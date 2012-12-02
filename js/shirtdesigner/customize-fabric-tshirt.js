@@ -117,7 +117,8 @@ $j(document).ready(function(){
             left_round_btm: "left-sleeve-outline-color"
 
             };
-            
+        
+        // sources variable provides url for each fabric part
         var sources = {
             front_collar_b: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/b.png",
             front_collar_b_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/b-btm.png",
@@ -216,37 +217,6 @@ $j(document).ready(function(){
             shirt_context.drawImage(c1,0,0,w,h);
         }
         
-        function updateCanvasSpecific2(path, shirt_context){
-            console.log("updateCanvasSpecific2" );
-            shirt_context.clearRect(0, 0, 387,409);
-            var img_path = path; 
-            var img= new Image();
-            var w=387, h=409;
-            img.src= img_path;
-            
-            img.onload = function () {
-                shirt_context.drawImage(img, 0, 0, w,h);
-            }
-            shirt_context.drawImage(c1,0,0,w,h);
-        }
-        
-        function updateCanvasSpecific3(path){
-            console.log("updateCanvasSpecific3" );
-            var canvas = document.getElementById('specific');
-            var context = canvas.getContext('2d');
-        
-            context.clearRect(0, 0, 387,409);
-            var img_path = path; 
-            var img= new Image();
-            var w=387, h=409;
-            img.src= img_path;
-            
-            img.onload = function () {
-                context.drawImage(img, 0, 0, w,h);
-            }
-            context.drawImage(c1,0,0,w,h);
-        }
-        
         
         // Updates all parts of the shirt
         function updateCanvasAll() {
@@ -293,7 +263,7 @@ $j(document).ready(function(){
             }
             
         }
-        // Genenerates the left view of the shirt
+        // Generates the left view of the shirt
         function updateCanvasLeft() {
             console.log("updateCanvasLeft");
             var w=387, h=409, keys;
@@ -374,7 +344,7 @@ $j(document).ready(function(){
             
         }
         
-        // Genenerates the right view of the shirt
+        // Generates the right view of the shirt
         function updateCanvasRight() {
             console.log("updateCanvasRight");
             var w=387, h=409, keys;
@@ -451,7 +421,7 @@ $j(document).ready(function(){
             }
             
         }
-        // Genenerates the back view of the shirt
+        // Generates the back view of the shirt
         function updateCanvasBack() {
             console.log("updateCanvasBack");
             var w=387, h=409, keys;
