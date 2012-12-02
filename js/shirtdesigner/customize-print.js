@@ -40,7 +40,8 @@ function removeCanvasImage(e){
     $j("#" + e).remove();
     $j("#i-" + e).remove();
 }
-  
+
+// Used to determine what element to resize or change colour
 function highlightCanvasImage(e){
     highlighted_art_id = e;
     
@@ -404,20 +405,7 @@ $j(document).ready(function(){
                 $j("#art-canvas3").css("display", "none");  
                 $j("#art-canvas4").css("display", "none");
                 
-                switch(front.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                    default:
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        break;
-                }
+                
                 active = "front";
                 document.getElementById('main-preview').style.backgroundImage = "url('"+$j("#front-image-url").val()+"')"; //front_shirt_url;
                 //document.getElementById('mini-preview').style.backgroundImage = "url('"+$j("#back-image-url").val()+"')";//back_shirt_url;
@@ -467,20 +455,7 @@ $j(document).ready(function(){
                 $j("#art-canvas3").css("display", "none");  
                 $j("#art-canvas4").css("display", "none");
                 
-                switch(back.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                    default:
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        break;
-                }
+                
                 active = "back";
                 document.getElementById('main-preview').style.backgroundImage = "url('"+$j("#back-image-url").val()+"')";//back_shirt_url;
                // document.getElementById('mini-preview').style.backgroundImage = "url('"+$j("#front-image-url").val()+"')";//front_shirt_url;
@@ -529,20 +504,7 @@ $j(document).ready(function(){
                 $j("#art-canvas").css("display", "none");  
                 $j("#art-canvas4").css("display", "none");
                 
-                switch(left.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                    default:
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        break;
-                }
+                
                 active = "left";
                 document.getElementById('main-preview').style.backgroundImage = "url('"+$j("#left-image-url").val()+"')";//back_shirt_url;
                 //document.getElementById('mini-preview').style.backgroundImage = "url('"+$j("#right-image-url").val()+"')";//front_shirt_url;
@@ -591,20 +553,7 @@ $j(document).ready(function(){
                 $j("#art-canvas3").css("display", "none");  
                 $j("#art-canvas").css("display", "none");
                 
-                switch(right.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                    default:
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        break;
-                }
+                
                 active = "right";
                 document.getElementById('main-preview').style.backgroundImage = "url('"+$j("#right-image-url").val()+"')";//back_shirt_url;
                 //document.getElementById('mini-preview').style.backgroundImage = "url('"+$j("#left-image-url").val()+"')";//front_shirt_url;
@@ -743,92 +692,7 @@ $j(document).ready(function(){
 
     });
     
-    var f_logo = 0, b_logo = 0, r_logo = 0, l_logo = 0,count_logo = 0;;
-     
-     $j("#logo-options > div").click(function(e){
-         switch(active) {
-            case "front": 
-                if (f_logo == 0){
-                     createLogo();
-                     f_logo ++;
-                     count_logo++;
-                 }
-                 
-                $j("#front-logo-type").val(e.target.id);
-                front.logo = e.target.id;
-                switch(front.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                }
-                break;
-            case "back": 
-                if (b_logo == 0){
-                     createLogo();
-                     b_logo ++;
-                     count_logo++;
-                 }
-                $j("#back-logo-type").val(e.target.id);
-                back.logo = e.target.id;
-                switch(back.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                }
-                break;
-            case "left": 
-                if (l_logo == 0){
-                     createLogo();
-                     l_logo ++;
-                     count_logo++;
-                 }
-                $j("#left-logo-type").val(e.target.id);
-                left.logo = e.target.id;
-                switch(left.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                }
-                break;
-            case "right": 
-                if (r_logo == 0){
-                     createLogo();
-                     r_logo ++;
-                     count_logo++;
-                 }
-                $j("#right-logo-type").val(e.target.id);
-                right.logo = e.target.id;
-                switch(right.logo) {
-                    case "logo-1": 
-                        $j("#logo-2").removeClass('shirt_type_box_selected');
-                        $j("#logo-1").addClass('shirt_type_box_selected');
-                        break;
-                    case "logo-2": 
-                        $j("#logo-1").removeClass('shirt_type_box_selected');
-                        $j("#logo-2").addClass('shirt_type_box_selected');
-                        break;
-                }
-                break;
-        }
-        drawLogo(e.target.id);
-        
-
-    });
+    
     /******** TEXT EVENTS ********/
     /******** TEXT EVENTS ********/
     /******** TEXT EVENTS ********/
@@ -2237,9 +2101,7 @@ $j(document).ready(function(){
     });
     
     $j('.submit').click(function(e) {
-       /* if(count_logo == 0) {
-            alert("Gush logo must be present");
-        } else */if (($j("#s").val() == "") && ($j("#m").val() == "") && ($j("#l").val() == "") && ($j("#xl").val() == "")){
+       if (($j("#s").val() == "") && ($j("#m").val() == "") && ($j("#l").val() == "") && ($j("#xl").val() == "")){
             alert("Please choose shirt size");
             
             
