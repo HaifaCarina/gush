@@ -2061,16 +2061,48 @@ $j(document).ready(function(){
                 stop: function() {
                     var e = $j(this);
                     var p = $j(this).position();
-                    if(p.left >= $j("#allowed-left-1").val() && p.top >= $j("#allowed-top-1").val() && (p.left + e.width() ) <= $j("#allowed-right-1").val() && (p.top + e.height() ) <= $j("#allowed-bottom-1").val()) {
-                        $j(this).attr("valid",1);
-                        console.log("valid position" + p.left + ">" + $j("#allowed-left-1").val() +" " + p.top + ">" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                    } else {
-                        $j(this).attr("valid",0);
-                        console.log("invalid position" + p.left + ":" + $j("#allowed-left-1").val() +" " + p.top + ":" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                    }
+                    console.log("art canvas: left: " + p.left + "; top:" +p.top + " width:" + $j(this).width() + " height:" + $j(this).height() );
                     
-                    console.log("image canvas: left: " + p.left + "; top:" +p.top + " width:" + $j(this).width() + " height:" + $j(this).height() );
-                    //updatePrice();            
+                    switch(active){
+                        case "front":
+                            if(p.left >= $j("#allowed-left-1").val() && p.top >= $j("#allowed-top-1").val() && (p.left + e.width() ) <= $j("#allowed-right-1").val() && (p.top + e.height() ) <= $j("#allowed-bottom-1").val()) {
+                                $j(this).attr("valid",1);
+                                console.log("valid position" + p.left + ">" + $j("#allowed-left-1").val() +" " + p.top + ">" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
+                            } else {
+                                $j(this).attr("valid",0);
+                                console.log("invalid position" + p.left + ":" + $j("#allowed-left-1").val() +" " + p.top + ":" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
+                            } 
+                            break;
+                        case "back":
+                            if(p.left >= $j("#allowed-left-2").val() && p.top >= $j("#allowed-top-2").val() && (p.left + e.width() ) <= $j("#allowed-right-2").val() && (p.top + e.height() ) <= $j("#allowed-bottom-2").val()) {
+                                $j(this).attr("valid",1);
+                                console.log("valid position" + p.left + ">" + $j("#allowed-left-2").val() +" " + p.top + ">" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
+                            } else {
+                                $j(this).attr("valid",0);
+                                console.log("invalid position" + p.left + ":" + $j("#allowed-left-2").val() +" " + p.top + ":" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
+                            } 
+                            break;
+                        case "left":
+                            if(p.left >= $j("#allowed-left-3").val() && p.top >= $j("#allowed-top-3").val() && (p.left + e.width() ) <= $j("#allowed-right-3").val() && (p.top + e.height() ) <= $j("#allowed-bottom-3").val()) {
+                                $j(this).attr("valid",1);
+                                console.log("valid position" + p.left + ">" + $j("#allowed-left-3").val() +" " + p.top + ">" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
+                            } else {
+                                $j(this).attr("valid",0);
+                                console.log("invalid position" + p.left + ":" + $j("#allowed-left-3").val() +" " + p.top + ":" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
+                            } 
+                            break;
+                        case "right":
+                            
+                            if(p.left >= $j("#allowed-left-4").val() && p.top >= $j("#allowed-top-4").val() && (p.left + e.width() ) <= $j("#allowed-right-4").val() && (p.top + e.height() ) <= $j("#allowed-bottom-4").val()) {
+                                $j(this).attr("valid",1);
+                                console.log("valid position" + p.left + ">" + $j("#allowed-left-4").val() +" " + p.top + ">" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
+                            } else {
+                                $j(this).attr("valid",0);
+                                console.log("invalid position" + p.left + ":" + $j("#allowed-left-4").val() +" " + p.top + ":" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
+                            } 
+                            break;
+                    }
+                    updatePrice(); 
                 }
             });
             drawImage();
