@@ -4,6 +4,12 @@ var $j = jQuery.noConflict();
 var highlighted_id;
 var pockets_qty = 0;
 var images = {};
+var max = 0, count=0;
+var front_keys = [];
+var shirt_canvas ;
+var shirt_context ; 
+
+
 function removeCanvasImage(e){
     $j("#" + e).remove();
 }
@@ -15,706 +21,562 @@ function highlightCanvasImage(e){
 
 }  
 
-function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
-function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
-function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
-function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+function generateHex(color) {
+    switch(color) {
+        case "black": 
+            console.log("black");
+            return "a30504";
+            break;
+        case "black": 
+            console.log("black");
+            return "000000";
+            break;
+    }
+}
 
 $j(document).ready(function(){
-    //alert("shirt-functions-tshirt.jg");
         window.console = $j('<iframe>').hide().appendTo('body')[0].contentWindow.console;
         
      // INITIALIZE CANVAS
-        var shirt_canvas = document.getElementById('body-outline');
-        var shirt_context = shirt_canvas.getContext('2d');
+        shirt_canvas = document.getElementById('body-outline');
+        shirt_context = shirt_canvas.getContext('2d');
+        $j("#body-color").val('black');
         
-        var shirt_type = "longsleeves";
-        $j("#body-color").val('ffffff');
+        // Matches fabric part of the the color of the input value used
+        var color_matches = {
+            front_collar_b: "body-color",
+            front_collar_b_btm: "body-color",
+            front_collar_lb1: "left-sleeve-outline-color",
+            front_collar_lb2: "left-sleeve-color",
+            front_collar_rb1: "right-sleeve-outline-color",
+            front_collar_rb2: "right-sleeve-color",
+            
+            front_round_b: "body-color",
+            front_round_b_btm: "body-color",
+            front_round_lb1: "left-sleeve-outline-color",
+            front_round_lb2: "left-sleeve-color",
+            front_round_rb1: "right-sleeve-outline-color",
+            front_round_rb2: "right-sleeve-color",
+            
+            front_vneck_b: "body-color",
+            front_vneck_b_btm: "body-color",
+            front_vneck_lb1: "left-sleeve-outline-color",
+            front_vneck_lb2: "left-sleeve-color",
+            front_vneck_rb1: "right-sleeve-outline-color",
+            front_vneck_rb2: "right-sleeve-color",
+            
+            back_collar_b: "body-color",
+            back_collar_b_btm: "body-color",
+            back_collar_lb1: "left-sleeve-outline-color",
+            back_collar_lb2: "left-sleeve-color",
+            back_collar_rb1: "right-sleeve-outline-color",
+            back_collar_rb2: "right-sleeve-color",
+            
+            back_round_b: "body-color",
+            back_round_b_btm: "body-color",
+            back_round_lb1: "left-sleeve-outline-color",
+            back_round_lb2: "left-sleeve-color",
+            back_round_rb1: "right-sleeve-outline-color",
+            back_round_rb2: "right-sleeve-color",
+            
+            back_vneck_b: "body-color",
+            back_vneck_b_btm: "body-color",
+            back_vneck_lb1: "left-sleeve-outline-color",
+            back_vneck_lb2: "left-sleeve-color",
+            back_vneck_rb1: "right-sleeve-outline-color",
+            back_vneck_rb2: "right-sleeve-color",
+            
+            right_collar_body: "body-color",
+            right_collar_body_btm: "body-color",
+            right_collar_neck: "neck-color",
+            right_collar_sleeve: "right-sleeve-color",
+            right_collar_btm: "right-sleeve-outline-color",
         
+        
+            left_collar_body: "body-color",
+            left_collar_body_btm: "body-color",
+            left_collar_neck: "neck-color",
+            left_collar_sleeve: "left-sleeve-color",
+            left_collar_btm: "left-sleeve-outline-color",
+           
+          
+            neck_collar_b1: "neck-color",
+            neck_vneck_b1: "neck-color",
+            neck_round_b1: "neck-color",
+           
+            right_round_body: "body-color",
+            right_round_body_btm: "body-color",
+            right_round_neck: "neck-color",
+            right_round_sleeve: "right-sleeve-color",
+            right_round_btm: "right-sleeve-outline-color",
+            
+            left_round_body: "body-color",
+            left_round_body_btm: "body-color",
+            left_round_neck: "left-sleeve-outline-color",
+            left_round_sleeve: "left-sleeve-color",
+            left_round_btm: "left-sleeve-outline-color"
+
+            };
+            
         var sources = {
-            body_outline: "../../media/shirtdesigner/images/illustration/tshirt/body/outline.png",
-            body_b: "../../media/shirtdesigner/images/illustration/tshirt/body/b.png",
-            body_lb1: "../../media/shirtdesigner/images/illustration/tshirt/body/lb1.png",
-            body_lb2: "../../media/shirtdesigner/images/illustration/tshirt/body/lb2.png",
-            body_rb1: "../../media/shirtdesigner/images/illustration/tshirt/body/rb1.png",
-            body_rb2: "../../media/shirtdesigner/images/illustration/tshirt/body/rb2.png",
-            neck_collar_b1: "../../media/shirtdesigner/images/illustration/tshirt/collar/b1.png",
-            neck_collar_outline: "../../media/shirtdesigner/images/illustration/tshirt/collar/outline.png",
-            right_collar_outline: "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-outline.png",
-            right_collar_body: "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-body.png",
-            right_collar_body_btm: "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-body-btm.png",
-            right_collar_neck: "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-neck.png",
-            right_collar_sleeve: "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-sleeve.png",
-            right_collar_btm: "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-sleeve-btm.png",
-            left_collar_outline: "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-outline.png",
-            left_collar_body: "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-body.png",
-            left_collar_body_btm: "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-body-btm.png",
-            left_collar_neck: "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-neck.png",
-            left_collar_sleeve: "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-sleeve.png",
-            left_collar_btm: "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-sleeve-btm.png",
-            neck_vneck_b1: "../../media/shirtdesigner/images/illustration/tshirt/vneck/b1.png",
-            neck_vneck_outline: "../../media/shirtdesigner/images/illustration/tshirt/vneck/outline.png",
-            neck_round_b1: "../../media/shirtdesigner/images/illustration/tshirt/round/b1.png",
-            neck_round_outline: "../../media/shirtdesigner/images/illustration/tshirt/round/outline.png",
-            right_round_outline: "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-outline.png",
-            right_round_body: "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-body.png",
-            right_round_body_btm: "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-body-btm.png",
-            right_round_neck: "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-neck.png",
-            right_round_sleeve: "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-sleeve.png",
-            right_round_btm: "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-sleeve-btm.png",
-            left_round_outline: "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-outline.png",
-            left_round_body: "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-body.png",
-            left_round_body_btm: "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-body-btm.png",
-            left_round_neck: "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-neck.png",
-            left_round_sleeve: "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-sleeve.png",
-            left_round_btm: "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-sleeve-btm.png"
-
-            };
+            front_collar_b: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/b.png",
+            front_collar_b_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/b-btm.png",
+            front_collar_lb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/lb1.png",
+            front_collar_lb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/lb2.png",
+            front_collar_rb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/rb1.png",
+            front_collar_rb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-collar/rb2.png",
             
-        var neck_type;    
-        if ($j("#sku").val().search("polo") >= 0) {
-            neck_type = "collar";
-        } else if ($j("#sku").val().search("vneck") >= 0){
-            neck_type = "vneck";
-        }    
-        var max = 0, count=0;
-        for (var obj in sources) {
-            max++;
-        }
-        console.log("max" + max); 
+            front_round_b: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-round/b.png",
+            front_round_b_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-round/b-btm.png",
+            front_round_lb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-round/lb1.png",
+            front_round_lb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-round/lb2.png",
+            front_round_rb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-round/rb1.png",
+            front_round_rb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-round/rb2.png",
+            
+            front_vneck_b: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-vneck/b.png",
+            front_vneck_b_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-vneck/b-btm.png",
+            front_vneck_lb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-vneck/lb1.png",
+            front_vneck_lb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-vneck/lb2.png",
+            front_vneck_rb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-vneck/rb1.png",
+            front_vneck_rb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/front-vneck/rb2.png",
+            
+            back_collar_b: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-collar/b.png",
+            back_collar_b_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-collar/b-btm.png",
+            back_collar_lb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-collar/lb1.png",
+            back_collar_lb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-collar/lb2.png",
+            back_collar_rb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-collar/rb1.png",
+            back_collar_rb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-collar/rb2.png",
+            
+            back_round_b: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-round/b.png",
+            back_round_b_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-round/b-btm.png",
+            back_round_lb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-round/lb1.png",
+            back_round_lb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-round/lb2.png",
+            back_round_rb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-round/rb1.png",
+            back_round_rb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-round/rb2.png",
+            
+            back_vneck_b: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-vneck/b.png",
+            back_vneck_b_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-vneck/b-btm.png",
+            back_vneck_lb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-vneck/lb1.png",
+            back_vneck_lb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-vneck/lb2.png",
+            back_vneck_rb1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-vneck/rb1.png",
+            back_vneck_rb2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/back-vneck/rb2.png",
+            
+            right_collar_body: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-collar/right-body.png",
+            right_collar_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-collar/right-body-btm.png",
+            right_collar_neck: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-collar/right-neck.png",
+            right_collar_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-collar/right-sleeve.png",
+            right_collar_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-collar/right-sleeve-btm.png",
         
-        for(var src in sources) {
-            console.log("NOT okay:" + src);
-            images[src] = new Image();
-            images[src].onload = function() {
-                count++;
-                console.log("count:"+ count);
-                console.log("updateCanvasSpecific" + src);
-                updateCanvasSpecific2(images[src], $j("#body-color").val());
-                console.log("DONE:" + src);
-                
-                if (count==max) {
-                    var shirt_path = "../../media/shirtdesigner/images/illustration/tshirt/body/outline.png";
-                    var shirt_img= new Image();
-                    shirt_img.src= shirt_path;
-                    shirt_img.onload = function () {
-                    shirt_context.drawImage(shirt_img,0,0,374,394); 
-                    };    
-                   // alert(neck_type); (cn,120,0,140,129);
-                   
-                    var x,y,w,h, neck_path;
-                    if (neck_type == "collar") {
-                        neck_path = "../../media/shirtdesigner/images/illustration/tshirt/collar/outline.png";
-                        x=120, y=0,w=140, h=129;
-                        $j('#collar').prop('checked',true);
-                    } else if (neck_type == "vneck") {
-                        neck_path = "../../media/shirtdesigner/images/illustration/tshirt/vneck/outline.png";
-                        x=130, y=1,w=110, h=31;
-                        $j('#v-neck').prop('checked',true);
-                    } else {
-                        neck_path = "../../media/shirtdesigner/images/illustration/tshirt/round/outline.png";
-                        x=130, y=1,w=110, h=31;
-                        $j('#round-neck').prop('checked',true);
-                    }
-                    var neck_img = new Image();
-                    neck_img.src= neck_path;
-
-                    neck_img.onload = function () {
-                    shirt_context.drawImage(neck_img,x,y,w,h);
-                    };
-                }
-                
-            };
+        
+            left_collar_body: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-collar/left-body.png",
+            left_collar_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-collar/left-body-btm.png",
+            left_collar_neck: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-collar/left-neck.png",
+            left_collar_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-collar/left-sleeve.png",
+            left_collar_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-collar/left-sleeve-btm.png",
+           
+          
+            neck_collar_b1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/collar/b1.png",
+            neck_vneck_b1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/vneck/b1.png",
+            neck_round_b1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/round/b1.png",
+           
+            right_round_body: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-body.png",
+            right_round_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-body-btm.png",
+            right_round_neck: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-neck.png",
+            right_round_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-sleeve.png",
+            right_round_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-sleeve-btm.png",
             
-            images[src].src = sources[src];
-            
-         }
-         
+            left_round_body: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-body.png",
+            left_round_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-body-btm.png",
+            left_round_neck: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-neck.png",
+            left_round_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve.png",
+            left_round_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve-btm.png"
+        };
+        
         var c1 = document.createElement("canvas");
         c1.id= "specific";
-        c1.width=374;
-        c1.height=394; 
+        c1.width=387;
+        c1.height=409; 
         c1.setAttribute('style', 'display:none');
         var context1 = c1.getContext('2d');
         document.getElementById('preview-panel').appendChild(c1);  
         
-        var c = document.createElement("canvas");
-        c.id= "specific0";
-        c.width=374;
-        c.height=394; 
-        c.setAttribute('style', 'display:none');
-        var context = c.getContext('2d');
-        document.getElementById('preview-panel').appendChild(c);
-        
-        var cn = document.createElement("canvas");
-        cn.id= "neck-canvas";
-        cn.setAttribute('style', 'display:none');
-        var contextn = cn.getContext('2d');
-        document.getElementById('preview-panel').appendChild(cn);
-        
-       
-       
-        
-        
-        function updateLeftSleeveCanvas(color){
-            /*var c = document.createElement("canvas");
-            c.id= "left-sleeve-canvas";
-            c.width=374;
-            c.height=394; 
+        // Intialize the display of black front fabric 
+        updateCanvasAll();  
             
-            var context = c.getContext('2d');
-            document.getElementById('preview-panel').appendChild(c);
-            */
-            context.clearRect(0, 0, 374,394);
-            
-            var img_path = "../../media/shirtdesigner/images/illustration/tshirt/body/lb2.png";
+       function updateCanvasSpecific(path, shirt_context){
+            console.log("updateCanvasSpecific" );
+            var img_path = path; 
             var img= new Image();
+            var w=387, h=409;
             img.src= img_path;
-            
-            //img.onload = function () {
-               context.drawImage(img, 0, 0, 374,394);
-            //};
-
-            var imgd = context.getImageData(0, 0, 374,394),
-            pix = imgd.data;
-
-            for (var i = 0, n = pix.length; i <n; i += 4) {
-                  pix[i] = hexToR(color);
-                  pix[i+1] = hexToG(color);
-                  pix[i+2] = hexToB(color);
+            console.log(max +":"+ count);
+            img.onload = function () {
+                shirt_context.drawImage(img, 0, 0, w,h);
             }
-            context.putImageData(imgd, 0, 0);
-            
-            shirt_context.drawImage(c,0,0,374,394);
-            //c.remove();
-
-        }
-        function updateLeftSleeveOutlineCanvas(color){
-            /*var c = document.createElement("canvas");
-            c.id= "left-sleeve-canvas";
-            c.width=374;
-            c.height=394; 
-            
-            var context = c.getContext('2d');
-            document.getElementById('preview-panel').appendChild(c);
-            */
-            context.clearRect(0, 0, 374,394);
-            var img_path = "../../media/shirtdesigner/images/illustration/tshirt/body/lb1.png";
-            var img= new Image();
-
-            img.src= img_path;
-            //img.onload = function () {
-               context.drawImage(img, 0, 0, 374,394);
-            //};
-            var imgd = context.getImageData(0, 0, 374,394),
-            pix = imgd.data;
-
-            for (var i = 0, n = pix.length; i <n; i += 4) {
-                  pix[i] = hexToR(color);
-                  pix[i+1] = hexToG(color);
-                  pix[i+2] = hexToB(color);
-            }
-            context.putImageData(imgd, 0, 0);
-            
-            shirt_context.drawImage(c,0,0,374,394);
-            //c.remove();
-
-        }
-        function updateRightSleeveCanvas(color){
-            /*var c = document.createElement("canvas");
-            c.id= "left-sleeve-canvas";
-            c.width=374;
-            c.height=394; 
-            
-            var context = c.getContext('2d');
-            document.getElementById('preview-panel').appendChild(c);
-            */
-            context.clearRect(0, 0, 374,394);
-            var img_path = "../../media/shirtdesigner/images/illustration/tshirt/body/rb2.png";
-            var img= new Image();
-
-            img.src= img_path;
-            //img.onload = function () {
-               context.drawImage(img, 0, 0, 374,394);
-            //};
-            var imgd = context.getImageData(0, 0, 374,394),
-            pix = imgd.data;
-
-            for (var i = 0, n = pix.length; i <n; i += 4) {
-                  pix[i] = hexToR(color);
-                  pix[i+1] = hexToG(color);
-                  pix[i+2] = hexToB(color);
-            }
-            context.putImageData(imgd, 0, 0);
-            
-            shirt_context.drawImage(c,0,0,374,394);
-            //c.remove();
-        }
-        function updateRightSleeveOutlineCanvas(color){
-            /*var c = document.createElement("canvas");
-            c.id= "left-sleeve-canvas";
-            c.width=374;
-            c.height=394; 
-            
-            var context = c.getContext('2d');
-            document.getElementById('preview-panel').appendChild(c);
-            */
-            context.clearRect(0, 0, 374,394);
-            var img_path = "../../media/shirtdesigner/images/illustration/tshirt/body/rb1.png";
-            var img= new Image();
-
-            img.src= img_path;
-            //img.onload = function () {
-               context.drawImage(img, 0, 0, 374,394);
-            //};
-            
-            var imgd = context.getImageData(0, 0, 374,394),
-            pix = imgd.data;
-
-            for (var i = 0, n = pix.length; i <n; i += 4) {
-                  pix[i] = hexToR(color);
-                  pix[i+1] = hexToG(color);
-                  pix[i+2] = hexToB(color);
-            }
-            context.putImageData(imgd, 0, 0);
-            
-            shirt_context.drawImage(c,0,0,374,394);
-            //c.remove();
-            
+            shirt_context.drawImage(c1,0,0,w,h);
         }
         
-        function updateBodyCanvas(color){
-            /*var c = document.createElement("canvas");
-            c.id= "body-canvas";
-            c.width=374;
-            c.height=394; 
-            
-            var context = c.getContext('2d');
-            document.getElementById('preview-panel').appendChild(c);
-            */
-            context.clearRect(0, 0, 374,394);
-            var img_path = "../../media/shirtdesigner/images/illustration/tshirt/body/b.png";
+        function updateCanvasSpecific2(path, shirt_context){
+            console.log("updateCanvasSpecific2" );
+            shirt_context.clearRect(0, 0, 387,409);
+            var img_path = path; 
             var img= new Image();
-            img.src= img_path;
-            //img.onload = function () {
-               context.drawImage(img, 0, 0, 374,394);
-            //};
-            var imgd = context.getImageData(0, 0, 374,394),
-            pix = imgd.data;
-
-            for (var i = 0, n = pix.length; i <n; i += 4) {
-                  pix[i] = hexToR(color);
-                  pix[i+1] = hexToG(color);
-                  pix[i+2] = hexToB(color);
-            }
-            context.putImageData(imgd, 0, 0);
-            shirt_context.drawImage(c,0,0,374,394);
-            //c.remove();
-        }
-        function updateOutlineCanvas(){
-            // BODY OUTLINE
-            var shirt_img = new Image();
-            shirt_path = "../../media/shirtdesigner/images/illustration/tshirt/body/outline.png";
-            shirt_img.src= shirt_path;
-            
-            //shirt_img.onload = function () {
-               shirt_context.drawImage(shirt_img,0,0,374,394);
-            //};
-            
-            switch($j('input[name=neck-selection]:checked').val()){
-                case "round-neck":
-                    var neck_img = new Image();
-                    var neck_path = "../../media/shirtdesigner/images/illustration/tshirt/round/outline.png";
-                    neck_img.src= neck_path;
-
-                    neck_img.onload = function () {
-                       shirt_context.drawImage(neck_img,130,1,110,31);
-                    };
-                    
-                    break;
-                case "v-neck":
-                    var neck_img = new Image();
-                    var neck_path = "../../media/shirtdesigner/images/illustration/tshirt/vneck/outline.png";
-                    neck_img.src= neck_path;
-
-                    neck_img.onload = function () {
-                       shirt_context.drawImage(neck_img,132,1,110,31);
-                    };
-                    
-                    break;
-                case "collar":
-                    var neck_img = new Image();
-                    var neck_path = "../../media/shirtdesigner/images/illustration/tshirt/collar/outline.png";
-                    neck_img.src= neck_path;
-
-                    neck_img.onload = function () {
-                       shirt_context.drawImage(neck_img,120,0,140,129);
-                    };
-                    
-                    break;
-            }
-            
-        }
-        
-        
-        function updateNeckCanvas(color) {
-            context1.clearRect(0, 0, 374,394);
-            var img= new Image();
-                    
-            switch($j('input[name=neck-selection]:checked').val()){
-                case "round-neck":
-                    cn.width=110;
-                    cn.height=31; 
-
-                    var img_path = "../../media/shirtdesigner/images/illustration/tshirt/round/b1.png";
-                    img.src= img_path;
-                    
-                    //img.onload = function () {
-                       contextn.drawImage(img, 0, 0, cn.width,cn.height);
-                    //};
-                    var imgd = contextn.getImageData(0, 0, cn.width,cn.height),
-                    pix = imgd.data;
-                    for (var i = 0, n = pix.length; i <n; i += 4) {
-                          pix[i] = hexToR(color);
-                          pix[i+1] = hexToG(color);
-                          pix[i+2] = hexToB(color);
-                    }
-                    contextn.putImageData(imgd, 0, 0);
-                    shirt_context.drawImage(cn,130,1,110,31);
-                    break;
-                case "v-neck":
-                    
-                    cn.width=110;
-                    cn.height=31; 
-
-                    var img_path = "../../media/shirtdesigner/images/illustration/tshirt/vneck/b1.png";
-                    img.src= img_path;
-                    
-                    //img.onload = function () {
-                       contextn.drawImage(img, 0, 0, cn.width,cn.height);
-                    //};
-                    var imgd = contextn.getImageData(0, 0, cn.width,cn.height),
-                    pix = imgd.data;
-                    for (var i = 0, n = pix.length; i <n; i += 4) {
-                          pix[i] = hexToR(color);
-                          pix[i+1] = hexToG(color);
-                          pix[i+2] = hexToB(color);
-                    }
-                    contextn.putImageData(imgd, 0, 0);
-                    shirt_context.drawImage(cn,130,1,110,31);
-                    
-                    break;
-                case "collar":
-                    cn.width=140;
-                    cn.height=129; 
-
-                    var img_path = "../../media/shirtdesigner/images/illustration/tshirt/collar/b1.png";
-                    img.src= img_path;
-                    
-                    //img.onload = function () {
-                       contextn.drawImage(img, 0, 0, cn.width,cn.height);
-                    //};
-                    var imgd = contextn.getImageData(0, 0, cn.width,cn.height),
-                    pix = imgd.data;
-                    for (var i = 0, n = pix.length; i <n; i += 4) {
-                          pix[i] = hexToR(color);
-                          pix[i+1] = hexToG(color);
-                          pix[i+2] = hexToB(color);
-                    }
-                    contextn.putImageData(imgd, 0, 0);
-                    shirt_context.drawImage(cn,120,0,140,129);
-                    break;
-                
-            }
-            //cn.remove();
-        }
-        
-        function updateCanvas(){
-            
-            shirt_context.clearRect(0, 0, 374,394);
-            updateBodyCanvas($j("#body-color").val());
-            
-            
-            if($j("#left-sleeve-same").is(':checked')){
-                updateLeftSleeveCanvas($j("#body-color").val());
-            }else {
-                updateLeftSleeveCanvas($j("#left-sleeve-color").val());
-            }
-            
-            if($j("#left-sleeve-outline-same").is(':checked')){
-                updateLeftSleeveOutlineCanvas($j("#body-color").val());
-            }else {
-                updateLeftSleeveOutlineCanvas($j("#left-sleeve-outline-color").val());
-            }
-            
-            if($j("#right-sleeve-same").is(':checked')){
-                updateRightSleeveCanvas($j("#body-color").val());
-            }else {
-                updateRightSleeveCanvas($j("#right-sleeve-color").val());
-            }
-            
-            if($j("#right-sleeve-outline-same").is(':checked')){
-                updateRightSleeveOutlineCanvas($j("#body-color").val());
-            }else {
-                updateRightSleeveOutlineCanvas($j("#right-sleeve-outline-color").val());
-            }
-            
-            
-            updateOutlineCanvas();
-            if($j("#neck-same").is(':checked')){
-                updateNeckCanvas($j("#body-color").val());
-            }else {
-                updateNeckCanvas($j("#neck-color").val());
-            }
-        }
-        
-        function updateCanvasBack(){
-            
-            shirt_context.clearRect(0, 0, 374,394);
-            updateBodyCanvas($j("#body-color").val());
-            
-            
-            if($j("#left-sleeve-same").is(':checked')){
-                updateLeftSleeveCanvas($j("#body-color").val());
-            }else {
-                updateLeftSleeveCanvas($j("#left-sleeve-color").val());
-            }
-            
-            if($j("#left-sleeve-outline-same").is(':checked')){
-                updateLeftSleeveOutlineCanvas($j("#body-color").val());
-            }else {
-                updateLeftSleeveOutlineCanvas($j("#left-sleeve-outline-color").val());
-            }
-            
-            if($j("#right-sleeve-same").is(':checked')){
-                updateRightSleeveCanvas($j("#body-color").val());
-            }else {
-                updateRightSleeveCanvas($j("#right-sleeve-color").val());
-            }
-            
-            if($j("#right-sleeve-outline-same").is(':checked')){
-                updateRightSleeveOutlineCanvas($j("#body-color").val());
-            }else {
-                updateRightSleeveOutlineCanvas($j("#right-sleeve-outline-color").val());
-            }
-            updateOutlineCanvas();
-      }
-      
-      
-          
-      function updateCanvasSpecific(path,color){
-            context1.clearRect(0, 0, 374,394);
-            
-            var img_path = path;
-            var img= new Image();
-
-            img.src= img_path;
-            
-            //img.onload = function () {
-                context1.drawImage(img, 0, 0, 374,394);
-            //}
-            
-            
-            
-            var imgd = context1.getImageData(0, 0, 374,394),
-            pix = imgd.data;
-
-            for (var i = 0, n = pix.length; i <n; i += 4) {
-                  pix[i] = hexToR(color);
-                  pix[i+1] = hexToG(color);
-                  pix[i+2] = hexToB(color);
-            }
-            context1.putImageData(imgd, 0, 0);
-            
-            shirt_context.drawImage(c1,0,0,374,394);
-            //c.remove();
-            
-        }
-        
-        function updateCanvasSpecific2(path,color){
-            context1.clearRect(0, 0, 374,394);
-            
-            var img_path = path;
-            var img= new Image();
-
+            var w=387, h=409;
             img.src= img_path;
             
             img.onload = function () {
-                context1.drawImage(img, 0, 0, 374,394);
+                shirt_context.drawImage(img, 0, 0, w,h);
             }
-            shirt_context.clearRect(0, 0, 374,394);
-           
+            shirt_context.drawImage(c1,0,0,w,h);
+        }
+        
+        function updateCanvasSpecific3(path){
+            console.log("updateCanvasSpecific3" );
+            var canvas = document.getElementById('specific');
+            var context = canvas.getContext('2d');
+        
+            context.clearRect(0, 0, 387,409);
+            var img_path = path; 
+            var img= new Image();
+            var w=387, h=409;
+            img.src= img_path;
+            
+            img.onload = function () {
+                context.drawImage(img, 0, 0, w,h);
+            }
+            context.drawImage(c1,0,0,w,h);
+        }
+        
+        
+        // Updates all parts of the shirt
+        function updateCanvasAll() {
+            console.log("updateCanvasAll");
+            
+            var w=387, h=409;
+            shirt_context.clearRect(0, 0, w, h);
+            switch($j('input[name=neck-selection]:checked').val()) {
+                case "round-neck": 
+                    front_keys = ["front_round_b", "front_round_b_btm","front_round_lb1", "front_round_lb2", "front_round_rb1", "front_round_rb2","neck_round_b1"];
+                    break;
+                case "v-neck":
+                    front_keys = ["front_vneck_b", "front_vneck_b_btm","front_vneck_lb1", "front_vneck_lb2", "front_vneck_rb1", "front_vneck_rb2","neck_vneck_b1"];
+                    break;
+                case "collar":
+                    front_keys = ["front_collar_b", "front_collar_b_btm","front_collar_lb1", "front_collar_lb2", "front_collar_rb1", "front_collar_rb2","neck_collar_b1"];
+                    break;
+            }
+            
+            
+            if($j("#neck-same").is(':checked')){
+                $j("#neck-color").val($j("#body-color").val()); 
+            } 
+            if($j("#left-sleeve-same").is(':checked')){
+                $j("#left-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#left-sleeve-outline-same").is(':checked')){
+                $j("#left-sleeve-outline-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-same").is(':checked')){
+                $j("#right-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-outline-same").is(':checked')){
+                $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
+            }
+            
+            for (var i = 0; i < front_keys.length; i++) {
+                var key = sources[front_keys[i]];
+                var key_array = key.split("/");
+                key_array[8] = $j("#" + color_matches[front_keys[i]]).val();
+                key = key_array.join("/");
+                
+                updateCanvasSpecific(key,  shirt_context);
+            }
+            
+        }
+        // Genenerates the left view of the shirt
+        function updateCanvasLeft() {
+            console.log("updateCanvasLeft");
+            var w=387, h=409, keys;
+            
+            switch($j('input[name=neck-selection]:checked').val()) {
+                case "round-neck": 
+                    keys = ["left_round_body", "left_round_body_btm","left_round_neck", "left_round_sleeve", "left_round_btm"];
+                    break;
+                case "v-neck":
+                    keys = ["left_vneck_body", "left_vneck_body_btm","left_vneck_neck", "left_vneck_sleeve", "left_vneck_btm"];
+                    break;
+                case "collar":
+                    keys = ["left_collar_body", "left_collar_body_btm","left_collar_neck", "left_collar_sleeve", "left_collar_btm"];
+                    break;
+            }
+            
+            
+            if($j("#neck-same").is(':checked')){
+                $j("#neck-color").val($j("#body-color").val()); 
+            } 
+            if($j("#left-sleeve-same").is(':checked')){
+                $j("#left-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#left-sleeve-outline-same").is(':checked')){
+                $j("#left-sleeve-outline-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-same").is(':checked')){
+                $j("#right-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-outline-same").is(':checked')){
+                $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
+            }
+            
+            var c2 = document.createElement("canvas");
+            c2.id= "specific-left";
+            c2.width=w;
+            c2.height=h; 
+            c2.setAttribute('style', 'display:none');
+            document.getElementById('preview-panel').appendChild(c2);  
+
+
+            var canvas = document.getElementById(c2.id);
+            var context = c2.getContext('2d');
+            var max = keys.length, count=0;
+            
+            for (var i = 0; i < keys.length; i++) {
+                var key = sources[keys[i]];
+                var key_array = key.split("/");
+                key_array[8] = $j("#" + color_matches[keys[i]]).val();
+                key = key_array.join("/");
+                
+                context.clearRect(0, 0, w,h);
+                
+                var img_path = key; 
+                var img= new Image();
+               
+                (function(i,img, img_path){
+                    img.onload=function(){
+                        context.drawImage(img,0,0,w,h);
+                        count++;
+                        if (max == count) {
+                            // Value here will be used in submission
+                            $j("#left-custom-shirt-code").val(canvas.toDataURL("image/png"));
+                            var i = document.createElement("img");
+                            i.id = 'left-custom-shirt-img';
+                            i.src = canvas.toDataURL("image/png");
+                            //document.getElementById('preview-panel').appendChild(i);
+                            c2.remove();
+                            
+                            console.log("left max na printed na!");
+                            
+                        }
+                    };
+                    img.src = img_path;
+                })(i,img, img_path);
+                   
+            }
             
         }
         
-      function updateCanvasLeft() {
-            shirt_context.clearRect(0, 0, 374,394);
+        // Genenerates the right view of the shirt
+        function updateCanvasRight() {
+            console.log("updateCanvasRight");
+            var w=387, h=409, keys;
             
-            if ($j('input[name=neck-selection]:checked').val() == "collar") {
-                var outline = "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-outline.png";
-                updateCanvasSpecific(outline, "000000");
-                
-
-                var body = "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-body.png",
-                    body_bottom = "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-body-btm.png",
-                    neck = "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-neck.png",
-                    sleeve = "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-sleeve.png",
-                    sleeve_bottom = "../../media/shirtdesigner/images/illustration/tshirt/left-collar/left-sleeve-btm.png";
-                    
-                updateCanvasSpecific(body, $j("#body-color").val());
-                updateCanvasSpecific(body_bottom, $j("#body-color").val());
-            
-                if($j("#left-sleeve-same").is(':checked')){
-                    updateCanvasSpecific(sleeve,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve,$j("#left-sleeve-color").val());
-                }
-
-                if($j("#left-sleeve-outline-same").is(':checked')){
-                    updateCanvasSpecific(sleeve_bottom,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve_bottom,$j("#left-sleeve-outline-color").val());
-                }
-                if($j("#neck-same").is(':checked')){
-                    updateCanvasSpecific(neck,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(neck,$j("#neck-color").val());
-                }
-            
-            
-            }else {
-                var outline = "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-outline.png";
-                updateCanvasSpecific(outline, "000000");
-                
-                var body = "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-body.png",
-                    body_bottom = "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-body-btm.png",
-                    neck = "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-neck.png",
-                    sleeve = "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-sleeve.png",
-                    sleeve_bottom = "../../media/shirtdesigner/images/illustration/tshirt/left-round/left-sleeve-btm.png";
-                    
-                  
-                
-                updateCanvasSpecific(body, $j("#body-color").val());
-                updateCanvasSpecific(body_bottom, $j("#body-color").val());
-            
-                if($j("#left-sleeve-same").is(':checked')){
-                    updateCanvasSpecific(sleeve,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve,$j("#left-sleeve-color").val());
-                }
-
-                if($j("#left-sleeve-outline-same").is(':checked')){
-                    updateCanvasSpecific(sleeve_bottom,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve_bottom,$j("#left-sleeve-outline-color").val());
-                }
-                if($j("#neck-same").is(':checked')){
-                    updateCanvasSpecific(neck,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(neck,$j("#neck-color").val());
-                }
-            
+            switch($j('input[name=neck-selection]:checked').val()) {
+                case "round-neck": 
+                    keys = ["right_round_body", "right_round_body_btm","right_round_neck", "right_round_sleeve", "right_round_btm"];
+                    break;
+                case "v-neck":
+                    keys = ["right_vneck_body", "right_vneck_body_btm","right_vneck_neck", "right_vneck_sleeve", "right_vneck_btm"];
+                    break;
+                case "collar":
+                    keys = ["right_collar_body", "right_collar_body_btm","right_collar_neck", "right_collar_sleeve", "right_collar_btm"];
+                    break;
             }
             
-      }
-      
-      function updateCanvasRight() {
-            shirt_context.clearRect(0, 0, 374,394);
             
-            if ($j('input[name=neck-selection]:checked').val() == "collar") {
-                var outline = "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-outline.png";
-                updateCanvasSpecific(outline, "000000");
-                
-                var body = "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-body.png",
-                    body_bottom = "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-body-btm.png",
-                    neck = "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-neck.png",
-                    sleeve = "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-sleeve.png",
-                    sleeve_bottom = "../../media/shirtdesigner/images/illustration/tshirt/right-collar/right-sleeve-btm.png";
-                
-                    
-                updateCanvasSpecific(body, $j("#body-color").val());
-                updateCanvasSpecific(body_bottom, $j("#body-color").val());
-            
-                if($j("#right-sleeve-same").is(':checked')){
-                    updateCanvasSpecific(sleeve,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve,$j("#right-sleeve-color").val());
-                }
-
-                if($j("#right-sleeve-outline-same").is(':checked')){
-                    updateCanvasSpecific(sleeve_bottom,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve_bottom,$j("#right-sleeve-outline-color").val());
-                }
-                if($j("#neck-same").is(':checked')){
-                    updateCanvasSpecific(neck,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(neck,$j("#neck-color").val());
-                }
-            
-            
-            }else {
-                var outline = "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-outline.png";
-                
-                updateCanvasSpecific(outline, "000000");
-                
-                var body = "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-body.png",
-                    body_bottom = "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-body-btm.png",
-                    neck = "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-neck.png",
-                    sleeve = "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-sleeve.png",
-                    sleeve_bottom = "../../media/shirtdesigner/images/illustration/tshirt/right-round/right-sleeve-btm.png";
-                    
-                updateCanvasSpecific(body, $j("#body-color").val());
-                updateCanvasSpecific(body_bottom, $j("#body-color").val());
-            
-                if($j("#right-sleeve-same").is(':checked')){
-                    updateCanvasSpecific(sleeve,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve,$j("#right-sleeve-color").val());
-                }
-
-                if($j("#right-sleeve-outline-same").is(':checked')){
-                    updateCanvasSpecific(sleeve_bottom,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(sleeve_bottom,$j("#right-sleeve-outline-color").val());
-                }
-                if($j("#neck-same").is(':checked')){
-                    updateCanvasSpecific(neck,$j("#body-color").val());
-                }else {
-                    updateCanvasSpecific(neck,$j("#neck-color").val());
-                }
-            
+            if($j("#neck-same").is(':checked')){
+                $j("#neck-color").val($j("#body-color").val()); 
+            } 
+            if($j("#right-sleeve-same").is(':checked')){
+                $j("#right-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-outline-same").is(':checked')){
+                $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-same").is(':checked')){
+                $j("#right-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-outline-same").is(':checked')){
+                $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
             }
             
-      }
+            var c2 = document.createElement("canvas");
+            c2.id= "specific-right";
+            c2.width=w;
+            c2.height=h; 
+            c2.setAttribute('style', 'display:none');
+            document.getElementById('preview-panel').appendChild(c2);  
+
+
+            var canvas = document.getElementById(c2.id);
+            var context = canvas.getContext('2d');
+            var max = keys.length, count=0;
+            
+            for (var i = 0; i < keys.length; i++) {
+                var key = sources[keys[i]];
+                var key_array = key.split("/");
+                key_array[8] = $j("#" + color_matches[keys[i]]).val();
+                key = key_array.join("/");
+                
+                context.clearRect(0, 0, 387,409);
+                
+                var img_path = key; 
+                var img= new Image();
+               
+                (function(i,img, img_path){
+                    img.onload=function(){
+                        context.drawImage(img,0,0,w,h);
+                        count++;
+                        if (max == count) {
+                            // Value here will be used in submission
+                            $j("#right-custom-shirt-code").val(canvas.toDataURL("image/png"));
+                            var i = document.createElement("img");
+                            i.id = 'right-custom-shirt-img';
+                            i.src = canvas.toDataURL("image/png");
+                            //document.getElementById('preview-panel').appendChild(i);
+                            c2.remove();
+                        }
+                    };
+                    img.src = img_path;
+                })(i,img, img_path);
+                   
+            }
+            
+        }
+        // Genenerates the back view of the shirt
+        function updateCanvasBack() {
+            console.log("updateCanvasBack");
+            var w=387, h=409, keys;
+            
+            switch($j('input[name=neck-selection]:checked').val()) {
+                case "round-neck": 
+                    keys = ["back_round_b","back_round_b_btm","back_round_lb1","back_round_lb2","back_round_rb1","back_round_rb2"];
+                    break;
+                case "v-neck":
+                    keys = ["back_vneck_b","back_vneck_b_btm","back_vneck_lb1","back_vneck_lb2","back_vneck_rb1","back_vneck_rb2"];
+                    break;
+                case "collar":
+                    keys = ["back_collar_b","back_collar_b_btm","back_collar_lb1","back_collar_lb2","back_collar_rb1","back_collar_rb2"];
+                    break;
+            }
+            
+            
+            if($j("#neck-same").is(':checked')){
+                $j("#neck-color").val($j("#body-color").val()); 
+            } 
+            if($j("#right-sleeve-same").is(':checked')){
+                $j("#right-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-outline-same").is(':checked')){
+                $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-same").is(':checked')){
+                $j("#right-sleeve-color").val($j("#body-color").val()); 
+            }
+            if($j("#right-sleeve-outline-same").is(':checked')){
+                $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
+            }
+            
+            var c2 = document.createElement("canvas");
+            c2.id= "specific-back";
+            c2.width=w;
+            c2.height=h; 
+            c2.setAttribute('style', 'display:none');
+            document.getElementById('preview-panel').appendChild(c2);  
+
+
+            var canvas = document.getElementById(c2.id);
+            var context = canvas.getContext('2d');
+            var max = keys.length, count=0;
+            
+            for (var i = 0; i < keys.length; i++) {
+                var key = sources[keys[i]];
+                var key_array = key.split("/");
+                key_array[8] = $j("#" + color_matches[keys[i]]).val();
+                key = key_array.join("/");
+                
+                context.clearRect(0, 0, 387,409);
+                
+                var img_path = key; 
+                var img= new Image();
+               
+                (function(i,img, img_path){
+                    img.onload=function(){
+                        context.drawImage(img,0,0,w,h);
+                        count++;
+                        if (max == count) {
+                            
+                            // Value here will be used in submission
+                            $j("#back-custom-shirt-code").val(canvas.toDataURL("image/png"));
+                            var i = document.createElement("img");
+                            i.id = 'back-custom-shirt-img';
+                            i.src = canvas.toDataURL("image/png");
+                            //document.getElementById('preview-panel').appendChild(i);
+                            c2.remove();
+                            
+                            // WHEN EVERYTHING IS LOADED, SUBMIT PAGE
+                            $j("#create-shirt-design").submit();
+                            
+                        }
+                    };
+                    img.src = img_path;
+                })(i,img, img_path);
+                   
+            }
+        }
+        
+        
+        $j("#body-color-selections > div").click(function(e){
+            console.log("change body color" );
+            $j("#body-color").val(e.target.id);
+            updateCanvasAll();
+        });
+        
+        $j(".neck-selection").change(function() {
+            console.log("change neck selection" );
+            updateCanvasAll();
+        });
+        
  /**
  *  Checkbox/Radio Button change functions
  * 
- */       
-        $j(".neck-selection").change(function() { 
-            updateCanvas();
-        });
+ */   
         $j("#neck-same").change(function () {
-
+            console.log("chnge neck-same" );
             if($j("#neck-same").is(':checked')){
+                $j("#neck-color").val($j("#body-color").val()); 
+                updateCanvasAll();
                 $j("div#neck-color-selections").css("display", "none");
             }else {
                 $j("div#neck-color-selections").css("display", "block");
             }    
         });
-
+        
+        
         $j("#left-sleeve-same").change(function () {
-
+            console.log("left sleeve same" );
             if($j("#left-sleeve-same").is(':checked')){
+                $j("#left-sleeve-color").val($j("#body-color").val()); 
+                updateCanvasAll();
                 $j("div#left-sleeve-color-selections").css("display", "none");
             }else {
                 $j("div#left-sleeve-color-selections").css("display", "block");
             }    
         });
-
+        
         $j("#left-sleeve-outline-same").change(function () {
-
+            console.log("left sleeve outline same" );
             if($j("#left-sleeve-outline-same").is(':checked')){
+                $j("#left-sleeve-outline-color").val($j("#body-color").val()); 
+                updateCanvasAll();
                 $j("div#left-sleeve-outline-color-selections").css("display", "none");
             }else {
                 $j("div#left-sleeve-outline-color-selections").css("display", "block");
@@ -722,8 +584,10 @@ $j(document).ready(function(){
         });
 
         $j("#right-sleeve-same").change(function () {
-
+                console.log("right sleeve same" );
             if($j("#right-sleeve-same").is(':checked')){
+                $j("#right-sleeve-color").val($j("#body-color").val()); 
+                updateCanvasAll();
                 $j("div#right-sleeve-color-selections").css("display", "none");
             }else {
                 $j("div#right-sleeve-color-selections").css("display", "block");
@@ -731,23 +595,16 @@ $j(document).ready(function(){
         });
 
         $j("#right-sleeve-outline-same").change(function () {
-
+            console.log("right sleeev outline change" );
             if($j("#right-sleeve-outline-same").is(':checked')){
+                $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
+                updateCanvasAll();
                 $j("div#right-sleeve-outline-color-selections").css("display", "none");
             }else {
                 $j("div#right-sleeve-outline-color-selections").css("display", "block");
             }    
         });
-
-        $j("#right-sleeve-outline-same").change(function () {
-
-            if($j("#right-sleeve-outline-same").is(':checked')){
-                $j("div#right-sleeve-outline-color-selections").css("display", "none");
-            }else {
-                $j("div#right-sleeve-outline-color-selections").css("display", "block");
-            }    
-        });
-
+        
         $j("#add-pockets").change(function () {
             if($j("#add-pockets").is(':checked')){
                 $j("#pocket-options").css("display", "block");
@@ -755,42 +612,49 @@ $j(document).ready(function(){
                 $j("#pocket-options").css("display", "none");
             }    
         });
-/**
+
+        
+ /**
  *  Color change functions
  * 
  */
-        $j("#body-color-selections > div").click(function(e){
-            $j("#body-color").val(e.target.id);
-            updateCanvas();
+        $j("#neck-color-selections > div").click(function(e){
+            console.log("cang neck color" );
+            $j("#neck-color").val(e.target.id);
+            updateCanvasAll();
         });
         
         $j("#left-sleeve-color-selections > div").click(function(e){
+            console.log("left sleeve color change" );
             $j("#left-sleeve-color").val(e.target.id);
-            updateCanvas();
+            updateCanvasAll();
         });
         
         $j("#left-sleeve-outline-color-selections > div").click(function(e){
+            console.log("left sleeve outlilne color change" );
             $j("#left-sleeve-outline-color").val(e.target.id);
-            updateCanvas();
+            updateCanvasAll();
         });
         
         $j("#right-sleeve-color-selections > div").click(function(e){
+            console.log("right sleeve color change" );
             $j("#right-sleeve-color").val(e.target.id);
-            updateCanvas();
+            updateCanvasAll();
         });
         
         $j("#right-sleeve-outline-color-selections > div").click(function(e){
+            console.log("right sleeve outline color change" );
             $j("#right-sleeve-outline-color").val(e.target.id);
-            updateCanvas();
+            updateCanvasAll();
         }); 
         
         $j("#neck-color-selections > div").click(function(e){
+            console.log("neck color change " );
             $j("#neck-color").val(e.target.id);
-            updateCanvas();
+            updateCanvasAll();
         });
-        
         $j("#pocket-color-selections > div").click(function(e){
-            var color = e.target.id;
+            var color = generateHex(e.target.id);
             var canvas = document.getElementById(highlighted_id);
             var pocket_context = canvas.getContext('2d');
             
@@ -824,7 +688,7 @@ $j(document).ready(function(){
         });
         
         $j("#strip-pocket-color-selections > div").click(function(e){
-            var color = e.target.id;
+            var color = generateHex(e.target.id);
             var canvas = document.getElementById(highlighted_id);
             var pocket_context = canvas.getContext('2d');
             
@@ -858,8 +722,7 @@ $j(document).ready(function(){
  /**
  *  Button functions
  * 
- */       
-        
+ */    
         $j("#add-pocket").click(function(){
 
             var cp = document.createElement("canvas");
@@ -891,7 +754,7 @@ $j(document).ready(function(){
         
         function createImageData() {
             var children = document.getElementById('pocket-area').childNodes;
-            var ids = new Array();
+            
             for (var c in children){
 
                 if(children[c].id != null   ){
@@ -902,50 +765,23 @@ $j(document).ready(function(){
             }
             
             $j("#front-custom-shirt-code").val(shirt_canvas.toDataURL("image/png"));
-            
             var i = document.createElement("img");
             i.id = 'front-custom-shirt-img';
             i.src = shirt_canvas.toDataURL("image/png");
+            //document.getElementById('preview-panel').appendChild(i);
             
-            document.getElementById('preview-panel').appendChild(i);
             
-           
             updateCanvasLeft();
-            
-            $j("#left-custom-shirt-code").val(shirt_canvas.toDataURL("image/png"));
-            var i = document.createElement("img");
-            i.id = 'left-custom-shirt-img';
-            i.src = shirt_canvas.toDataURL("image/png");
-            
-            document.getElementById('preview-panel').appendChild(i);
-            
-            
             updateCanvasRight();
-            $j("#right-custom-shirt-code").val(shirt_canvas.toDataURL("image/png"));
-            var i = document.createElement("img");
-            i.id = 'right-custom-shirt-img';
-            i.src = shirt_canvas.toDataURL("image/png");
-            //console.log($j("#right-custom-shirt-code").val());
-            document.getElementById('preview-panel').appendChild(i);
+            updateCanvasBack();
             
-             updateCanvasBack();
-            $j("#back-custom-shirt-code").val(shirt_canvas.toDataURL("image/png"));
-            var i = document.createElement("img");
-            i.id = 'back-custom-shirt-img';
-            i.src = shirt_canvas.toDataURL("image/png");
-            
-            document.getElementById('preview-panel').appendChild(i);
+            console.log("return sumbit");
             
         }
         
-        updateCanvasLeft();
-        updateCanvasRight();
-        
         $j("#submit-custom-shirt").click(function(){
             createImageData();
-            shirt_context.clearRect(0, 0, 374,394);
-           // $j("#create-shirt-design").submit();
+            // Note that the submit script is run in the UpdateCanvasBack when everything has been completed
         });
-    
-        
-});
+      
+});      

@@ -1,7 +1,12 @@
 <?php
 $fabric_color = array(
-        "a30504" => "red",
-        "000000" => "black",
+        "a30504" => "Red",
+        "096e39" => "Green",
+        "0359a4" => "Blue",
+        "000000" => "Black",
+        "ffffff" => "White",
+        "9b9b9b" => "Grey",
+        "ffff01" => "Yellow"
         
     );
 ?>
@@ -14,7 +19,7 @@ $fabric_color = array(
         <input type="hidden" id="body-color"/>
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -28,11 +33,11 @@ $fabric_color = array(
         <input type="radio" id="collar" name="neck-selection" class="neck-selection" value="collar" /> Collar  <br/>
         Fabric Color: <br/>
         <input type="checkbox" id="neck-same" checked/> Same as body<br/>
-        <input type="hidden" id="neck-color" value="black"/>
+        <input type="hidden" id="neck-color"/>
         <div id="neck-color-selections" style="display:none;">
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -42,11 +47,11 @@ $fabric_color = array(
     LEFT SLEEVE <br/>
     Fabric Color:<br/>
         <input type="checkbox" id="left-sleeve-same" checked/> Same as body <br/>
-        <input type="hidden" id="left-sleeve-color" value="black"/>
+        <input type="hidden" id="left-sleeve-color"/>
         <div id="left-sleeve-color-selections" style="display:none;">
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -55,11 +60,11 @@ $fabric_color = array(
         
     Outline Color:<br/>
         <input type="checkbox" id="left-sleeve-outline-same" checked/> Same as body <br/>
-        <input type="hidden" id="left-sleeve-outline-color" value="black"/>
+        <input type="hidden" id="left-sleeve-outline-color"/>
         <div id="left-sleeve-outline-color-selections" style="display:none;">
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -69,11 +74,11 @@ $fabric_color = array(
     RIGHT SLEEVE <br/>
     Fabric Color:<br/>
         <input type="checkbox" id="right-sleeve-same" checked/> Same as body <br/>
-        <input type="hidden" id="right-sleeve-color" value="black"/>
+        <input type="hidden" id="right-sleeve-color"/>
         <div id="right-sleeve-color-selections" style="display:none;">
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -82,11 +87,11 @@ $fabric_color = array(
         
     Outline Color:<br/>
         <input type="checkbox" id="right-sleeve-outline-same" checked/> Same as body <br/>
-        <input type="hidden" id="right-sleeve-outline-color" value="black"/>
+        <input type="hidden" id="right-sleeve-outline-color"/>
         <div id="right-sleeve-outline-color-selections" style="display:none;">
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -102,7 +107,7 @@ $fabric_color = array(
         <div id="pocket-color-selections" >
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -113,7 +118,7 @@ $fabric_color = array(
         <div id="strip-pocket-color-selections" >
         <?php 
             foreach( $fabric_color as $id => $v) {
-                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+                echo '<div class="shirt-color-box" id="'.$id.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
 
             }
         ?>
@@ -124,13 +129,19 @@ $fabric_color = array(
     </div>
             </td><td>
     <div id="preview-panel">
-        <canvas id="body-outline" width="387" height="409" >
+        <canvas id="body-outline" width="374" height="394" >
          </canvas>
         <div id="pocket-area" style="margin-left: 20px;margin-top: -320px;position: relative; display: block; width: 374px; height: 315px;"></div>
         
     </div>
                 
-    
+    <!-- @desc Placeholders for colors -->
+    <input type="hidden" id="b" name="b" />
+    <input type="hidden" id="b-btm" name="b-btm" />
+    <input type="hidden" id="lb1" name="lb1" />
+    <input type="hidden" id="lb2" name="lb2" />
+    <input type="hidden" id="rb1" name="rb1" />
+    <input type="hidden" id="rb2" name="rb2" />
         
     <!-- @desc Inputs the base64 code of each images -->
     <form name="create_shirt_design" id="create-shirt-design" action="<?php echo $this->getURL('',array('_secure'=>true)).'shirtdesigner/index/createShirtDesign';?>" method="post">  

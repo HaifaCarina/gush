@@ -27,14 +27,14 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
             array('template' => 'shirtdesigner/customize-fabric.phtml')
             );
         } else if (strstr($sku, 'hoody')){
-            /*$this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-hoody.js');
+            $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-hoody.js');
             $block = $this->getLayout()->createBlock(
 		'Mage_Core_Block_Template',
 		'shirtdesigner',
 		array('template' => 'shirtdesigner/customize-fabric-hoody.phtml')
 		);
-            */
             
+            /*
             //TESTING IN USING REAL SHIRT IMAGES
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-tshirt-real.js');
             $block = $this->getLayout()->createBlock(
@@ -42,6 +42,8 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
             'shirtdesigner',
             array('template' => 'shirtdesigner/customize-fabric-real.phtml')
             );
+             * 
+             */
         } else {
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-tshirt.js');
             $block = $this->getLayout()->createBlock(
