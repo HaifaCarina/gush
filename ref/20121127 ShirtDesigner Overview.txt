@@ -1,0 +1,120 @@
+SHIRT DESIGNER MODULE OVERVIEW
+
+MVC FILES
+
+Controllers
+/app/code/local/Myportal/ShirtDesigner/controllers
+1. IndexController.php
+- contains all functions in navigating and loading files throughout the shirt designer module
+2. ShirtDesignerController.php
+- contains all functions in navigation and loading files of the adminhtml part of the module
+
+Models
+/app/code/local/Myportal/ShirtDesigner/Model
+
+Views - Frontend
+/app/design/frontend/gush/default/template/shirtdesigner/
+1. customize-fabric-hoody.phtml 
+- view for changing hoody fabric parts (hood, sleeves, neck, body, etc)
+2. customize-fabric.phtml
+- view for changinging tshirt and long sleeve fabric parts (sleeves, neck, body, etc)
+3. customize-print.phtml
+- view for adding print options
+
+Views - Backend
+/app/design/adminhtml/default/default/template/shirtdesigner
+1.adminhtml.phtml
+- displays a table of the designs
+2. details.phtml
+- displays per product information with download files link
+
+
+
+JAVASCRIPT FILES
+jQuery Plugins directory
+/app/js/jquery
+
+Shirtdesigner Module
+/js/shirtdesigner
+1. customize-fabric-hoody.js
+- events and functions the elements in customising fabric of hoody
+
+2. customize-fabric-longsleeves.js
+- events and functions the elements in customising fabric of longsleeves
+
+3. customize-fabric-tshirt.js
+- events and functions the elements in customising fabric of tshirts
+
+NOTE: #1-#3 are generally the same. What differs is the link and dimension of each image loaded in the canvas (shirt preview)
+
+4. customize-print.js
+- events and functions of the elements in customising the shirt print
+- used in Customize Print
+5. sarris.js
+- text customisation
+- used in Customize Print
+6. ajaxupload.3.4.js
+- For uploading photos
+- used in Customize Print
+
+CSS FILES
+/skin/frontend/gush/default/shirtdesigner/
+1. shirt-style.css
+- overall interface stylesheet of customising the fabric
+
+IMAGES
+/media/shirtdesigner/images
+
+INDEXCONTROLLER.PHP IN A NUTSHEEL
+
+indexAction
+- called when Customize Button is clicked
+- displays the customise fabric
+- depending on the SKU, it will display either hoody, long sleeves or tshirt
+- generates the next design_id variable to be used in view
+
+createShirtDesignAction
+- displays the shirt print customization
+- depending on the url, displays the intended shirt size chart
+
+createNewDesignAction
+- creates and upload image data of new design
+- query insert to database the details of the customisation
+
+testAction
+- used in upload Photo option of print customisation
+
+SHIRT DESIGNER MODULE FLOW
+1. Customize button is clicked
+- IndexAction [IndexController.php] is called
+- customize-fabric/-hoody.phtml is called
+- customize-fabric-hoody/longsleeves/tshirt is called
+- shirt-style.css is called
+- USER starts customizing fabric
+
+2. Done button is clicked
+- createShirtDesignAction [IndexController.php] is called
+- customize-print.phtml is called
+- customize-print.js is called
+
+2.a Upload photos ic clicked
+- IndexController.php/testAction is called
+- ajaxupload.3.4.js is called
+
+3. Submit button is clicked
+- createNewDesignAction[IndexController.php] is called
+- saves the details of customisation via ShirtDesigner_Design Model [Model/Design.php]
+
+IN CHANGING PHOTOS
+Involved files:
+1. customize-fabric.phtml /customize-fabric-hoody.phtml
+2. customize-fabric-tshirt.js /customize-fabric-hoody.js/ customize-fabric-longsleeves.js
+
+STEPS (ex. tshirt)
+1. Replace accordingly the photos in media/shirtdesigner/images/illustration/tshirt for each folder.
+2. Open customize-fabric-tshirt.js
+3. ...
+
+WAIT! STOP! Sasakit ulo natin if eedit natin tong file nat kasi HTML5 canvas drawings ang gamit. Since wala ka pa background on canvases, gawan nlng kita ng bagong implementation for this gamit yung files na sinend ni arnold. Tapos from there, ikaw nlng magcocontinue with the rest of the photos. So I have on more file to send you tonight. :)
+
+Thanks.
