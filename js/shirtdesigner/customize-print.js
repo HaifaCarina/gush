@@ -40,8 +40,7 @@ function removeCanvasImage(e){
     $j("#" + e).remove();
     $j("#i-" + e).remove();
 }
-
-// Used to determine what element to resize or change colour
+  
 function highlightCanvasImage(e){
     highlighted_art_id = e;
     
@@ -160,8 +159,6 @@ function highlightCanvasImage(e){
     }
 $j(document).ready(function(){
      window.console = $j('<iframe>').hide().appendTo('body')[0].contentWindow.console;
-     //alert("functions-custom.jg");
-     //$j("#testing-border").animate({top: '120px', left: '135'});
      
      
      $j("#border-1").draggable({
@@ -404,7 +401,6 @@ $j(document).ready(function(){
                 $j("#art-canvas2").css("display", "none");
                 $j("#art-canvas3").css("display", "none");  
                 $j("#art-canvas4").css("display", "none");
-                
                 
                 active = "front";
                 document.getElementById('main-preview').style.backgroundImage = "url('"+$j("#front-image-url").val()+"')"; //front_shirt_url;
@@ -671,27 +667,6 @@ $j(document).ready(function(){
         }
     });
      
-     $j("#shirt-type-options > div").click(function(e){
-        
-        $j("#print-type").val(e.target.id);
-        
-        console.log($j("#print-type").val());
-        
-        switch($j("#print-type").val()) {
-            case "pressed": 
-                
-                $j("#stitched").removeClass('shirt_type_box_selected');
-                $j("#pressed").addClass('shirt_type_box_selected');
-                break;
-            case "stitched": 
-                
-                $j("#pressed").removeClass('shirt_type_box_selected');
-                $j("#stitched").addClass('shirt_type_box_selected');
-                break;
-        }
-
-    });
-    
     
     /******** TEXT EVENTS ********/
     /******** TEXT EVENTS ********/
