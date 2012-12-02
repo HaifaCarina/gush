@@ -18,7 +18,7 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $this->getLayout()->getBlock('head')->addJs('jquery/jquery-ui.min.js');
         $this->getLayout()->getBlock('head')->addCss('shirtdesigner/shirt-style.css');
 
-        
+        // Compares if longsleeves/jackets is found in the sku value
         if (strstr($sku, 'longsleeves') || strstr($sku, 'jackets') ) {
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-longsleeves.js');
             $block = $this->getLayout()->createBlock(
@@ -26,6 +26,7 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
             'shirtdesigner',
             array('template' => 'shirtdesigner/customize-fabric.phtml')
             );
+        // Compares if hoody is found in the sku value
         } else if (strstr($sku, 'hoody')){
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-hoody.js');
             $block = $this->getLayout()->createBlock(
@@ -33,17 +34,8 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
 		'shirtdesigner',
 		array('template' => 'shirtdesigner/customize-fabric-hoody.phtml')
 		);
-            
-            /*
-            //TESTING IN USING REAL SHIRT IMAGES
-            $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-tshirt-real.js');
-            $block = $this->getLayout()->createBlock(
-            'Mage_Core_Block_Template',
-            'shirtdesigner',
-            array('template' => 'shirtdesigner/customize-fabric-real.phtml')
-            );
-             * 
-             */
+         
+        // the rest will be considered as tshirts
         } else {
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-tshirt.js');
             $block = $this->getLayout()->createBlock(
@@ -54,14 +46,12 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         }
         
         
-        
+        // Sets the design_id of the current design by getting the max value of the design_id in the table and adds 1
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
         $query = 'SELECT max(design_id) FROM shirt_designer';
         $results = $readConnection->fetchAll($query);
         $block->setData('design_id',$results[0]['max(design_id)'] + 1);
-        
-        //echo '<script type="text/javascript">alert("SKU: '.$sku.'");</script>';
         $block->setData('sku',$sku);
         
         
@@ -69,97 +59,11 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
 	$this->renderLayout();
        
     }
- /*
-  *  @desc This function is called when user clicks the 'Customize' button in the products catalog
-  *         User chooses standard or custom and redirects accordingly
-  */   
- public function decideShirtDesignerAction(){
-     $list_tshirt = array("m-tshirts","m-vintagetees","m-vneck","w-blouse","w-jerseyshirt","w-ringertees",
-            "w-sportyshirt","w-tshirts","w-vneck","m-polo","w-polo");
-     $list_longsleeves = array("m-longsleeves","w-longsleeves","w-pololongsleeves","m-3fourthsleeves");
-        
-     $params = $this->getRequest()->getParams();
-     $sku = $params['sku'];
-     $product_id = $params['product_id'];
-     //echo $params['sku']."<br/>";
-     $to_be_replaced = substr($params['sku'],2,strlen($params['sku']));
-     
-     //echo substr($params['sku'],2,strlen($params['sku']))."<br/>";
-     //echo str_replace($to_be_replaced,"custom-tshirt",$params['sku']);
-     if (in_array($sku,$list_tshirt)){
-         $new_sku = str_replace($to_be_replaced,"custom-tshirt",$params['sku']);
-         //echo $sku['sku'];
-         $url = Mage::getUrl('',array('_secure'=>true));
-         $url = $url.'shirtdesigner/index/customizeShirtDesign?sku='.$new_sku;
-         $this->_redirectUrl($url);
-         
-     } else if (in_array($sku,$list_longsleeves)) {
-         $new_sku = str_replace($to_be_replaced,"custom-longsleeves",$params['sku']);
-         $url = Mage::getUrl('',array('_secure'=>true));
-         $url = $url.'shirtdesigner/index/customizeShirtDesign?sku='.$new_sku;
-         $this->_redirectUrl($url);
-     } else {
-         
-         $url = Mage::getUrl('',array('_secure'=>true));
-         $url = $url.'shirtdesigner/?sku='.$sku.'&product_id='.$product_id;
-         $this->_redirectUrl($url);
-     }
-     
-     
-     
-     
- }
- public function customizeShirtDesignAction(){
-     $params = $this->getRequest()->getParams();
-     
-     $sku = $params['sku'];
-     
-     $this->loadLayout(); 
-
-        $this->getLayout()->getBlock('head')->addJs('jquery/jquery-1.7.1.min.js');
-        $this->getLayout()->getBlock('head')->addJs('jquery/jquery-ui.min.js');
-        $this->getLayout()->getBlock('head')->addCss('shirtdesigner/shirt-style.css');
-
-        if ($sku == "m-custom-tshirt" || $sku == "w-custom-tshirt") {
-            $this->getLayout()->getBlock('head')->addJs('shirtdesigner/shirt-functions-tshirt.js');
-            $block = $this->getLayout()->createBlock(
-		'Mage_Core_Block_Template',
-		'shirtdesigner',
-		array('template' => 'shirtdesigner/shirtcustomizer.phtml')
-		);
-        } else if ($sku == "m-custom-longsleeves" || $sku == "w-custom-longsleeves") {
-            $this->getLayout()->getBlock('head')->addJs('shirtdesigner/shirt-functions-longsleeves.js');
-            $block = $this->getLayout()->createBlock(
-		'Mage_Core_Block_Template',
-		'shirtdesigner',
-		array('template' => 'shirtdesigner/shirtcustomizer.phtml')
-		);
-        } else if ($sku == "m-custom-hoody" || $sku == "w-custom-hoody") {
-            $this->getLayout()->getBlock('head')->addJs('shirtdesigner/shirt-functions-hoody.js');
-            $block = $this->getLayout()->createBlock(
-		'Mage_Core_Block_Template',
-		'shirtdesigner',
-		array('template' => 'shirtdesigner/shirtcustomizer-hoody.phtml')
-		);
-        }
-        
-        
-        $block->setData('sku',$sku);
-        
-        $resource = Mage::getSingleton('core/resource');
-        $readConnection = $resource->getConnection('core_read');
-        $query = 'SELECT max(design_id) FROM shirt_designer';
-        $results = $readConnection->fetchAll($query);
-        $block->setData('design_id',$results[0]['max(design_id)'] + 1);
-        
-	$this->getLayout()->getBlock('content')->append($block);	
-	$this->renderLayout();
-       
- }
- /* @name createShirtDesign
-  * @desc Displays the shirt print customization
-  * 
-  */
+ 
+    /*
+     * @function createShirtDesignAction
+     * @desc Displays print customization panel for text, artworks and uploaded images
+     */
   
     public function createShirtDesignAction(){
      $list_men = array("m-custom-tshirt","m-custom-longsleeves","m-custom-hoody");
@@ -215,11 +119,6 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $_product = $model->load($product_id);
         $block->setData('product_price',number_format($_product->getPrice(), 2));  
         
-                //echo "PHP: ".number_format($_product->getPrice(), 2) ;
-        //echo $results[0]['max(design_id)'] + 1;
-        //$block->setData('design_id',$results[0]['max(design_id)'] + 1);
-        
-        
         Mage::getSingleton('core/session')->setFrontCustomShirtCode($param['front-custom-shirt-code']);
         Mage::getSingleton('core/session')->setBackCustomShirtCode($param['back-custom-shirt-code']);
         Mage::getSingleton('core/session')->setFrontCustomShirtCode($param['left-custom-shirt-code']);
@@ -234,8 +133,6 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $block->setData('design_id',$design_id);
         $this->getLayout()->getBlock('content')->append($block);	
 	$this->renderLayout();
-       
-       // echo '<script type="text/javascript">alert("'.$design_id.'");</script>';
         
  }
  // Save data to custom-designs folder
@@ -395,47 +292,6 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
           
     }
     
-    public function chooseFromExistingDesignsAction() {
-        $params = $this->getRequest()->getParams();
-        $sku = $params['sku'];
-        $product_id = $params['product_id'];
-        
-        
-        $this->loadLayout(); 
-        $this->getLayout()->getBlock('head')->addJs('jquery/jquery-1.7.1.min.js');
-        $this->getLayout()->getBlock('head')->addJs('jquery/jquery-ui.min.js');
-        $this->getLayout()->getBlock('head')->addCss('shirtdesigner/style.css');
-        $this->getLayout()->getBlock('head')->addJs('shirtdesigner/functions-existing-designs.js');
-            $block = $this->getLayout()->createBlock(
-		'Mage_Core_Block_Template',
-		'shirtdesigner',
-		array('template' => 'shirtdesigner/shirtdesigner-existing-designs.phtml')
-		);
-        
-        $block->setData('sku',$sku);
-        $block->setData('product_id',$product_id);
-        
-        // SIZE CHARTS
-        if ('m-' == substr($sku, 0, 2)){
-            $url = Mage::getUrl('',array('_secure'=>true));
-            $size_chart_url = $url."media/shirtdesigner/images/size-charts/men.png";
-        } else if ('w-' == substr($sku, 0, 2)){
-            $url = Mage::getUrl('',array('_secure'=>true));
-            $size_chart_url = $url."media/shirtdesigner/images/size-charts/women.png";
-        }
-        
-        $block->setData('size-chart-url',$size_chart_url);
-        
-        
-        $resource = Mage::getSingleton('core/resource');
-        $readConnection = $resource->getConnection('core_read');
-        $query = 'SELECT max(design_id) FROM shirt_designer';
-        $results = $readConnection->fetchAll($query);
-        $block->setData('design_id',$results[0]['max(design_id)'] + 1);
-        
-	$this->getLayout()->getBlock('content')->append($block);	
-	$this->renderLayout();
-    }
     
     public function saveExistingDesignAction () {
         $design = Mage::getModel('shirtdesigner/design');
@@ -466,14 +322,6 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
     }
     
     public function testAction () {
-        /*$this->loadLayout(); 
-        $this->getLayout()->getBlock('head')->addJs('jquery/jquery-1.7.1.min.js');
-        $this->getLayout()->getBlock('head')->addJs('shirtdesigner/ajaxupload.3.5.js');
-        echo "test";
-        echo '<script type="text/javascript">alert("asdasd");</script>';
-        //$this->getLayout()->getBlock('content')->append($block);	
-	$this->renderLayout();
-        */
         
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
@@ -485,9 +333,7 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $uploaddir = $url.'media/shirtdesigner/images/uploads/'.$design_id.'/';
         
         $file = $uploaddir .$design_id."-". basename($_FILES['uploadfile']['name']); 
-        echo '<script type="text/javascript">console.log("url:'.$url.'");</script>';
-        echo '<script type="text/javascript">console.log("uploaddir:'.$uploaddir.'");</script>';
-       
+        
         try {    
             $uploader = new Varien_File_Uploader('uploadfile');
             
