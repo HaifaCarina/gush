@@ -34,22 +34,15 @@ function generateHex(color) {
     }
 }
 
-function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
-function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
-function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
-function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
-
 $j(document).ready(function(){
-    //alert("shirt-functions-tshirt.jg");
         window.console = $j('<iframe>').hide().appendTo('body')[0].contentWindow.console;
         
      // INITIALIZE CANVAS
         shirt_canvas = document.getElementById('body-outline');
         shirt_context = shirt_canvas.getContext('2d');
-        
-        var shirt_type = "longsleeves";
         $j("#body-color").val('black');
         
+        // Matches fabric part of the the color of the input value used
         var color_matches = {
             front_collar_b: "body-color",
             front_collar_b_btm: "body-color",
@@ -198,6 +191,7 @@ $j(document).ready(function(){
             left_round_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve.png",
             left_round_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve-btm.png"
         };
+        
         var c1 = document.createElement("canvas");
         c1.id= "specific";
         c1.width=387;
@@ -206,20 +200,11 @@ $j(document).ready(function(){
         var context1 = c1.getContext('2d');
         document.getElementById('preview-panel').appendChild(c1);  
         
-        //for (var obj in sources) { max++; }
-            
-        for(var src in sources) {
-          //  updateCanvasSpecific3(sources[src]);
-           
-         }
-         console.log("DONE!" );
-         
-         
-       updateCanvasAll();  
+        // Intialize the display of black front fabric 
+        updateCanvasAll();  
             
        function updateCanvasSpecific(path, shirt_context){
             console.log("updateCanvasSpecific" );
-           //shirt_context.clearRect(0, 0, 387,409);
             var img_path = path; 
             var img= new Image();
             var w=387, h=409;
@@ -232,13 +217,13 @@ $j(document).ready(function(){
         }
         
         function updateCanvasSpecific2(path, shirt_context){
-             console.log("updateCanvasSpecific2" );
-           shirt_context.clearRect(0, 0, 387,409);
+            console.log("updateCanvasSpecific2" );
+            shirt_context.clearRect(0, 0, 387,409);
             var img_path = path; 
             var img= new Image();
             var w=387, h=409;
             img.src= img_path;
-            console.log(max +":"+ count);
+            
             img.onload = function () {
                 shirt_context.drawImage(img, 0, 0, w,h);
             }
@@ -250,7 +235,7 @@ $j(document).ready(function(){
             var canvas = document.getElementById('specific');
             var context = canvas.getContext('2d');
         
-           context.clearRect(0, 0, 387,409);
+            context.clearRect(0, 0, 387,409);
             var img_path = path; 
             var img= new Image();
             var w=387, h=409;
@@ -263,9 +248,10 @@ $j(document).ready(function(){
         }
         
         
-        
+        // Updates all parts of the shirt
         function updateCanvasAll() {
             console.log("updateCanvasAll");
+            
             var w=387, h=409;
             shirt_context.clearRect(0, 0, w, h);
             switch($j('input[name=neck-selection]:checked').val()) {
@@ -303,12 +289,11 @@ $j(document).ready(function(){
                 key_array[8] = $j("#" + color_matches[front_keys[i]]).val();
                 key = key_array.join("/");
                 
-                console.log("new value:" + key);
                 updateCanvasSpecific(key,  shirt_context);
             }
             
         }
-        
+        // Genenerates the left view of the shirt
         function updateCanvasLeft() {
             console.log("updateCanvasLeft");
             var w=387, h=409, keys;
@@ -342,7 +327,6 @@ $j(document).ready(function(){
                 $j("#right-sleeve-outline-color").val($j("#body-color").val()); 
             }
             
-            
             var c2 = document.createElement("canvas");
             c2.id= "specific-left";
             c2.width=w;
@@ -371,7 +355,7 @@ $j(document).ready(function(){
                         context.drawImage(img,0,0,w,h);
                         count++;
                         if (max == count) {
-                            
+                            // Value here will be used in submission
                             $j("#left-custom-shirt-code").val(canvas.toDataURL("image/png"));
                             var i = document.createElement("img");
                             i.id = 'left-custom-shirt-img';
@@ -390,6 +374,7 @@ $j(document).ready(function(){
             
         }
         
+        // Genenerates the right view of the shirt
         function updateCanvasRight() {
             console.log("updateCanvasRight");
             var w=387, h=409, keys;
@@ -451,15 +436,13 @@ $j(document).ready(function(){
                         context.drawImage(img,0,0,w,h);
                         count++;
                         if (max == count) {
-                            
+                            // Value here will be used in submission
                             $j("#right-custom-shirt-code").val(canvas.toDataURL("image/png"));
                             var i = document.createElement("img");
                             i.id = 'right-custom-shirt-img';
                             i.src = canvas.toDataURL("image/png");
                             //document.getElementById('preview-panel').appendChild(i);
                             c2.remove();
-                            console.log("right max na printed na!");
-                            
                         }
                     };
                     img.src = img_path;
@@ -468,7 +451,7 @@ $j(document).ready(function(){
             }
             
         }
-        
+        // Genenerates the back view of the shirt
         function updateCanvasBack() {
             console.log("updateCanvasBack");
             var w=387, h=409, keys;
@@ -531,13 +514,14 @@ $j(document).ready(function(){
                         count++;
                         if (max == count) {
                             
+                            // Value here will be used in submission
                             $j("#back-custom-shirt-code").val(canvas.toDataURL("image/png"));
                             var i = document.createElement("img");
                             i.id = 'back-custom-shirt-img';
                             i.src = canvas.toDataURL("image/png");
                             //document.getElementById('preview-panel').appendChild(i);
                             c2.remove();
-                            console.log("BACK max na printed na!");
+                            
                             // WHEN EVERYTHING IS LOADED, SUBMIT PAGE
                             $j("#create-shirt-design").submit();
                             
@@ -553,24 +537,7 @@ $j(document).ready(function(){
         $j("#body-color-selections > div").click(function(e){
             console.log("change body color" );
             $j("#body-color").val(e.target.id);
-            
-            
-            var key;
-            switch($j('input[name=neck-selection]:checked').val()) {
-                case "round-neck": 
-                    key = sources["front_round_b"];
-                    break;
-                case "v-neck":
-                    key = sources["front_vneck_b"];
-                    break;
-                case "collar":
-                    key = sources["front_collar_b"];
-                    break;
-             }
-            
-               updateCanvasAll();
-                
-            
+            updateCanvasAll();
         });
         
         $j(".neck-selection").change(function() {
@@ -787,7 +754,7 @@ $j(document).ready(function(){
         
         function createImageData() {
             var children = document.getElementById('pocket-area').childNodes;
-            var ids = new Array();
+            
             for (var c in children){
 
                 if(children[c].id != null   ){
