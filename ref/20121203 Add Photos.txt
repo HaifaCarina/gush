@@ -1,0 +1,159 @@
+3 December 2012
+FINAL IMAGE STRUCTURE
+back-collar/
+b-btm.pngb.pnglb1.pnglb2.pngrb1.pngrb2.png
+back-round/
+b-btm.pngb.pnglb1.pnglb2.pngrb1.pngrb2.png
+back-vneck/
+b-btm.pngb.pnglb1.pnglb2.pngrb1.pngrb2.png
+collar/
+b1.png
+front-collar/
+b-btm.pngb.pnglb1.pnglb2.pngrb1.pngrb2.png
+front-round/
+b-btm.pngb.pnglb1.pnglb2.pngrb1.pngrb2.png
+front-vneck/
+b-btm.pngb.pnglb1.pnglb2.pngrb1.pngrb2.png
+left-collar/
+left-body-btm.pngleft-body.pngleft-neck.pngleft-sleeve-btm.pngleft-sleeve.pngleft-round/
+left-body-btm.pngleft-body.pngleft-neck.pngleft-sleeve-btm.pngleft-sleeve.png
+right-collar/
+right-body-btm.pngright-body.pngright-neck.pngright-sleeve-btm.pngright-sleeve.png
+right-round/
+right-body-btm.pngright-body.pngright-neck.pngright-sleeve-btm.pngright-sleeve.png
+round/
+b1.png
+standard-sizes/
+collar-left.pngcollar-right.pnground-left.pnground-right.png
+vneck/
+b1.png
+
+
+
+ADD ADDITIONAL TSHIRT COLORS
+1. Add PNG files in module.
+
+format: /media/shirtdesigner/images/illustration/<gender>/<shirt_type>/<color>
+ex. female red: /media/shirtdesigner/images/illustrations/female/tshirt/red/
+
+2. Add available fabric colours found in line 1-4.
+File: /app/design/frontend/gush/default/template/customize-fabric.phtml
+
+3. Add hex values of generateHex function
+File: /js/shirtdesigner/customize-fabric-tshirt.js
+
+
+
+
+ADD LONGSLEEVES COLORS
+
+1. Add PNG files in module.
+format: /media/shirtdesigner/images/illustration/<gender>/<shirt_type>/<color>
+ex.female red: /media/shirtdesigner/images/illustrations/female/longsleeves/red/
+
+2. Rename customize-fabric-longsleeves.js to customize-fabric-longsleeves-old.js for back-up purposes.
+File: /js/shirtdesigner/customize-fabric-longsleeves.js
+
+3. Copy customize-fabric-tshirt.js. Rename the copy customize-fabric-longsleeves.js
+
+4. Replace all occurrence of 'tshirt' to 'long sleeve' in the file.
+File: /js/shirtdesigner/customize-fabric-longsleeves.js
+
+5. Add available fabric colours found in line 1-4.
+File: /app/design/frontend/gush/default/template/customize-fabric.phtml
+
+6. Add hex values of generateHex function
+File: /js/shirtdesigner/customize-fabric-longsleeves.js
+
+
+For the javascript functions, I've added descriptions for each function and the rest I believe is self-explanatory.
+
+CUSTOMIZE FABRIC (JAVASCRIPT) OVERVIEW
+This houses the functions necessary in generating the overall image of the shirt fabric depending on the user selections.
+
+1. removeCanvasImage
+- function used for removing pockets
+2. highlightCanvasImage
+- function used to highlight pockets
+3. generatehex(color)
+- determines the hex value of a given key/color. In the options, we define each colour option with strings, example, "red", "black", "blue". It is here that we set the hex values, ex for black "000000". This will be used for the pockets change of colors.
+4. document.ready fxn
+
+Variables:
+shirt_canvas variable - initialises our canvas [id=body-outline], the one you see in the right box with white background.
+color_matches variable - matches fabric part of the the color of the input value used
+sources variable-  provides url for each fabric part
+
+Fxns:
+updateCanvasAll - updates all parts of the shirt
+updateCanvasLeft - generates the left view of the shirt
+updateCanvasRight - generates the right view of the shirt
+updateCanvasBack - generates the back view of the shirt
+createImageData - called when submit button is clicked
+
+The rest of the functions triggers change of colour per each part.
+
+CUSTOMIZE PRINT (JAVASCRIPT) OVERVIEW
+
+Functions:
+1. Record - used as class to simplify saving of text data with its font size, style, colour and value
+2. removeCanvasImage - used to remove artworks and uploaded images
+3. highlighCanvasImage - used to determine what element to resize or change colour
+4. getBaseURL - one solution of getting the base url in javascript
+5. updatePrice - determines the value of the product price depending on the rules set. The rule is that the original price stays the same when the print is in front and inside the bordered frame. In the front view, when print is located outside, additional 200pesos will be added to the product price. Additional 200pesos when print is added to the back and sides.
+6. border-1/2/3/4 draggable events - updates the value of allowable print area when dragged
+7. print-guide-border click - toggles the checkbox then hide/shows the framed border for allowable print
+8. .shirtdesigner-tabmenu > li click - determines what side menu to display (front, back, left, right, sizes)
+9. .front-tabmenu > li click - determines what side menu to display (text, art, images)
+10. textDraw1/2/3 - text options for the four sides (front, back, left and right)
+11. drawArt - adds the selected artwork in the canvas
+12. drawImage - adds the selected image in the canvas
+
+
+The PHTML files are pretty easy to understand given you already have a PHP and HTML background. I added comments for each function for easy reference. 
+
+Just note that to make changes in fabric customisation, I've noted the files involved below. Also, the indexController found in /app/code/local/Myportal/ShirtDesigner/controllers holds the foundation of the module. 
+
+FABRIC CUSTOMIZATION
+directory: /app/design/frontend/gush/default/template/shirtdesigner/
+1. customize-fabric.phtml
+2. customize-fabric-hoody.phtml
+
+
+directory: /js/shirtdesigner/
+1. customize-fabric-hoody.js2. customize-fabric-longsleeves.js3. customize-fabric-tshirt.js
+
+PRINT CUSTOMIZATION
+directory: /app/design/frontend/gush/default/template/shirtdesigner/
+1. customize-print.phtml
+
+directory: /js/shirtdesigner/
+1. customize-print.js
+
+Let me know if you have clarifications.
+
+
+Regards,
+Haifa
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
