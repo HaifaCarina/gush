@@ -814,9 +814,11 @@ $print_colors = array(
             <div id="art-canvas3" class="bordered" height="394" width="374"></div>
             <canvas id="print4" class="bordered" height="394" width="374"></canvas>
             <div id="art-canvas4" class="bordered" height="394" width="374"></div>
-            <?php 
-                echo "PHP ".$this->getData('product_price') ;
-            ?>
+            
+            
+            PHP <input type="text" id="product-price" size="8" style="background-color: #5EDAFE" value="<?php echo $this->getData('product_price'); ?>" readonly />
+            <input type="hidden" id="original-price"  value="<?php echo $this->getData('product_price'); ?>"/>
+            
             <input type="hidden" id="allowed-top-1"  value="120"/>
             <input type="hidden" id="allowed-left-1" value="135" />
             <input type="hidden" id="allowed-bottom-1"  value="250"/>
