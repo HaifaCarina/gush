@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Myportal_ShirtDesigner>
+            <version>0.1.0</version>
+        </Myportal_ShirtDesigner>
+    </modules>
+    
+    <frontend>
+        <routers>
+            <Myportal_ShirtDesigner_SomeFreeRouterName1>
+                <use>standard</use>
+                <args>
+                    <module>Myportal_ShirtDesigner</module>
+                    <frontName>shirtdesigner</frontName>
+                </args>
+            </Myportal_ShirtDesigner_SomeFreeRouterName1>
+        </routers>
+        
+        
+    </frontend>
+    
+    <admin>
+        <routers>
+            <shirtdesigner>
+                <use>admin</use>
+                <args>
+                    <module>Myportal_ShirtDesigner</module>
+                    <frontName>shirtdesigner</frontName>
+                </args>
+            </shirtdesigner>
+        </routers>
+    </admin>
+    
+    <adminhtml>
+        <menu>
+            <shirtdesigner translate="title" module="shirtdesigner">
+                <title>Shirtdesigner</title>
+                <sort_order>105</sort_order>
+                <children>
+                    <example translate="title" module="shirtdesigner">
+                        <title>Manage Designs</title>
+                        <sort_order>1</sort_order>
+                        <action>shirtdesigner/ShirtDesigner/index</action>
+                    </example>
+                    
+                </children>
+           
+            </shirtdesigner>
+        </menu>    
+        
+    </adminhtml>
+<!--
+    <adminhtml>
+        
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <shirtdesigner>
+                            <title>ShirtDesigner Menu Item</title>
+                            <children>
+                                <example translate="title" module="shirtdesigner">
+                                    <title>ShirtDesigner Menu Item</title>
+                                </example>
+                            </children>
+                        </shirtdesigner>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    -->
+    <global>
+        <helpers>
+            <shirtdesigner>
+                <class>Myportal_ShirtDesigner_Helper</class>
+            </shirtdesigner>
+        </helpers>
+        
+        <models>
+            <shirtdesigner>
+                <class>Myportal_ShirtDesigner_Model</class>
+            </shirtdesigner>
+        </models>
+        
+        <events>
+            <!-- Hooking to our own event "add_to_cart_before" -->
+            <!-- Hooking to our own event "add_to_cart_before" -->
+            <checkout_cart_save_before>
+                <observers>
+                    <shirtdesigner>
+                        <type>singleton</type>
+                        <class>shirtdesigner/observer</class>
+                        <method>hookToAddToCartBefore</method>
+                    </shirtdesigner>
+                </observers>
+            </checkout_cart_save_before>
+        </events>
+    </global>
+</config>

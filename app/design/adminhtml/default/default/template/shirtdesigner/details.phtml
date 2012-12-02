@@ -1,0 +1,282 @@
+<?php
+    
+    $data = $this->getData('data');
+    $url =  Mage::getBaseUrl();
+    $url = substr($url, 0, $url-10);
+    
+    
+?>
+
+<img src="<?php echo $url.$data['front_design_url']; ?>"> </img> 
+<img src="<?php echo $url.$data['back_design_url']; ?>"> </img> <br/>
+<img src="<?php echo $url.$data['left_design_url']; ?>"> </img> 
+<img src="<?php echo $url.$data['right_design_url']; ?>"> </img> <br/>
+<label> ORDER ID: </label> <?php echo $this->getData('order_id'); ?> <br/>
+<label> Design ID: </label> <?php echo $data['design_id']; ?> <br/>
+<label> SKU: </label> <?php echo $data['sku']; ?> <br/>
+<label> Date Submitted: </label> <?php echo $data['timestamp']; ?> <br/>
+<label> Shirt Color: </label> <?php echo $data['shirt_color']; ?> <br/>
+<label> Print Type: </label> <?php echo $data['print_type']; ?> <br/>
+
+
+<?php
+if ((count($data['front_text_1']) > 0) || 
+        (count($data['front_text_2']) > 0) || 
+        (count($data['front_text_3']) > 0)) { ?>
+    <label>FRONT:</label> <br/>
+    <?php if (count($data['front_text_1']) > 0) { ?>
+        <label> Text 1: </label> <br/>
+        Text: <?php echo $data['front_text_1']; ?> <br/>
+        Size: <?php echo $data['front_text_1_size']; ?> <br/>
+        Color: <?php echo $data['front_text_1_color']; ?> <br/>
+        Font: <?php echo $data['front_text_1_font']; ?> <br/>
+        Style: <?php echo $data['front_text_1_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['front_text_2']) > 0) { ?>
+        <label> Text 2: </label> <br/>
+        Text: <?php echo $data['front_text_2']; ?> <br/>
+        Size: <?php echo $data['front_text_2_size']; ?> <br/>
+        Color: <?php echo $data['front_text_2_color']; ?> <br/>
+        Font: <?php echo $data['front_text_2_font']; ?> <br/>
+        Style: <?php echo $data['front_text_2_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['front_text_3']) > 0) { ?>
+        <label> Text 3: </label> <br/>
+        Text: <?php echo $data['front_text_3']; ?> <br/>
+        Size: <?php echo $data['front_text_3_size']; ?> <br/>
+        Color: <?php echo $data['front_text_3_color']; ?> <br/>
+        Font: <?php echo $data['front_text_3_font']; ?> <br/>
+        Style: <?php echo $data['front_text_3_style']; ?> <br/>
+    <?php } 
+} ?>
+
+<?php
+if ((count($data['back_text_1']) > 0) || 
+        (count($data['back_text_2']) > 0) || 
+        (count($data['back_text_3']) > 0)) { ?>
+    <label>BACK:</label> <br/> 
+    <?php
+    if (count($data['back_text_1']) > 0) { ?>
+        <label> Text 1: </label> <br/>
+        Text: <?php echo $data['back_text_1']; ?> <br/>
+        Size: <?php echo $data['back_text_1_size']; ?> <br/>
+        Color: <?php echo $data['back_text_1_color']; ?> <br/>
+        Font: <?php echo $data['back_text_1_font']; ?> <br/>
+        Style: <?php echo $data['back_text_1_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['back_text_2']) > 0) { ?>
+        <label> Text 2: </label> <br/>
+        Text: <?php echo $data['back_text_2']; ?> <br/>
+        Size: <?php echo $data['back_text_2_size']; ?> <br/>
+        Color: <?php echo $data['back_text_2_color']; ?> <br/>
+        Font: <?php echo $data['back_text_2_font']; ?> <br/>
+        Style: <?php echo $data['back_text_2_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['back_text_3']) > 0) { ?>
+        <label> Text 3: </label> <br/>
+        Text: <?php echo $data['back_text_3']; ?> <br/>
+        Size: <?php echo $data['back_text_3_size']; ?> <br/>
+        Color: <?php echo $data['back_text_3_color']; ?> <br/>
+        Font: <?php echo $data['back_text_3_font']; ?> <br/>
+        Style: <?php echo $data['back_text_3_style']; ?> <br/>
+    <?php } 
+    } ?>
+ 
+<?php
+if ((count($data['left_text_1']) > 0) || 
+        (count($data['left_text_2']) > 0) || 
+        (count($data['left_text_3']) > 0)) { ?>
+    <label>LEFT:</label> <br/> 
+    <?php
+    if (count($data['left_text_1']) > 0) { ?>
+        <label> Text 1: </label> <br/>
+        Text: <?php echo $data['left_text_1']; ?> <br/>
+        Size: <?php echo $data['left_text_1_size']; ?> <br/>
+        Color: <?php echo $data['left_text_1_color']; ?> <br/>
+        Font: <?php echo $data['left_text_1_font']; ?> <br/>
+        Style: <?php echo $data['left_text_1_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['left_text_2']) > 0) { ?>
+        <label> Text 2: </label> <br/>
+        Text: <?php echo $data['left_text_2']; ?> <br/>
+        Size: <?php echo $data['left_text_2_size']; ?> <br/>
+        Color: <?php echo $data['left_text_2_color']; ?> <br/>
+        Font: <?php echo $data['left_text_2_font']; ?> <br/>
+        Style: <?php echo $data['left_text_2_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['left_text_3']) > 0) { ?>
+        <label> Text 3: </label> <br/>
+        Text: <?php echo $data['left_text_3']; ?> <br/>
+        Size: <?php echo $data['left_text_3_size']; ?> <br/>
+        Color: <?php echo $data['left_text_3_color']; ?> <br/>
+        Font: <?php echo $data['left_text_3_font']; ?> <br/>
+        Style: <?php echo $data['left_text_3_style']; ?> <br/>
+    <?php } 
+    } ?>
+        
+<?php
+if ((count($data['right_text_1']) > 0) || 
+        (count($data['right_text_2']) > 0) || 
+        (count($data['right_text_3']) > 0)) { ?>
+    <label>RIGHT:</label> <br/> 
+    <?php
+    if (count($data['right_text_1']) > 0) { ?>
+        <label> Text 1: </label> <br/>
+        Text: <?php echo $data['right_text_1']; ?> <br/>
+        Size: <?php echo $data['right_text_1_size']; ?> <br/>
+        Color: <?php echo $data['right_text_1_color']; ?> <br/>
+        Font: <?php echo $data['right_text_1_font']; ?> <br/>
+        Style: <?php echo $data['right_text_1_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['right_text_2']) > 0) { ?>
+        <label> Text 2: </label> <br/>
+        Text: <?php echo $data['right_text_2']; ?> <br/>
+        Size: <?php echo $data['right_text_2_size']; ?> <br/>
+        Color: <?php echo $data['right_text_2_color']; ?> <br/>
+        Font: <?php echo $data['right_text_2_font']; ?> <br/>
+        Style: <?php echo $data['right_text_2_style']; ?> <br/>
+    <?php } ?>
+
+    <?php
+    if (count($data['right_text_3']) > 0) { ?>
+        <label> Text 3: </label> <br/>
+        Text: <?php echo $data['right_text_3']; ?> <br/>
+        Size: <?php echo $data['right_text_3_size']; ?> <br/>
+        Color: <?php echo $data['right_text_3_color']; ?> <br/>
+        Font: <?php echo $data['right_text_3_font']; ?> <br/>
+        Style: <?php echo $data['right_text_3_style']; ?> <br/>
+    <?php } 
+    } ?>
+
+
+<label>Front Images: </label><?php echo $data['front_images']; ?> <br/>
+<label>Back Images: </label><?php echo $data['back_images']; ?><br/>
+<label>Left Images: </label><?php echo $data['left_images']; ?><br/>
+<label>Right Images: </label><?php echo $data['right_images']; ?> <br/>
+
+<label>SIZES </label> <br/>
+<label>S: </label><?php echo $data['s']; ?> <br/>
+<label>M: </label><?php echo $data['m']; ?><br/>
+<label>L: </label><?php echo $data['l']; ?><br/>
+<label>XL: </label><?php echo $data['xl']; ?> <br/>
+
+<?php
+    //$url =  Mage::helper("adminhtml")->getUrl("shirtdesigner/ShirtDesigner/downloadFiles/");
+
+$current_url =  $this->helper('core/url')->getCurrentUrl(); 
+    $key = "gush";
+    $encrypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $current_url, MCRYPT_MODE_CBC, md5(md5($key))));
+    $url =  Mage::helper("adminhtml")->getUrl("shirtdesigner/ShirtDesigner/downloadFiles/", array('name'=>'haifa','order_id'=>$this->getData('order_id'),'design_id'=>$data['design_id']));
+    
+    
+?>
+<a href="<?php echo $url ?>" >Download Files</a>
+
+<?php 
+
+function create_zip($files = array(),$destination = '',$overwrite = false) {
+  
+  if(file_exists($destination) && !$overwrite) { return false; }
+  
+  $valid_files = array();
+  
+   if(is_array($files)) {
+       
+    foreach($files as $file) {
+      if(file_exists($file[0])) {
+          
+        $valid_files[] = $file;
+      }
+    }
+  }
+  if(count($valid_files)) {
+    $zip = new ZipArchive();
+    if($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true) {
+      return false;
+    }
+    
+    foreach($valid_files as $file) {
+        $zip->addFile($file[0],$file[1]);
+    }
+    $zip->close();
+    
+    
+    if (file_exists($destination)) {
+        echo '<script type="text/javascript">alert("file exists");</script>';
+        header("Content-Type: application/zip"); 
+        header("Content-Disposition: attachment; filename=files.zip");   
+        $zip = fopen($destination,"r"); // open the zip file
+        echo fpassthru($zip); // deliver the zip file
+        unlink($destination);
+    } 
+    return file_exists($destination);
+  }
+  else
+  {
+    return false;
+  }
+}
+
+
+$dir = 'design-'.$this->getData('order_id');
+
+$files_to_zip = array(
+  array('/home/shop/public_html/'.$data['front_design_url'], $dir.'/front-design.jpg'),
+  array('/home/shop/public_html/'.$data['back_design_url'], $dir.'/back-design.jpg'),
+  array('/home/shop/public_html/'.$data['front_design_url'], $dir.'/left-design.jpg'),
+  array('/home/shop/public_html/'.$data['back_design_url'], $dir.'/right-design.jpg')
+);
+
+$images = explode(",", $data['front_images']);
+foreach($images as $d) {
+    $p = str_replace('https://www.gushshop.com/shop/','/home/shop/public_html/',$d);
+    $q = explode("/",$p);
+    $end = end($q);
+    $files_to_zip[] = array($p,$dir.'/'.$end);
+}
+
+$images = explode(",", $data['back_images']);
+foreach($images as $d) {
+    $p = str_replace('https://www.gushshop.com/shop/','/home/shop/public_html/',$d);
+    $q = explode("/",$p);
+    $end = end($q);
+    $files_to_zip[] = array($p,$dir.'/'.$end);
+}
+
+$images = explode(",", $data['left_images']);
+foreach($images as $d) {
+    $p = str_replace('https://www.gushshop.com/shop/','/home/shop/public_html/',$d);
+    $q = explode("/",$p);
+    $end = end($q);
+    $files_to_zip[] = array($p,$dir.'/'.$end);
+}
+
+$images = explode(",", $data['right_images']);
+foreach($images as $d) {
+    $p = str_replace('https://www.gushshop.com/shop/','/home/shop/public_html/',$d);
+    $q = explode("/",$p);
+    $end = end($q);
+    $files_to_zip[] = array($p,$dir.'/'.$end);
+}
+
+
+$path = '/home/shop/public_html/media/'.$dir.'.zip';
+//$result = create_zip($files_to_zip,$path);
+
+
+
+?>

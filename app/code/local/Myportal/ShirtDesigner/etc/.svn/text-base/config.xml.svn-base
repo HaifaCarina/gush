@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Myportal_ShirtDesigner>
+            <version>0.1.0</version>
+        </Myportal_ShirtDesigner>
+    </modules>
+    
+    <frontend>
+        <routers>
+            <Myportal_ShirtDesigner_SomeFreeRouterName1>
+                <use>standard</use>
+                <args>
+                    <module>Myportal_ShirtDesigner</module>
+                    <frontName>shirtdesigner</frontName>
+                </args>
+            </Myportal_ShirtDesigner_SomeFreeRouterName1>
+        </routers>
+    </frontend>
+
+    <adminhtml>
+        
+        <!-- The <acl> section is for access control. Here we define the pieces where access can be controlled within a role. -->
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <shirtdesigner>
+                            <title>ShirtDesigner Menu Item</title>
+                            <children>
+                                <example translate="title" module="shirtdesigner">
+                                    <title>ShirtDesigner Menu Item</title>
+                                </example>
+                            </children>
+                        </shirtdesigner>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <global>
+        <helpers>
+            <shirtdesigner>
+                <class>Myportal_ShirtDesigner_Helper</class>
+            </shirtdesigner>
+        </helpers>
+    </global>
+</config>

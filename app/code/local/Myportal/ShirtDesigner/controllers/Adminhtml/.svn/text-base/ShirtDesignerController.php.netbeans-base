@@ -1,0 +1,50 @@
+<?php
+
+class Myportal_ShirtDesigner_Adminhtml_ShirtDesignerController extends Mage_Adminhtml_Controller_action
+{
+
+    public function indexAction() {
+       $design = Mage::getModel('shirtdesigner/design');
+        //$param = $this->getRequest()->getParams();
+        
+       $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        $query = 'SELECT * FROM shirt_designer group by timestamp desc';
+        $results = $readConnection->fetchAll($query);
+        
+        $this->loadLayout(); 
+        $this->_setActiveMenu('shirtdesigner/adminhtml_shirtdesigner');
+        $block = $this->getLayout()->createBlock(
+		'Mage_Core_Block_Template',
+		'shirtdesigneradminhtml',
+		array('template' => 'shirtdesigner/adminhtml.phtml')
+		);
+        $block->setData('results',$results);
+        $url = Mage::getUrl();
+        $block->setData('url',$url);
+        $this->getLayout()->getBlock('head')->addCss('shirtdesigner/admin-style.css');
+        $this->getLayout()->getBlock('content')->append($block);
+        $this->renderLayout();
+    }
+    
+    public function detailsAction(){
+        $this->loadLayout(); 
+        
+        $param = $this->getRequest()->getParams();
+        echo $param['design_id'];
+        
+        $this->getLayout()->getBlock('head')->addCss('shirtdesigner/admin-style.css');
+        $block = $this->getLayout()->createBlock(
+		'Mage_Core_Block_Template',
+		'shirtdesignerdetails',
+		array('template' => 'shirtdesigner/details.phtml')
+		);
+        
+        $model = Mage::getModel  ('shirtdesigner/design');
+        $model->load($param['design_id']);     
+        $data = $model->getData();
+        $block->setData('data',$data);
+        $this->getLayout()->getBlock('content')->append($block);
+        $this->renderLayout();
+    }
+}

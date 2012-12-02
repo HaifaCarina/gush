@@ -1,0 +1,93 @@
+<?php 
+
+/*echo "<pre>";
+echo "Start here";
+print_r($this->getData('results')); 
+echo "</pre>";
+*/
+
+echo '<table class="center" id="newspaper-a" >';
+
+echo '<thead><tr>';
+echo '<th scope="col">ID</th>';
+echo '<th scope="col">Date Created</th>';
+echo '<th scope="col">Thumbnail</th>';
+echo '<th scope="col">Order #</th>';
+echo '<th scope="col">Action</th>';
+echo '</tr></thead>';
+
+foreach ($this->getData('results') as $d) {
+        //echo '<tr>';
+        $content = '<tr>';
+        
+        /***** DESIGN ID *****/
+        //echo '<td>'.$d['design_id'].'</td>';
+        $content.='<td>'.$d['design_id'].'</td>';
+        
+        /***** DATE CREATED *****/
+        $date = explode(" ",$d['timestamp']);
+        $date = $date[0];
+        //echo '<td>'.$date.'</td>';
+        $content.='<td>'.$date.'</td>';
+
+        /***** THUMBNAIL *****/
+        $url = $this->getData('url');
+        $url = substr($url, 0, strlen($url)-10);
+        //echo '<td> <img src='.$url.$d['front_design_url'].' height=100 width=98/></td>';
+        $content .= '<td> <img src='.$url.$d['front_design_url'].' height=100 width=98/></td>';
+        
+        /***** ORDER ID *****/
+        $resource = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $query = 'SELECT order_id FROM  shirt_designer_aggregate WHERE design_id='.$d['design_id'];
+        $results = $resource->fetchAll($query);
+
+        if (count($results) > 0) {
+            
+            foreach($results as $r) {
+                
+                $order_id = $r['order_id'];
+                //echo '<td>';
+                $content .='<td>';
+                $resource_order = Mage::getSingleton('core/resource')->getConnection('core_read');
+                $query_order = 'SELECT entity_id FROM  sales_flat_order WHERE increment_id='.$order_id;
+                $results_order = $resource_order->fetchAll($query_order);
+                
+                foreach($results_order as $r_order) {
+                    //echo '/'.$r_order['entity_id'];
+                    
+                    $entity_id = $r_order['entity_id'];
+                }
+                
+                $key =  Mage::getSingleton('adminhtml/url')->getSecretKey("sales_order","view");
+                $order_url = $url.'admin/sales_order/view/order_id/'.$entity_id.'/key/'.$key;
+                //echo '<a href='.$order_url.'>'.$order_id.'</a><br/>';
+                $content .= '<a href='.$order_url.'>'.$order_id.'</a><br/>';
+                //echo '</td>';
+                $content .= '</td>';
+            }
+            $display_record = true;
+            
+        }else {
+            $content .= '<td>none</td>';
+            $display_record = false;
+        }
+        
+        
+        /***** VIEW *****/
+        //echo '<td>';
+        $content .= '<td>';
+        //$url =  Mage::helper("adminhtml")->getUrl("shirtdesigner/adminhtml_shirtdesigner/details/", array("design_id"=>$d['design_id']));
+        $url =  Mage::helper("adminhtml")->getUrl("shirtdesigner/ShirtDesigner/details/", array("design_id"=>$d['design_id'], "order_id" => $order_id));
+        
+        /*echo '<a href='.$url.' >view</a>';
+        echo '</td>';
+         echo '</tr>';
+         */
+        $content .= '<a href='.$url.' >view</a></td></tr>';
+        
+        if($display_record == true){
+            echo $content;
+        }
+}
+echo '</table>';
+?>

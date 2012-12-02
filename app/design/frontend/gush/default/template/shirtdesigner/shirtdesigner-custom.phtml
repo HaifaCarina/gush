@@ -1,0 +1,858 @@
+<?php
+
+$print_colors = array(
+    '330000' => '330000', 
+    '333300' => '333300', 
+    '336600' => '336600', 
+    '339900' => '339900',
+    '33CC00' => '33CC00',
+    '33FF00' => '33FF00',
+    '66FF00' => '66FF00',
+    '66CC00' => '66CC00',
+    '669900' => '669900',
+    '666600' => '666600',
+    '663300' => '663300',
+    '660000' => '660000',
+    'FF0000' => 'FF0000',
+    'FF3300' => 'FF3300',
+    'FF6600' => 'FF6600',
+    'FF9900' => 'FF9900',
+    'FFCC00' => 'FFCC00',
+    'FFFF00' => 'FFFF00',
+    
+    '330033' => '330033',
+    '333333' => '333333',
+    '336633' => '336633',
+    '339933' => '339933',
+    '33CC33' => '33CC33',
+    '33FF33' => '33FF33',
+    '66FF33' => '66FF33',
+    '66CC33' => '66CC33',
+    '669933' => '669933',
+    '666633' => '666633',
+    '663333' => '663333',
+    '660033' => '660033',
+    'FF0033' => 'FF0033',
+    'FF3333' => 'FF3333',
+    'FF6633' => 'FF6633',
+    'FF9933' => 'FF9933',
+    'FFCC33' => 'FFCC33',
+    'FFFF33' => 'FFFF33',
+    
+    '330066' => '330066',
+    '333366' => '333366',
+    '336666' => '336666',
+    '339966' => '339966',
+    '33CC66' => '33CC66',
+    '33FF66' => '33FF66',
+    '66FF66' => '66FF66',
+    '66CC66' => '66CC66',
+    '669966' => '669966',
+    '666666' => '666666',
+    '663366' => '663366',
+    '660066' => '660066',
+    'FF0066' => 'FF0066',
+    'FF3366' => 'FF3366',
+    'FF6666' => 'FF6666',
+    'FF9966' => 'FF9966',
+    'FFCC66' => 'FFCC66',
+    'FFFF66' => 'FFFF66',
+    
+    '330099' => '330099',
+    '333399' => '333399',
+    '336699' => '336699',
+    '339999' => '339999',
+    '33CC99' => '33CC99',
+    '33FF99' => '33FF99',
+    '66FF99' => '66FF99',
+    '66CC99' => '66CC99',
+    '669999' => '669999',
+    '666699' => '666699',
+    '663399' => '663399',
+    '660099' => '660099',
+    'FF0099' => 'FF0099',
+    'FF3399' => 'FF3399',
+    'FF6699' => 'FF6699',
+    'FF9999' => 'FF9999',
+    'FFCC99' => 'FFCC99',
+    'FFFF99' => 'FFFF99',
+    
+    '3300CC' => '3300CC',
+    '3333CC' => '3333CC',
+    '3366CC' => '3366CC',
+    '3399CC' => '3399CC',
+    '33CCCC' => '33CCCC',
+    '33FFCC' => '33FFCC',
+    '66FFCC' => '66FFCC',
+    '66CCCC' => '66CCCC',
+    '6699CC' => '6699CC',
+    '6666CC' => '6666CC',
+    '6633CC' => '6633CC',
+    '6600CC' => '6600CC',
+    'FF00CC' => 'FF00CC',
+    'FF33CC' => 'FF33CC',
+    'FF66CC' => 'FF66CC',
+    'FF99CC' => 'FF99CC',
+    'FFCCCC' => 'FFCCCC',
+    'FFFFCC' => 'FFFFCC',
+    
+    '3300FF' => '3300FF',
+    '3333FF' => '3333FF',
+    '3366FF' => '3366FF',
+    '3399FF' => '3399FF',
+    '33CCFF' => '33CCFF',
+    '33FFFF' => '33FFFF',
+    '66FFFF' => '66FFFF',
+    '66CCFF' => '66CCFF',
+    '6699FF' => '6699FF',
+    '6666FF' => '6666FF',
+    '6633FF' => '6633FF',
+    '6600FF' => '6600FF',
+    'FF00FF' => 'FF00FF',
+    'FF33FF' => 'FF33FF',
+    'FF66FF' => 'FF66FF',
+    'FF99FF' => 'FF99FF',
+    'FFCCFF' => 'FFCCFF',
+    'FFFFFF' => 'FFFFFF',
+    
+    '0000FF' => '0000FF',
+    '0033FF' => '0033FF',
+    '0066FF' => '0066FF',
+    '0099FF' => '0099FF',
+    '00CCFF' => '00CCFF',
+    '00FFFF' => '00FFFF',
+    '99FFFF' => '99FFFF',
+    '99CCFF' => '99CCFF',
+    '9999FF' => '9999FF',
+    '9966FF' => '9966FF',
+    '9933FF' => '9933FF',
+    '9900FF' => '9900FF',
+    'CC00FF' => 'CC00FF',
+    'CC33FF' => 'CC33FF',
+    'CC66FF' => 'CC66FF',
+    'CC99FF' => 'CC99FF',
+    'CCCCFF' => 'CCCCFF',
+    'CCFFFF' => 'CCFFFF',
+    
+    '0000CC' => '0000CC',
+    '0033CC' => '0033CC',
+    '0066CC' => '0066CC',
+    '0099CC' => '0099CC',
+    '00CCCC' => '00CCCC',
+    '00FFCC' => '00FFCC',
+    '99FFCC' => '99FFCC',
+    '99CCCC' => '99CCCC',
+    '9999CC' => '9999CC',
+    '9966CC' => '9966CC',
+    '9933CC' => '9933CC',
+    '9900CC' => '9900CC',
+    'CC00CC' => 'CC00CC',
+    'CC33CC' => 'CC33CC',
+    'CC66CC' => 'CC66CC',
+    'CC99CC' => 'CC99CC',
+    'CCCCCC' => 'CCCCCC',
+    'CCFFCC' => 'CCFFCC',
+    
+    '000099' => '000099',
+    '003399' => '003399',
+    '006699' => '006699',
+    '009999' => '009999',
+    '00CC99' => '00CC99',
+    '00FF99' => '00FF99',
+    '99FF99' => '99FF99',
+    '99CC99' => '99CC99',
+    '999999' => '999999',
+    '996699' => '996699',
+    '993399' => '993399',
+    '990099' => '990099',
+    'CC0099' => 'CC0099',
+    'CC3399' => 'CC3399',
+    'CC6699' => 'CC6699',
+    'CC9999' => 'CC9999',
+    'CCCC99' => 'CCCC99',
+    'CCFF99' => 'CCFF99',
+    
+    '000066' => '000066',
+    '003366' => '003366',   
+    '006666' => '006666',
+    '009966' => '009966',
+    '00CC66' => '00CC66',
+    '00FF66' => '00FF66',
+    '99FF66' => '99FF66',
+    '99CC66' => '99CC66',
+    '999966' => '999966',
+    '996666' => '996666',
+    '993366' => '993366',
+    '990066' => '990066',
+    'CC0066' => 'CC0066',
+    'CC3366' => 'CC3366',
+    'CC6666' => 'CC6666',
+    'CC9966' => 'CC9966',
+    'CCCC66' => 'CCCC66',
+    'CCFF66' => 'CCFF66',
+    
+    '000033' => '000033',
+    '003333' => '003333',
+    '006633' => '006633',
+    '009933' => '009933',
+    '00CC33' => '00CC33',
+    '00FF33' => '00FF33',
+    '99FF33' => '99FF33',
+    '99CC33' => '99CC33',
+    '999933' => '999933',
+    '996633' => '996633',
+    '993333' => '993333',
+    '990033' => '990033',
+    'CC0033' => 'CC0033',
+    'CC3333' => 'CC3333',
+    'CC6633' => 'CC6633',
+    'CC9933' => 'CC9933',
+    'CCCC33' => 'CCCC33',
+    'CCFF33' => 'CCFF33',
+    
+    '000000' => '000000', 
+    '003300' => '003300',
+    '006600' => '006600',
+    '009900' => '009900',
+    '00CC00' => '00CC00',
+    '00FF00' => '00FF00',
+    '99FF00' => '99FF00',
+    '99CC00' => '99CC00',
+    '999900' => '999900',
+    '996600' => '996600',
+    '993300' => '993300',
+    '990000' => '990000',
+    'CC0000' => 'CC0000',
+    'CC3300' => 'CC3300',
+    'CC6600' => 'CC6600',
+    'CC9900' => 'CC9900',
+    'CCCC00' => 'CCCC00',
+    'CCFF00' => 'CCFF00',
+    
+    '000000' => '000000',        
+    '333333' => '333333',
+    '666666' => '666666',
+    '999999' => '999999',
+    'CCCCCC' => 'CCCCCC',
+    'FFFFFF' => 'FFFFFF', 
+            
+    );
+
+    $shirt_colors = array(
+        "p1" => "ddbe7d",
+        "p2" => "951d29",
+        "p3" => "36312e",
+        "p4" => "9da991",
+        "p5" => "718296",
+        "p6" => "9198a2",
+        "p7" => "eceaeb",
+        "p8" => "2e3339",
+        "p9" => "252324",
+        "p10" => "d2cec2",
+        "p11" => "46639d"
+    );
+    
+    
+    //include_once('http://localhost/magento/app/design/frontend/base/default/template/shirtdesigner/colors_array.php');
+    if( $_POST ){
+        if ((($_FILES["file"]["type"] == "image/gif")
+        || ($_FILES["file"]["type"] == "image/jpeg")
+        || ($_FILES["file"]["type"] == "image/jpg")
+        || ($_FILES["file"]["type"] == "image/png")
+        || ($_FILES["file"]["type"] == "image/pjpeg"))
+        && ($_FILES["file"]["size"] < 2000000))
+        {
+                if ($_FILES["file"]["error"] > 0)
+                {
+                        echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                }
+                else
+                {
+                        $filename	=   str_replace(' ', '_', $_FILES["file"]["name"]);
+
+                        if (file_exists("media/shirtdesigner/images/uploads/".$this->getData('design_id')."/upload_" . $filename ))
+                        {
+                                echo $_FILES["file"]["name"] . " already exists. ";
+                        }
+                        else
+                        {
+                                move_uploaded_file($_FILES["file"]["tmp_name"],
+                                "media/shirtdesigner/images/uploads/".$this->getData('design_id')."/upload_" . $filename );
+
+                                echo "<h3>The image is uploaded!</h3>";
+
+                                unset ($_POST);
+                        }
+                }
+        }
+        else
+        {
+                //echo "Invalid file";
+        }
+    }
+    $uploads = scandir('media/shirtdesigner/images/uploads/'.$this->getData('design_id'));
+    $categories = scandir('media/shirtdesigner/images/art');
+    $military = scandir('media/shirtdesigner/images/art/military');
+    $music = scandir('media/shirtdesigner/images/art/music');
+    $ignore = array( 'cgi-bin', '.', '..' ,'.DS_Store','.svn');
+    
+    $art = array();
+    
+    foreach( $categories as $cat )
+    {
+        if(!in_array( $cat, $ignore ))
+        {
+           $art[] = scandir('media/shirtdesigner/images/art/'.$cat);
+        }
+    }
+
+
+?>
+<script type="text/javascript" >
+        
+	$j(function(){
+            var design_id = '<?php echo $this->getData("design_id")?>';
+            console.log("what is" + design_id);	
+            
+                var btnUpload=$j('#upload');
+		var status=$j('#status');
+		new AjaxUpload(btnUpload, {
+			action: '<?php echo $this->getURL().'shirtdesigner/index/test';?>',
+			name: 'uploadfile',
+			onSubmit: function(file, ext){
+				 if (! (ext && /^(jpg|png|jpeg|gif)$/.test(ext))){ 
+                    // extension is not allowed 
+					status.text('Only JPG, PNG or GIF files are allowed');
+					return false;
+				}
+				status.text('Uploading...');
+			},
+			onComplete: function(file, response){
+				//On completion clear the status
+				status.text('');
+				//Add uploaded file to list
+				if(response==="success"){ //'+design_id+'/
+                                        $j('#upload-images').append('<img id="'+file+'" height="50" width="50" src="../../media/shirtdesigner/images/uploads/'+design_id+'-'+file+'" alt="" /> ');
+                                       // $j('<div></div>').appendTo('#upload-images').html('<img id="'+file+'" height="50" width="50" src="../../media/shirtdesigner/images/uploads/'+design_id+'-'+file+'" alt="" /><br />'+file).addClass('success');
+                                } else{
+					//$j('<li></li>').appendTo('#files').text(file+"error").addClass('error');
+				}
+                                
+			}
+		});  
+	//'<img id="'+file+'"height="50" width="50" src="../../media/shirtdesigner/images/uploads/< ?php$this->getData('design_id')?>/'+file+'/>'	
+	}); 
+</script>
+<div id="shirtdesigner-module">
+    <table>
+        <tr><td width="430">
+    <div id="customization-panel">
+    <!-- MAIN TAB MENU -->
+    <ul class="shirtdesigner-tabmenu">
+        <li id="front-menu" class="active">Front</li>
+        <li id="back-menu">Back</li>
+        <li id="left-menu">Left</li>
+        <li id="right-menu">Right</li>
+        <li id="sizes-menu">Sizes</li>
+    </ul>
+    
+    <div class="shirtdesigner-content front-content">
+        <!-- INSIDE TAB MENU -->
+        <ul class="front-tabmenu">
+            <li id="front-text-menu" class="active">Add Text</li>
+            <li id="front-art-menu">Add Art</li>
+            <li id="front-image-menu">Upload Image</li>
+        </ul>
+        <div class="inside-content text">
+        <form name="checkout_design" id="checkout-design" action="<?php echo $this->getURL().'shirtdesigner/index/createNewDesign';?>" method="post">  
+        
+            <table>
+                <tr>
+                    <td><label>Text</label></td>
+                    <td>
+                        <input type="radio" id="text-selection-1" class="text-selection" name="text-selection" value="1" onclick="" checked/>
+                        <input type="text" id="text-1" onkeyup="" name="text-1" value="" /><br/>
+
+                        <input type="radio" id="text-selection-2" class="text-selection" name="text-selection" value="2" onclick="" />
+                        <input type="text" id="text-2" onkeyup="" name="text-2" value="" /><br/>
+
+                        <input type="radio" id="text-selection-3" class="text-selection" name="text-selection" value="3" onclick="" />
+                        <input type="text" id="text-3" onkeyup="" name="text-3" value=""  /><br/>
+                        
+                        <input type="hidden" id="design-id" name="design-id" value="<?php echo $this->getData('design_id') ?>"/>
+                        <input type="hidden" id="product-id" name="product-id" value="<?php echo $this->getData('product_id') ?>"/>
+                        <input type="hidden" id="shirt-color" name="shirt-color" />
+                        <input type="hidden" id="sku" name="sku" value="<?php echo $this->getData('sku') ?>"/>
+                        <input type="hidden" id="print-type" name="print-type" />
+                        <input type="hidden" id="front-text-1" name="front-text-1" />
+                        <input type="hidden" id="front-text-1-size" name="front-text-1-size" />
+                        <input type="hidden" id="front-text-1-color" name="front-text-1-color" />
+                        <input type="hidden" id="front-text-1-font" name="front-text-1-font" />
+                        <input type="hidden" id="front-text-1-left" name="front-text-1-left" />
+                        <input type="hidden" id="front-text-1-top" name="front-text-1-top" />
+                        <input type="hidden" id="front-text-1-style" name="front-text-1-style" />
+
+                        <input type="hidden" id="front-text-2" name="front-text-2" />
+                        <input type="hidden" id="front-text-2-size" name="front-text-2-size" />
+                        <input type="hidden" id="front-text-2-color" name="front-text-2-color" />
+                        <input type="hidden" id="front-text-2-font" name="front-text-2-font" />
+                        <input type="hidden" id="front-text-2-left" name="front-text-2-left" />
+                        <input type="hidden" id="front-text-2-top" name="front-text-2-top" />
+                        <input type="hidden" id="front-text-2-style" name="front-text-2-style" />
+
+                        <input type="hidden" id="front-text-3" name="front-text-3" />
+                        <input type="hidden" id="front-text-3-size" name="front-text-3-size" />
+                        <input type="hidden" id="front-text-3-color" name="front-text-3-color" />
+                        <input type="hidden" id="front-text-3-font" name="front-text-3-font" />
+                        <input type="hidden" id="front-text-3-left" name="front-text-3-left" />
+                        <input type="hidden" id="front-text-3-top" name="front-text-3-top" />
+                        <input type="hidden" id="front-text-3-style" name="front-text-3-style" />
+                        
+                        <input type="hidden" id="back-text-1" name="back-text-1" />
+                        <input type="hidden" id="back-text-1-size" name="back-text-1-size" />
+                        <input type="hidden" id="back-text-1-color" name="back-text-1-color" />
+                        <input type="hidden" id="back-text-1-font" name="back-text-1-font" />
+                        <input type="hidden" id="back-text-1-left" name="back-text-1-left" />
+                        <input type="hidden" id="back-text-1-top" name="back-text-1-top" />
+                        <input type="hidden" id="back-text-1-style" name="back-text-1-style" />
+
+                        <input type="hidden" id="back-text-2" name="back-text-2" />
+                        <input type="hidden" id="back-text-2-size" name="back-text-2-size" />
+                        <input type="hidden" id="back-text-2-color" name="back-text-2-color" />
+                        <input type="hidden" id="back-text-2-font" name="back-text-2-font" />
+                        <input type="hidden" id="back-text-2-left" name="back-text-2-left" />
+                        <input type="hidden" id="back-text-2-top" name="back-text-2-top" />
+                        <input type="hidden" id="back-text-2-style" name="back-text-2-style" />
+
+                        <input type="hidden" id="back-text-3" name="back-text-3" />
+                        <input type="hidden" id="back-text-3-size" name="back-text-3-size" />
+                        <input type="hidden" id="back-text-3-color" name="back-text-3-color" />
+                        <input type="hidden" id="back-text-3-font" name="back-text-3-font" />
+                        <input type="hidden" id="back-text-3-left" name="back-text-3-left" />
+                        <input type="hidden" id="back-text-3-top" name="back-text-3-top" />
+                        <input type="hidden" id="back-text-3-style" name="back-text-3-style" />
+                        
+                        <input type="hidden" id="left-text-1" name="left-text-1" />
+                        <input type="hidden" id="left-text-1-size" name="left-text-1-size" />
+                        <input type="hidden" id="left-text-1-color" name="left-text-1-color" />
+                        <input type="hidden" id="left-text-1-font" name="left-text-1-font" />
+                        <input type="hidden" id="left-text-1-left" name="left-text-1-left" />
+                        <input type="hidden" id="left-text-1-top" name="left-text-1-top" />
+                        <input type="hidden" id="left-text-1-style" name="left-text-1-style" />
+
+                        <input type="hidden" id="left-text-2" name="left-text-2" />
+                        <input type="hidden" id="left-text-2-size" name="left-text-2-size" />
+                        <input type="hidden" id="left-text-2-color" name="left-text-2-color" />
+                        <input type="hidden" id="left-text-2-font" name="left-text-2-font" />
+                        <input type="hidden" id="left-text-2-left" name="left-text-2-left" />
+                        <input type="hidden" id="left-text-2-top" name="left-text-2-top" />
+                        <input type="hidden" id="left-text-2-style" name="left-text-2-style" />
+
+                        <input type="hidden" id="left-text-3" name="left-text-3" />
+                        <input type="hidden" id="left-text-3-size" name="left-text-3-size" />
+                        <input type="hidden" id="left-text-3-color" name="left-text-3-color" />
+                        <input type="hidden" id="left-text-3-font" name="left-text-3-font" />
+                        <input type="hidden" id="left-text-3-left" name="left-text-3-left" />
+                        <input type="hidden" id="left-text-3-top" name="left-text-3-top" />
+                        <input type="hidden" id="left-text-3-style" name="left-text-3-style" />
+                        
+                        <input type="hidden" id="right-text-1" name="right-text-1" />
+                        <input type="hidden" id="right-text-1-size" name="right-text-1-size" />
+                        <input type="hidden" id="right-text-1-color" name="right-text-1-color" />
+                        <input type="hidden" id="right-text-1-font" name="right-text-1-font" />
+                        <input type="hidden" id="right-text-1-left" name="right-text-1-left" />
+                        <input type="hidden" id="right-text-1-top" name="right-text-1-top" />
+                        <input type="hidden" id="right-text-1-style" name="right-text-1-style" />
+
+                        <input type="hidden" id="right-text-2" name="right-text-2" />
+                        <input type="hidden" id="right-text-2-size" name="right-text-2-size" />
+                        <input type="hidden" id="right-text-2-color" name="right-text-2-color" />
+                        <input type="hidden" id="right-text-2-font" name="right-text-2-font" />
+                        <input type="hidden" id="right-text-2-left" name="right-text-2-left" />
+                        <input type="hidden" id="right-text-2-top" name="right-text-2-top" />
+                        <input type="hidden" id="right-text-2-style" name="right-text-2-style" />
+
+                        <input type="hidden" id="right-text-3" name="right-text-3" />
+                        <input type="hidden" id="right-text-3-size" name="right-text-3-size" />
+                        <input type="hidden" id="right-text-3-color" name="right-text-3-color" />
+                        <input type="hidden" id="right-text-3-font" name="right-text-3-font" />
+                        <input type="hidden" id="right-text-3-left" name="right-text-3-left" />
+                        <input type="hidden" id="right-text-3-top" name="right-text-3-top" />
+                        <input type="hidden" id="right-text-3-style" name="right-text-3-style" />
+                        
+                        <input type="hidden" id="front-logo-type" name="front-logo-type" />
+                        <input type="hidden" id="back-logo-type" name="back-logo-type" />
+                        <input type="hidden" id="left-logo-type" name="left-logo-type" />
+                        <input type="hidden" id="right-logo-type" name="right-logo-type" />
+                        
+                        <input type="hidden" id="front-image-code" name="front-image-code"  />
+                        <input type="hidden" id="back-image-code" name="back-image-code"  />
+                        <input type="hidden" id="left-image-code" name="left-image-code"  />
+                        <input type="hidden" id="right-image-code" name="right-image-code"  />
+                        
+                        <input type="hidden" id="front-image-url" name="front-image-url" value="<?php echo $this->getData('front-custom-shirt-url'); ?>" />
+                        <input type="hidden" id="back-image-url" name="back-image-url" value="<?php echo $this->getData('back-custom-shirt-url'); ?>" />
+                        <input type="hidden" id="left-image-url" name="left-image-url" value="<?php echo $this->getData('left-custom-shirt-url'); ?>" />
+                        <input type="hidden" id="right-image-url" name="right-image-url" value="<?php echo $this->getData('right-custom-shirt-url'); ?>" />
+                        
+                        <input type="hidden" id="s-size" name="s-size"  />
+                        <input type="hidden" id="m-size" name="m-size"  />
+                        <input type="hidden" id="l-size" name="l-size"  />
+                        <input type="hidden" id="xl-size" name="xl-size"  />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td><label>Text Size</label></td>
+                    <td>
+                        <select id="text-size" name="text-size">
+                        <option value="12">12</option>
+                        <option value="14">14</option>
+                        <option value="16">16</option>
+                        <option value="20">20</option>
+                        <option value="24">24</option>
+                        <option value="32">32</option>
+                        <option value="54">54</option>
+                        <option value="64">64</option>
+                        </select>
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label>Text Color</label></td>
+                    <td>
+
+                        <div class="color-selections text-color-selections">
+                            <input type="hidden" id="text-color" name="text-color" value="000000"/>
+                            <?php 
+                                $count = 0;
+                                foreach ( $print_colors as $k=>$v ) { 
+                                    if($count%18 == 0) {
+                                        echo '<br/>'; 
+                                    }
+                                    echo '<div class="color-box" id="'.$v.'" style="background-color: #'.$v.'" onclick="" title="'.$k.'"></div>';
+                                    $count++;
+                                }
+                            ?>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label>Text Font</label></td>
+                    <td>
+                        <select id="text-font" name="text-font" onchange="">
+                        <option value="century gothic">Century Gothic</option>
+                        <option value="arial">Arial</option>
+                        <option value="papyrus">Papyrus</option>
+                        <option value="american typewriter">American Typewriter</option>
+
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td><label>Text Style</label></td>
+                    <td>
+                        <select id="text-style" name="text-style" onchange="">
+                        <option value="straight">Straight</option>
+                        <option value="arc">Arc</option>
+                        <option value="circle">Circle</option>
+                        <option value="mirror">Mirror</option>
+                        <option value="shadow">Shadow</option>
+                        <option value="stroke">Stroke</option>
+                        <option value="upsidedown">Upside-down</option>
+                        <option value="vertical1">Vertical 1</option>
+                        <option value="vertical2">Vertical 2</option>
+                        
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        
+                    </td>
+                </tr>
+            </table>
+            </form>
+            <button class="submit">Save</button>
+        </div>
+        
+        
+        <div class="inside-content art">
+            <table>
+                <!--<tr>
+                    <td><label>Logo</label></td>
+                    <td>
+                        <div id="logo-options">
+                            <div title="Logo-1" id="logo-1" class="logo_box" style="background-image: url('../../media/shirtdesigner/images/logo/logo-1.png')"></div>
+                            <div title="Logo-2" id="logo-2" class="logo_box" style="background-image: url('../../media/shirtdesigner/images/logo/logo-2.png')"></div>
+                        </div><br/><br/><br/>
+                        *logo must be placed in atleast once
+                    </td>
+                </tr> -->
+                <tr>
+                    <td><label>Category</label></td>
+                    <td>
+                        <select id="art-category" name="art" style="max-width: 150px;" onchange="">
+                            <option value="">Please choose</option>
+                            <?php   
+                                foreach( $categories as $cat )
+                                {
+                                    if(!in_array( $cat, $ignore ))
+                                    {
+                                       echo '<option value=' . $cat. '>' . $cat. '</option>';
+                                    }
+                                }
+                                
+                            ?>
+                            
+                        </select> 
+                        <br/>
+                        <?php 
+                            for ($i=0; $i <= 13; $i++){
+                                
+                                $category_name = $categories[$i+3];
+                                
+                                echo '<div id="'.$category_name.'" class="art-images" style="display:none;">';
+                                
+                                foreach( $art[$i] as $mil )
+                                {
+                                    if(!in_array( $mil, $ignore ))
+                                    {
+                                       echo '<img id="'.$mil.'"height="50" width="50" src="../../media/shirtdesigner/images/art/'.$category_name.'/' . $mil . '"/>';
+                                    }
+                                }
+                                echo '</div>';
+                            }
+
+                        ?>
+                        <br/>
+                        *doubleclick on preview to remove object
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Design Size</label></td>
+                    <td>
+                        <select id="art-size" name="art-size" style="max-width: 150px;" onchange="">
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                            
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Art Color</label></td>
+                    <td>
+
+                        <div class="color-selections art-color-selections">
+                            <input type="hidden" id="art-color" name="text-color" value="000000"/>
+                            <?php 
+                                $count = 0;
+                                foreach ( $print_colors as $k=>$v ) { 
+                                    if($count%18 == 0) {
+                                        echo '<br/>'; 
+                                    }
+                                    echo '<div class="color-box" id="'.$v.'" style="background-color: #'.$v.'" onclick="" title="'.$k.'"></div>';
+                                    $count++;
+                                }
+                            ?>
+                        
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                            <td>
+                                
+                                <button class="submit">Save</button>
+                            </td>
+                        </tr>
+            </table>
+            
+        </div>
+        <div class="inside-content image">
+            <table>
+                        <tr>
+                            <td>
+                                <label>Image</label></td>
+                            <td>
+                                <?php
+                                    echo '<div id="upload-images" class="upload-images" style="display:block;">';
+
+                                    foreach( $uploads as $upload )
+                                        {
+                                            if(!in_array( $upload, $ignore ))
+                                            {
+                                               echo '<img id="'.$upload.'"height="50" width="50" src="../../media/shirtdesigner/images/uploads/'.$this->getData('design_id')."/"  . $upload . '"/>';
+                                            }
+                                        }
+                                    echo '</div>';
+                                ?>
+                                <br/>
+                                *doubleclick on preview to remove object
+                            </td>
+                        </tr>
+                        <tr>
+                            
+                            <td><label>Upload Image</label></td>
+                            <td><!--
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <input type="file" id="file" name="file" /><input type="submit" id="upload" name="upload" value="Upload" />
+                                </form>
+                                -->
+                                <input id="upload" type="submit" value="Choose File"/>
+                                <span id="status" ></span>
+    
+                            </td>
+                            
+                        </tr>
+                        
+                        <tr>
+                        <td><label>Image Size</label></td>
+                            <td>
+                                <select id="image-size" name="image-size" style="max-width: 150px;" onchange="">
+                                    <option value="small">Small</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="large">Large</option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                
+                                <button class="submit">Save</button>
+                            </td>
+                        </tr>
+                    </table>
+        </div>
+        
+        <img id="output_image" style="display: none;"/>
+        <img id="output2_image" style="display: none;"/>
+        <img id="output3_image" style="display: none;"/>
+        <img id="output4_image" style="display: none;"/> 
+        <canvas id="output" height="394" width="374" style="display: none;"></canvas>
+        <canvas id="output2" height="394" width="374" style="display: none;"></canvas>
+        <canvas id="output3" height="394" width="374" style="display: none;"></canvas>
+        <canvas id="output4" height="394" width="374" style="display: none;"></canvas>
+        <canvas id="final-output" height="394" width="374" style="display: none;"></canvas>
+        <canvas id="final-output2" height="394" width="374" style="display: none;"></canvas>
+        <canvas id="final-output3" height="394" width="374" style="display: none;"></canvas>
+        <canvas id="final-output4" height="394" width="374" style="display: none;"></canvas>
+    </div>
+
+    <div class="shirtdesigner-content sizes-content" >
+        <br/><br/>
+        <div id="size-chart" style="background-color: #ffffff; ">
+            <img width="403" height="361" src="<?php echo $this->getData('size-chart-url'); ?>"/>
+            <br/>
+            Quantity <br/>
+            
+            <table style="margin-left:auto; margin-right:auto; width: 300px;">
+                <tr>
+                    <td>S <input id="s" name="s" size="3" /> </td>
+                    <td>M <input id="m" name="m" size="3" /> </td>
+                </tr>
+                <tr>
+                    <td>L <input id="l" name="l" size="3" /> </td>
+                    <td>XL <input id="xl" name="xl" size="3" /> </td>
+                </tr>
+            </table>
+            <button class="submit">Save</button>
+        </div>
+    </div>
+    
+    </div>
+    </td>
+    <td>
+    <div id="preview-panel">
+        <!-- MAIN TAB MENU -->
+    <ul class="shirtdesigner-tabmenu">
+        <li id="design-menu" class="active">Design Preview</li>
+        <!--<li id="swap-menu">Swap Out Item</li>-->
+    </ul>
+        <?php
+            $shirt_design = scandir('media/shirtdesigner/images/apparels/'.$this->getData('sku'));
+            // This gets the filename of the first item in the directory
+            $front_image_ok = false;
+            $back_image_ok = false;
+            foreach ( $shirt_design as $d ) { 
+                    if(!in_array( $d, $ignore ))
+                    {   
+                        if('f-' == substr($d, 0, 2) && !$front_image_ok) {
+                            $front_image_filename = $d;
+                            $front_image_ok = true;
+                        } 
+                        if('b-' == substr($d, 0, 2) && !$back_image_ok) {
+                            $back_image_filename = $d;
+                            $back_image_ok = true;
+                        } 
+                    } 
+            }
+        ?>
+        
+        <div id="main-preview" style="background-image: url('<?php echo $this->getData('front-custom-shirt-url');?>')">
+            <input type="hidden" id="sku" value="<?php echo $this->getData('sku'); ?>" />
+            
+            <canvas id="print" class="bordered" width="374"  height="394"></canvas>
+            <div id="art-canvas" class="bordered" height="394" width="374"></div>
+            <canvas id="print2" class="bordered" height="394" width="374"></canvas>
+            <div id="art-canvas2" class="bordered" height="394" width="374"></div>
+            <canvas id="print3" class="bordered" width="374"  height="394"></canvas>
+            <div id="art-canvas3" class="bordered" height="394" width="374"></div>
+            <canvas id="print4" class="bordered" height="394" width="374"></canvas>
+            <div id="art-canvas4" class="bordered" height="394" width="374"></div>
+            
+            
+        
+        </div>
+    <!--    <div id="mini-preview" style="background-image: url('<?php echo $this->getData('back-custom-shirt-url');?>')">
+            
+        </div>
+-->
+        <div id="shirt-color-options">
+            <?php 
+                
+                $count = 0;
+                foreach ( $shirt_design as $d ) { 
+                    if(!in_array( $d, $ignore ))
+                    {   
+                        if('f-' == substr($d, 0, 2)) {
+                            $d = substr($d, 2, strlen($d)); //removes f- or b-
+                            $d = str_replace('.jpg','',$d);
+                            
+                            echo '<div class="shirt-color-box" id="'.$d.'" style="background-color: #'.$d.'" onclick="" title="'.$d.'"></div>';
+                   
+                            $count++;
+                            if($count%18 == 0) {
+                                echo '<br/>'; 
+                            }
+                        }
+                       
+                    }   
+                }
+                
+            ?>
+        </div>
+        <!--<div id="shirt-type-options">
+            <div title="Pressed" id="pressed" class="shirt_type_box shirt_type_box_selected"  >Pressed</div>
+            <div title="Stitched" id="stitched" class="shirt_type_box" >Stitched</div>
+        </div> -->
+    </div>
+    </td>
+    </tr></table>
+</div>
+
+<div id="reviewbox" style="display: none;">
+    <img id="review-front" height="300" width="250"/>
+    <img id="review-back" height="300" width="250" />
+    <img id="review-left" height="300" width="250" />
+    <img id="review-right" height="300" width="250" />
+    <br/>
+    <button id="submitfinal">This is final, submit</button>
+    <button id="cancel">Cancel</button>
+</div>

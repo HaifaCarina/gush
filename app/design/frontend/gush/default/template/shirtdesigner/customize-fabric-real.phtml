@@ -1,0 +1,147 @@
+<?php
+$fabric_color = array(
+        "a30504" => "red",
+        "000000" => "black",
+        
+    );
+?>
+<div id="shirtdesigner-module">
+    <table><tr><td width="400">
+    <div id="customization-panel">
+    BODY: <br/>
+    Fabric Color: <br/>
+    <div id="body-color-selections">
+        <input type="hidden" id="body-color"/>
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/>
+    </div>
+    
+    
+    NECK <br/>
+        <input type="radio" id="round-neck" name="neck-selection" class="neck-selection" value="round-neck" checked/> Round
+        <input type="radio" id="v-neck" name="neck-selection" class="neck-selection" value="v-neck" /> Vneck
+        <input type="radio" id="collar" name="neck-selection" class="neck-selection" value="collar" /> Collar  <br/>
+        Fabric Color: <br/>
+        <input type="checkbox" id="neck-same" checked/> Same as body<br/>
+        <input type="hidden" id="neck-color" value="black"/>
+        <div id="neck-color-selections" style="display:none;">
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/><br/><br/><br/>
+        </div>
+    
+    LEFT SLEEVE <br/>
+    Fabric Color:<br/>
+        <input type="checkbox" id="left-sleeve-same" checked/> Same as body <br/>
+        <input type="hidden" id="left-sleeve-color" value="black"/>
+        <div id="left-sleeve-color-selections" style="display:none;">
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/><br/><br/><br/>
+        </div>
+        
+    Outline Color:<br/>
+        <input type="checkbox" id="left-sleeve-outline-same" checked/> Same as body <br/>
+        <input type="hidden" id="left-sleeve-outline-color" value="black"/>
+        <div id="left-sleeve-outline-color-selections" style="display:none;">
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/><br/><br/><br/>
+        </div>
+    
+    RIGHT SLEEVE <br/>
+    Fabric Color:<br/>
+        <input type="checkbox" id="right-sleeve-same" checked/> Same as body <br/>
+        <input type="hidden" id="right-sleeve-color" value="black"/>
+        <div id="right-sleeve-color-selections" style="display:none;">
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/><br/><br/><br/>
+        </div>
+        
+    Outline Color:<br/>
+        <input type="checkbox" id="right-sleeve-outline-same" checked/> Same as body <br/>
+        <input type="hidden" id="right-sleeve-outline-color" value="black"/>
+        <div id="right-sleeve-outline-color-selections" style="display:none;">
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/><br/><br/><br/>
+        </div>
+    
+    EXTRAS <br/>
+    <input type="checkbox" id="add-pockets" /> Add pockets <br/>
+    <div id="pocket-options" style="display: none;">
+        
+        <button id="add-pocket"value="Ok">Add Pocket</button> <br/>
+        Color of selected pocket:
+        <div id="pocket-color-selections" >
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/><br/><br/><br/>
+        </div>
+        
+        Strip Color of selected pocket: <br/>
+        <div id="strip-pocket-color-selections" >
+        <?php 
+            foreach( $fabric_color as $id => $v) {
+                echo '<div class="shirt-color-box" id="'.$v.'" style="background-color: #'.$id.'" onclick="" title="'.$v.'"></div>';
+
+            }
+        ?>
+        <br/><br/><br/><br/><br/>
+        </div>
+    </div>
+    <button id="submit-custom-shirt">Submit</button> 
+    </div>
+            </td><td>
+    <div id="preview-panel">
+        <canvas id="body-outline" width="387" height="409" >
+         </canvas>
+        <div id="pocket-area" style="margin-left: 20px;margin-top: -320px;position: relative; display: block; width: 374px; height: 315px;"></div>
+        
+    </div>
+                
+    
+        
+    <!-- @desc Inputs the base64 code of each images -->
+    <form name="create_shirt_design" id="create-shirt-design" action="<?php echo $this->getURL('',array('_secure'=>true)).'shirtdesigner/index/createShirtDesign';?>" method="post">  
+    <input type="hidden" id="front-custom-shirt-code" name="front-custom-shirt-code" />
+    <input type="hidden" id="back-custom-shirt-code" name="back-custom-shirt-code" />
+    <input type="hidden" id="left-custom-shirt-code" name="left-custom-shirt-code" />
+    <input type="hidden" id="right-custom-shirt-code" name="right-custom-shirt-code" />
+    <input type="hidden" id="sku" name="sku" value="<?php echo $this->getData('sku'); ?>"/>
+    <input type="hidden" id="design-id" name="design-id" value="<?php echo $this->getData('design_id') ?>"/>
+                        
+    </form>
+    
+            </td></tr></table>
+</div>

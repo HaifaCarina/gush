@@ -1,0 +1,161 @@
+<?php
+
+    
+    $ignore = array( 'cgi-bin', '.', '..' ,'.DS_Store','.svn');
+    
+    $shirt_design = scandir('media/shirtdesigner/images/existing-designs/'.$this->getData('sku'));
+    $shirt_round = scandir('media/shirtdesigner/images/existing-designs/'.$this->getData('sku').'/round');
+    $shirt_vneck = scandir('media/shirtdesigner/images/existing-designs/'.$this->getData('sku').'/vneck');
+    // This gets the filename of the first item in the directory
+    $value_ok = false;
+    
+    foreach ( $shirt_round as $d ) { 
+        if(!in_array( $d, $ignore ))
+        {   
+            // echo $d;
+            if(!$value_ok) {
+            $round_url = $this->getURL()."media/shirtdesigner/images/existing-designs/".$this->getData('sku').'/round/'.$d;
+                $round_color = $d;
+                $value_ok = true;
+            }
+        } 
+    }
+    
+    $value_ok = false;
+    foreach ( $shirt_vneck as $d ) { 
+        if(!in_array( $d, $ignore ))
+        {   
+            // echo $d;
+            if(!$value_ok) {
+            $vneck_url = $this->getURL()."media/shirtdesigner/images/existing-designs/".$this->getData('sku').'/vneck/'.$d;
+                $vneck_color = $d;
+                $value_ok = true;
+            }
+        } 
+    }
+    
+?>
+<?php
+            
+        ?>
+<div id="shirtdesigner-module">
+    <div id="customization-panel">
+    <!-- MAIN TAB MENU -->
+    <ul class="shirtdesigner-tabmenu">
+        <li id="front-menu" class="active">Front</li>
+        <li id="sizes-menu" >Sizes</li>
+    </ul>
+    
+    <div class="shirtdesigner-content front-content">
+        <br/>
+        Neck Type: <br/>
+        <input type="radio" id="round" class="neck-type-options" name="neck-type-options" value="round" onclick="" checked/> Round<br/>
+        <input type="radio" id="vneck" class="neck-type-options" name="neck-type-options" value="vneck" onclick="" /> Vneck
+        <br/><br/>
+        <button class="submit">Save</button>
+    </div>
+
+    <div class="shirtdesigner-content sizes-content" >
+        <br/><br/>
+        <div id="size-chart" style="background-color: #ffffff; ">
+            <img width="403" height="361" src="<?php echo $this->getData('size-chart-url'); ?>"/>
+            <br/>
+            Quantity <br/>
+            
+            <table style="margin-left:auto; margin-right:auto; width: 300px;">
+                <tr>
+                    <td>S <input id="s" name="s" size="3" /> </td>
+                    <td>M <input id="m" name="m" size="3" /> </td>
+                </tr>
+                <tr>
+                    <td>L <input id="l" name="l" size="3" /> </td>
+                    <td>XL <input id="xl" name="xl" size="3" /> </td>
+                </tr>
+            </table>
+            <button class="submit">Save</button>
+        </div>
+    </div>
+    
+    </div>
+    
+    <div id="preview-panel">
+        <!-- MAIN TAB MENU -->
+    <ul class="shirtdesigner-tabmenu">
+        <li id="design-menu" class="active">Design Preview</li>
+        <!--<li id="swap-menu">Swap Out Item</li>-->
+    </ul>
+        <div id="main-preview" style="background-image: url('<?php echo $round_url; ?>')">
+        </div>
+        
+        <div id="shirt-color-options" class="round-preview"style="margin-top: 30px;">
+            
+            <?php 
+                
+                $count = 0;
+                foreach ( $shirt_round as $d ) { 
+                    if(!in_array( $d, $ignore ))
+                    {   
+                            $d = str_replace('.png','',$d);
+                            //echo $d;
+                            echo '<div class="shirt-color-box" id="'.$d.'" style="background-color: #'.$d.'" title="'.$d.'"></div>';
+                            $count++;
+                            if($count%18 == 0) {
+                                echo '<br/>'; 
+                            }
+                        
+                       
+                    }   
+                }
+                
+            ?>
+        </div>
+        
+        <div id="shirt-color-options" class="vneck-preview"style="margin-top: 30px;">
+            
+            <?php 
+                
+                $count = 0;
+                foreach ( $shirt_vneck as $d ) { 
+                    if(!in_array( $d, $ignore ))
+                    {   
+                            $d = str_replace('.png','',$d);
+                            //echo $d;
+                            echo '<div class="shirt-color-box" id="'.$d.'" style="background-color: #'.$d.'" title="'.$d.'"></div>';
+                            $count++;
+                            if($count%18 == 0) {
+                                echo '<br/>'; 
+                            }
+                        
+                       
+                    }   
+                }
+                
+            ?>
+        </div>
+       
+    </div>
+    
+    
+</div>
+<div id="reviewbox" style="display: none;">
+    <img id="review-front" height="270" width="250"/>
+    <br/>
+    <button id="submitfinal">This is final, submit</button>
+    <button id="cancel">Cancel</button>
+</div>
+<input type="hidden" id="round-url" name="round-url" value="<?php echo $round_url; ?>" />
+<input type="hidden" id="vneck-url" name="round-url" value="<?php echo $vneck_url; ?>" />
+<input type="hidden" id="round-color" value="<?php echo $round_color; ?>">
+<input type="hidden" id="vneck-color" value="<?php echo $vneck_color; ?>">
+<input type="hidden" id="neck-type" > 
+
+<form name="checkout_design" id="checkout-design" action="<?php echo $this->getURL().'shirtdesigner/index/saveExistingDesign';?>" method="post">  
+    
+    <input type="hidden" id="sku" name="sku" value="<?php echo $this->getData('sku') ?>"/>
+    <input type="hidden" id="product-id" name="product-id" value="<?php echo $this->getData('product_id') ?>"/>
+    <input type="hidden" id="front-image-url" name="front-image-url"/>
+    <input type="hidden" id="s-size" name="s-size"  />
+    <input type="hidden" id="m-size" name="m-size"  />
+    <input type="hidden" id="l-size" name="l-size"  />
+    <input type="hidden" id="xl-size" name="xl-size"  />
+</form>
