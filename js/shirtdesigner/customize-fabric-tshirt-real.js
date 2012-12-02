@@ -376,7 +376,7 @@ $j(document).ready(function(){
                             var i = document.createElement("img");
                             i.id = 'left-custom-shirt-img';
                             i.src = canvas.toDataURL("image/png");
-                            document.getElementById('preview-panel').appendChild(i);
+                            //document.getElementById('preview-panel').appendChild(i);
                             c2.remove();
                             
                             console.log("left max na printed na!");
@@ -456,7 +456,7 @@ $j(document).ready(function(){
                             var i = document.createElement("img");
                             i.id = 'right-custom-shirt-img';
                             i.src = canvas.toDataURL("image/png");
-                            document.getElementById('preview-panel').appendChild(i);
+                            //document.getElementById('preview-panel').appendChild(i);
                             c2.remove();
                             console.log("right max na printed na!");
                             
@@ -535,7 +535,7 @@ $j(document).ready(function(){
                             var i = document.createElement("img");
                             i.id = 'back-custom-shirt-img';
                             i.src = canvas.toDataURL("image/png");
-                            document.getElementById('preview-panel').appendChild(i);
+                            //document.getElementById('preview-panel').appendChild(i);
                             c2.remove();
                             console.log("BACK max na printed na!");
                             // WHEN EVERYTHING IS LOADED, SUBMIT PAGE
@@ -801,7 +801,7 @@ $j(document).ready(function(){
             var i = document.createElement("img");
             i.id = 'front-custom-shirt-img';
             i.src = shirt_canvas.toDataURL("image/png");
-            document.getElementById('preview-panel').appendChild(i);
+            //document.getElementById('preview-panel').appendChild(i);
             
             
             updateCanvasLeft();
