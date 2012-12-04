@@ -39,6 +39,7 @@ var highlighted_art_id;
 function removeCanvasImage(e){
     $j("#" + e).remove();
     $j("#i-" + e).remove();
+    updatePrice();
 }
   
 function highlightCanvasImage(e){
@@ -84,7 +85,7 @@ function highlightCanvasImage(e){
     }
     
     function updatePrice() {
-        var parts = 0, print_back = 0, print_left = 0, print_right = 0;
+        var parts = 0, print_front=0, print_back = 0, print_left = 0, print_right = 0;
         console.log("original price:"+ $j("#original-price").val());
        
         var price = $j("#original-price").val();
@@ -99,6 +100,8 @@ function highlightCanvasImage(e){
                     parts++;
                     break;
                 //    alert("some print is invalid!");
+                }  else {
+                    print_front = 1;
                 }
             }        
         }
@@ -123,7 +126,7 @@ function highlightCanvasImage(e){
             if(children1[c].id !== undefined ) {
                 console.log("id:"+children1[c].id);
                 console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
-                parts++;
+                
                 if($j("#"+children1[c].id).attr("valid")==0) {
                     parts++;
                     break;
@@ -140,7 +143,6 @@ function highlightCanvasImage(e){
                 console.log("id:"+children1[c].id);
                 console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
                 
-                parts++;
                 if($j("#"+children1[c].id).attr("valid")==0) {
                     parts++;
                     break;
@@ -150,10 +152,23 @@ function highlightCanvasImage(e){
                 }
             }        
         }
+              var sides = 0;
+              if (print_front==1) { sides++;}
+              if (print_back==1) { sides++;}
+              if (print_left==1) { sides++;}
+              if (print_right==1) { sides++;}
+              
+              if(sides > 1) {
+                  price += (200 * (sides-1));
+              }
+              console.log("parts:" + parts);
+              console.log("sides:" + sides);
+              
+        /*
               if (print_back==1) { price+=200;};
               if (print_left==1) { price+=200;};
               if (print_right==1) { price+=200;};
-              
+              */
               price += (200 * parts);
               $j("#product-price").val( price);
     }
