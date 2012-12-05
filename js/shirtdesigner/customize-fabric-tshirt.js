@@ -23,7 +23,7 @@ function highlightCanvasImage(e){
 
 function generateHex(color) {
     switch(color) {
-        case "black": 
+        case "red": 
             console.log("red");
             return "a30504";
             break;
@@ -31,6 +31,26 @@ function generateHex(color) {
             console.log("black");
             return "000000";
             break;
+	 case "blue":
+	     console.log("blue");
+	     return "0359a4";
+	     break;
+	 case "gray":
+	     console.log("gray");
+	     return "9b9b9b";
+	     break;
+	 case "green":
+	     console.log("green");
+	     return "096e39";
+	     break;
+	 case "white":
+	     console.log("white");
+	     return "ffffff";
+	     break;
+	 case "yellow":
+	     console.log("yellow");
+	     return "ffff01";
+	     break;
     }
 }
 
