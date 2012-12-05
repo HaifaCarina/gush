@@ -86,17 +86,19 @@
         </models>
         
         <events>
+            <!-- Hooking to our own event "sales_quote_add_item" -->
             <!-- Hooking to our own event "add_to_cart_before" -->
-            <!-- Hooking to our own event "add_to_cart_before" -->
-            <checkout_cart_save_before>
+            <sales_quote_add_item>
                 <observers>
-                    <shirtdesigner>
+                    <shirtdesigner_observer>
                         <type>singleton</type>
                         <class>shirtdesigner/observer</class>
                         <method>hookToAddToCartBefore</method>
-                    </shirtdesigner>
+                    </shirtdesigner_observer>
                 </observers>
-            </checkout_cart_save_before>
+            </sales_quote_add_item>
         </events>
+        
+        
     </global>
 </config>

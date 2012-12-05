@@ -2,13 +2,14 @@
 class Myportal_ShirtDesigner_Model_Observer
 {
     
-	   public function hookToAddToCartBefore(Varien_Event_Observer $observer)
+	   public function hookToAddToCartBefore($observer)
 	   {
-		echo '<script type="text/javascript">alert("stopWhenAddingToCart");</script>';
+               Mage::log('hookToAddToCartBefore event called');
+               echo '<script type="text/javascript">alert("stopWhenAddingToCartOKAAAAY!");</script>';
 	   /*      $event = $observer->getEvent();
 	         $model = $event->getPage();
 	     		print_r($model->getData());
-	         */die('test');
+	         *///die('test');
 	 } 
 } 
 ?>
