@@ -24,7 +24,7 @@ function highlightCanvasImage(e){
 function generateHex(color) {
     switch(color) {
         case "black": 
-            console.log("black");
+            console.log("red");
             return "a30504";
             break;
         case "black": 
@@ -32,6 +32,21 @@ function generateHex(color) {
             return "000000";
             break;
     }
+}
+
+function generateGender() {
+    var sku = $j("#sku").val();
+    var key_array = sku.split("-");
+    var gender;
+    
+    if (key_array[0] == "w") {
+        gender = "female";
+    } else {
+        gender = "male";
+    }
+    
+    return gender;
+    
 }
 
 $j(document).ready(function(){
@@ -206,6 +221,10 @@ $j(document).ready(function(){
             
        function updateCanvasSpecific(path, shirt_context){
             console.log("updateCanvasSpecific" );
+            console.log("path: "+path);
+            console.log("sku:"  + $j("#sku").val());
+            
+            
             var img_path = path; 
             var img= new Image();
             var w=387, h=409;
@@ -257,8 +276,10 @@ $j(document).ready(function(){
                 var key = sources[front_keys[i]];
                 var key_array = key.split("/");
                 key_array[8] = $j("#" + color_matches[front_keys[i]]).val();
+                key_array[6] = generateGender();
                 key = key_array.join("/");
                 
+                console.log(key_array);
                 updateCanvasSpecific(key,  shirt_context);
             }
             
@@ -313,6 +334,8 @@ $j(document).ready(function(){
                 var key = sources[keys[i]];
                 var key_array = key.split("/");
                 key_array[8] = $j("#" + color_matches[keys[i]]).val();
+                key_array[6] = generateGender();
+                
                 key = key_array.join("/");
                 
                 context.clearRect(0, 0, w,h);
@@ -394,6 +417,7 @@ $j(document).ready(function(){
                 var key = sources[keys[i]];
                 var key_array = key.split("/");
                 key_array[8] = $j("#" + color_matches[keys[i]]).val();
+                key_array[6] = generateGender();
                 key = key_array.join("/");
                 
                 context.clearRect(0, 0, 387,409);
@@ -471,6 +495,7 @@ $j(document).ready(function(){
                 var key = sources[keys[i]];
                 var key_array = key.split("/");
                 key_array[8] = $j("#" + color_matches[keys[i]]).val();
+                key_array[6] = generateGender();
                 key = key_array.join("/");
                 
                 context.clearRect(0, 0, 387,409);
