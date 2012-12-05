@@ -21,6 +21,11 @@ function highlightCanvasImage(e){
 
 }  
 
+function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+
 function generateHex(color) {
     switch(color) {
         case "red": 
@@ -671,6 +676,7 @@ $j(document).ready(function(){
             updateCanvasAll();
         });
         $j("#pocket-color-selections > div").click(function(e){
+            console.log("highlight ID:" + highlighted_id);
             var color = generateHex(e.target.id);
             var canvas = document.getElementById(highlighted_id);
             var pocket_context = canvas.getContext('2d');
