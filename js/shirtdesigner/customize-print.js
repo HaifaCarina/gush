@@ -115,15 +115,12 @@ function highlightCanvasImage(e){
                             console.log("1one colored " + art_colors[0] + ":" + pix[i]);
                                 console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
                                 console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
-                                
-                            
                         } else {
                             //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
                             if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
                                 console.log("1full colored " + art_colors[0] + ":" + pix[i]);
                                 console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
                                 console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
-                                
                                 full_color=1;
                                 break;
                             }
@@ -154,16 +151,27 @@ function highlightCanvasImage(e){
                 var pix = context.getImageData(0, 0, e.width(),e.height()).data;
                 
                 for (var i = 0, n = pix.length; i <n; i += 4) {
+                   
+                    if(pix[i+3]==255) {
                         if(art_colors.length == 0) {
-                            art_colors.push(pix[i] + pix[i+1] + pix[i+2]);
+                            art_colors.push(pix[i] );
+                            art_colors.push(pix[i +1]);
+                            art_colors.push(pix[i+2]);
+                            
+                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
                         } else {
-                            var pixel_color = pix[i] + pix[i+1] + pix[i+2];
-                            if( art_colors[0] != pixel_color) {
-                                console.log("2full colored"+ art_colors[0] + ":" + pixel_color );
+                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
+                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
                                 full_color=1;
                                 break;
                             }
                         }
+                   }
                 }
                 
                 if($j("#"+children1[c].id).attr("valid")==0) {
@@ -188,16 +196,27 @@ function highlightCanvasImage(e){
                 var pix = context.getImageData(0, 0, e.width(),e.height()).data;
                 
                 for (var i = 0, n = pix.length; i <n; i += 4) {
+                   
+                    if(pix[i+3]==255) {
                         if(art_colors.length == 0) {
-                            art_colors.push(pix[i] + pix[i+1] + pix[i+2]);
+                            art_colors.push(pix[i] );
+                            art_colors.push(pix[i +1]);
+                            art_colors.push(pix[i+2]);
+                            
+                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
                         } else {
-                            var pixel_color = pix[i] + pix[i+1] + pix[i+2];
-                            if( art_colors[0] != pixel_color) {
-                                console.log("3full colored"+ art_colors[0] + ":" + pixel_color );
+                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
+                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
                                 full_color=1;
                                 break;
                             }
                         }
+                   }
                 }
                 
                 if($j("#"+children1[c].id).attr("valid")==0) {
@@ -222,16 +241,27 @@ function highlightCanvasImage(e){
                 var pix = context.getImageData(0, 0, e.width(),e.height()).data;
                 
                 for (var i = 0, n = pix.length; i <n; i += 4) {
+                   
+                    if(pix[i+3]==255) {
                         if(art_colors.length == 0) {
-                            art_colors.push(pix[i] + pix[i+1] + pix[i+2]);
+                            art_colors.push(pix[i] );
+                            art_colors.push(pix[i +1]);
+                            art_colors.push(pix[i+2]);
+                            
+                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
                         } else {
-                            var pixel_color = pix[i] + pix[i+1] + pix[i+2];
-                            if( art_colors[0] != pixel_color) {
-                                console.log("4full colored"+ art_colors[0] + ":" + pixel_color );
+                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
+                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
                                 full_color=1;
                                 break;
                             }
                         }
+                   }
                 }
                 
                 if($j("#"+children1[c].id).attr("valid")==0) {
