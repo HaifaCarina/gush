@@ -154,7 +154,20 @@ $j(document).ready(function(){
             left_round_body_btm: "body-color",
             left_round_neck: "left-sleeve-outline-color",
             left_round_sleeve: "left-sleeve-color",
-            left_round_btm: "left-sleeve-outline-color"
+            left_round_btm: "left-sleeve-outline-color",
+            
+            right_vneck_body: "body-color",
+            right_vneck_body_btm: "body-color",
+            right_vneck_neck: "right-sleeve-outline-color",
+            right_vneck_sleeve: "right-sleeve-color",
+            right_vneck_btm: "right-sleeve-outline-color",
+            
+            left_vneck_body: "body-color",
+            left_vneck_body_btm: "body-color",
+            left_vneck_neck: "left-sleeve-outline-color",
+            left_vneck_sleeve: "left-sleeve-color",
+            left_vneck_btm: "left-sleeve-outline-color"
+        
 
             };
         
@@ -230,7 +243,20 @@ $j(document).ready(function(){
             left_round_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-body-btm.png",
             left_round_neck: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-neck.png",
             left_round_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve.png",
-            left_round_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve-btm.png"
+            left_round_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve-btm.png",
+            
+            right_vneck_body: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-body.png",
+            right_vneck_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-body-btm.png",
+            right_vneck_neck: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-neck.png",
+            right_vneck_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-sleeve.png",
+            right_vneck_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-sleeve-btm.png",
+            
+            left_vneck_body: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-body.png",
+            left_vneck_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-body-btm.png",
+            left_vneck_neck: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-neck.png",
+            left_vneck_sleeve: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve.png",
+            left_vneck_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/left-round/left-sleeve-btm.png"
+        
         };
         
         var c1 = document.createElement("canvas");
@@ -359,12 +385,14 @@ $j(document).ready(function(){
                
                 var key = sources[keys[i]];
                  console.log("keys:" +keys[i] );
+                 console.log("color matches:" + color_matches[keys[i]]);
                 var key_array = key.split("/");
                 key_array[8] = $j("#" + color_matches[keys[i]]).val();
                 key_array[6] = generateGender();
                 
                 key = key_array.join("/");
-                
+                console.log("key_array:" +key_array );
+                 
                 context.clearRect(0, 0, w,h);
                 
                 var img_path = key; 
