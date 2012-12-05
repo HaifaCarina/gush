@@ -85,7 +85,9 @@ function highlightCanvasImage(e){
     }
     
     function updatePrice() {
-        var parts = 0, print_front=0, print_back = 0, print_left = 0, print_right = 0;
+        var parts = 0, print_front=0, print_back = 0, print_left = 0, print_right = 0, full_color=0;
+        var art_colors = new Array();
+        
         console.log("original price:"+ $j("#original-price").val());
        
         var price = $j("#original-price").val();
@@ -96,6 +98,39 @@ function highlightCanvasImage(e){
             if(children1[c].id !== undefined ) {
                 console.log("id:"+children1[c].id);
                 console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
+                
+                var canvas = document.getElementById(children1[c].id);
+                var context = canvas.getContext('2d');
+                var e = $j("#"+children1[c].id);
+                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
+                
+                for (var i = 0, n = pix.length; i <n; i += 4) {
+                   
+                    if(pix[i+3]==255) {
+                        if(art_colors.length == 0) {
+                            art_colors.push(pix[i] );
+                            art_colors.push(pix[i +1]);
+                            art_colors.push(pix[i+2]);
+                            
+                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
+                                
+                            
+                        } else {
+                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
+                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
+                                
+                                full_color=1;
+                                break;
+                            }
+                        }
+                   }
+                }
+                
                 if($j("#"+children1[c].id).attr("valid")==0) {
                     parts++;
                     break;
@@ -103,6 +138,7 @@ function highlightCanvasImage(e){
                 }  else {
                     print_front = 1;
                 }
+            
             }        
         }
         
@@ -111,6 +147,25 @@ function highlightCanvasImage(e){
             if(children1[c].id !== undefined ) {
                 console.log("id:"+children1[c].id);
                 console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
+                
+                var canvas = document.getElementById(children1[c].id);
+                var context = canvas.getContext('2d');
+                var e = $j("#"+children1[c].id);
+                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
+                
+                for (var i = 0, n = pix.length; i <n; i += 4) {
+                        if(art_colors.length == 0) {
+                            art_colors.push(pix[i] + pix[i+1] + pix[i+2]);
+                        } else {
+                            var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                            if( art_colors[0] != pixel_color) {
+                                console.log("2full colored"+ art_colors[0] + ":" + pixel_color );
+                                full_color=1;
+                                break;
+                            }
+                        }
+                }
+                
                 if($j("#"+children1[c].id).attr("valid")==0) {
                     parts++;
                     break;
@@ -126,6 +181,24 @@ function highlightCanvasImage(e){
             if(children1[c].id !== undefined ) {
                 console.log("id:"+children1[c].id);
                 console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
+                
+                var canvas = document.getElementById(children1[c].id);
+                var context = canvas.getContext('2d');
+                var e = $j("#"+children1[c].id);
+                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
+                
+                for (var i = 0, n = pix.length; i <n; i += 4) {
+                        if(art_colors.length == 0) {
+                            art_colors.push(pix[i] + pix[i+1] + pix[i+2]);
+                        } else {
+                            var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                            if( art_colors[0] != pixel_color) {
+                                console.log("3full colored"+ art_colors[0] + ":" + pixel_color );
+                                full_color=1;
+                                break;
+                            }
+                        }
+                }
                 
                 if($j("#"+children1[c].id).attr("valid")==0) {
                     parts++;
@@ -143,6 +216,24 @@ function highlightCanvasImage(e){
                 console.log("id:"+children1[c].id);
                 console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
                 
+                var canvas = document.getElementById(children1[c].id);
+                var context = canvas.getContext('2d');
+                var e = $j("#"+children1[c].id);
+                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
+                
+                for (var i = 0, n = pix.length; i <n; i += 4) {
+                        if(art_colors.length == 0) {
+                            art_colors.push(pix[i] + pix[i+1] + pix[i+2]);
+                        } else {
+                            var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                            if( art_colors[0] != pixel_color) {
+                                console.log("4full colored"+ art_colors[0] + ":" + pixel_color );
+                                full_color=1;
+                                break;
+                            }
+                        }
+                }
+                
                 if($j("#"+children1[c].id).attr("valid")==0) {
                     parts++;
                     break;
@@ -152,6 +243,8 @@ function highlightCanvasImage(e){
                 }
             }        
         }
+              if (full_color==1) { price += 150;}
+              
               var sides = 0;
               if (print_front==1) { sides++;}
               if (print_back==1) { sides++;}
@@ -1544,7 +1637,7 @@ $j(document).ready(function(){
     /******** ART EVENTS ********/
     /******** ART EVENTS ********/
     /******** ART EVENTS ********/
-    var art_color = "blue";
+    var art_color = "#111111";
     var art_canvas_id;
     var art_element_id;
     var art_size = $j("#art-size").val();
@@ -1624,7 +1717,7 @@ $j(document).ready(function(){
     }
     
     function drawArt() {
-        
+        console.log("drawArt");
         var art_canvas = document.getElementById(art_canvas_id);
         var art_context = art_canvas.getContext('2d');
         
@@ -1650,7 +1743,7 @@ $j(document).ready(function(){
               //pix[i+3] is the transparency.
         }
         art_context.putImageData(imgd, 0, 0);
-        
+        updatePrice();
     }
     
     
@@ -1830,7 +1923,7 @@ $j(document).ready(function(){
         var imgd = image_context.getImageData(0, 0, getImageSize(), getImageSize()),
         pix = imgd.data;
         image_context.putImageData(imgd, 0, 0);
-        
+        updatePrice();
     }
     
     
