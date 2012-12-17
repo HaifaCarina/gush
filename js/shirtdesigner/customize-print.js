@@ -6,19 +6,19 @@ function Record() {
     this.text_1 = "";
     this.text_1_font_family = "Arial";
     this.text_1_size = 12;
-    this.text_1_color = "black";
+    this.text_1_color = "#000000";
     this.text_1_style = "straight";
     
     this.text_2 = "";
     this.text_2_font_family = "Arial";
     this.text_2_size = 12;
-    this.text_2_color = "black";
+    this.text_2_color = "#000000";
     this.text_2_style = "straight";
     
     this.text_3 = "";
     this.text_3_font_family = "Arial";
     this.text_3_size = 12;
-    this.text_3_color = "black";
+    this.text_3_color = "#000000";
     this.text_3_style = "straight";
     
     this.art = new Array();
@@ -84,436 +84,9 @@ function highlightCanvasImage(e){
 
     }
     
-    function updatePrice() {
-        var parts = 0, print_front=0, print_back = 0, print_left = 0, print_right = 0, full_color=0;
-        var art_colors = new Array();
-        
-        console.log("original price:"+ $j("#original-price").val());
-       
-        var price = $j("#original-price").val();
-        price = Number(new String(price.replace(",","")));
-        
-        var children1 = document.getElementById('art-canvas').childNodes;
-        for (var c in children1){
-            if(children1[c].id !== undefined ) {
-                console.log("id:"+children1[c].id);
-                console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
-                
-                var canvas = document.getElementById(children1[c].id);
-                var context = canvas.getContext('2d');
-                var e = $j("#"+children1[c].id);
-                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
-                
-                for (var i = 0, n = pix.length; i <n; i += 4) {
-                   
-                    if(pix[i+3]==255) {
-                        if(art_colors.length == 0) {
-                            art_colors.push(pix[i] );
-                            art_colors.push(pix[i +1]);
-                            art_colors.push(pix[i+2]);
-                            
-                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
-                        } else {
-                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
-                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
-                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
-                                full_color=1;
-                                break;
-                            }
-                        }
-                   }
-                }
-                
-                if($j("#"+children1[c].id).attr("valid")==0) {
-                    parts++;
-                    break;
-                //    alert("some print is invalid!");
-                }  else {
-                    print_front = 1;
-                }
-            
-            }        
-        }
-        
-        children1 = document.getElementById('art-canvas2').childNodes;
-        for (var c in children1){
-            if(children1[c].id !== undefined ) {
-                console.log("id:"+children1[c].id);
-                console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
-                
-                var canvas = document.getElementById(children1[c].id);
-                var context = canvas.getContext('2d');
-                var e = $j("#"+children1[c].id);
-                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
-                
-                for (var i = 0, n = pix.length; i <n; i += 4) {
-                   
-                    if(pix[i+3]==255) {
-                        if(art_colors.length == 0) {
-                            art_colors.push(pix[i] );
-                            art_colors.push(pix[i +1]);
-                            art_colors.push(pix[i+2]);
-                            
-                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
-                        } else {
-                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
-                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
-                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
-                                full_color=1;
-                                break;
-                            }
-                        }
-                   }
-                }
-                
-                if($j("#"+children1[c].id).attr("valid")==0) {
-                    parts++;
-                    break;
-                //    alert("some print is invalid!");
-                } else {
-                    print_back = 1;
-                }
-            }        
-        }
-        
-        children1 = document.getElementById('art-canvas3').childNodes;
-        for (var c in children1){
-            if(children1[c].id !== undefined ) {
-                console.log("id:"+children1[c].id);
-                console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
-                
-                var canvas = document.getElementById(children1[c].id);
-                var context = canvas.getContext('2d');
-                var e = $j("#"+children1[c].id);
-                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
-                
-                for (var i = 0, n = pix.length; i <n; i += 4) {
-                   
-                    if(pix[i+3]==255) {
-                        if(art_colors.length == 0) {
-                            art_colors.push(pix[i] );
-                            art_colors.push(pix[i +1]);
-                            art_colors.push(pix[i+2]);
-                            
-                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
-                        } else {
-                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
-                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
-                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
-                                full_color=1;
-                                break;
-                            }
-                        }
-                   }
-                }
-                
-                if($j("#"+children1[c].id).attr("valid")==0) {
-                    parts++;
-                    break;
-                //    alert("some print is invalid!");
-                } else {
-                    print_left = 1;
-                }
-            }        
-        }
-        
-        children1 = document.getElementById('art-canvas4').childNodes;
-        for (var c in children1){
-            if(children1[c].id !== undefined ) {
-                console.log("id:"+children1[c].id);
-                console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
-                
-                var canvas = document.getElementById(children1[c].id);
-                var context = canvas.getContext('2d');
-                var e = $j("#"+children1[c].id);
-                var pix = context.getImageData(0, 0, e.width(),e.height()).data;
-                
-                for (var i = 0, n = pix.length; i <n; i += 4) {
-                   
-                    if(pix[i+3]==255) {
-                        if(art_colors.length == 0) {
-                            art_colors.push(pix[i] );
-                            art_colors.push(pix[i +1]);
-                            art_colors.push(pix[i+2]);
-                            
-                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
-                        } else {
-                            //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
-                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
-                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
-                                full_color=1;
-                                break;
-                            }
-                        }
-                   }
-                }
-                
-                if($j("#"+children1[c].id).attr("valid")==0) {
-                    parts++;
-                    break;
-                //    alert("some print is invalid!");
-                } else {
-                    print_right = 1;
-                }
-            }        
-        }
-              if (full_color==1) { price += 150;}
-              
-              var sides = 0;
-              if (print_front==1) { sides++;}
-              if (print_back==1) { sides++;}
-              if (print_left==1) { sides++;}
-              if (print_right==1) { sides++;}
-              
-              if(sides > 1) {
-                  price += (200 * (sides-1));
-              }
-              console.log("parts:" + parts);
-              console.log("sides:" + sides);
-              
-        /*
-              if (print_back==1) { price+=200;};
-              if (print_left==1) { price+=200;};
-              if (print_right==1) { price+=200;};
-              */
-              price += (200 * parts);
-              $j("#product-price").val( price);
-    }
+    
 $j(document).ready(function(){
      window.console = $j('<iframe>').hide().appendTo('body')[0].contentWindow.console;
-     
-     
-     $j("#border-1").draggable({
-        stop: function() {
-           var pos = $j(this).position();
-             var pos_left = pos.left + 135;
-             var pos_top = pos.top +120;
-             var pos_right = pos.left + 135 + 100;
-             var pos_bottom = pos.top +120 + 130;
-             $j("#allowed-left-1").val(pos_left);
-             $j("#allowed-top-1").val(pos_top);
-             $j("#allowed-right-1").val(pos_right);
-             $j("#allowed-bottom-1").val(pos_bottom);
-             
-             var children1 = document.getElementById('art-canvas').childNodes;
-             for (var c in children1){
-                if(children1[c].id !== undefined ) {
-                    console.log("FRONT VALID ELEMENTS:"+$j("#"+children1[c].id).attr("valid") + $j("#"+children1[c].id).attr("id"));
-                        var e = $j("#"+children1[c].id);
-                        var p = $j("#"+children1[c].id).position();
-
-                            if(p.left >= $j("#allowed-left-1").val() && p.top >= $j("#allowed-top-1").val() && (p.left + e.width() ) <= $j("#allowed-right-1").val() && (p.top + e.height() ) <= $j("#allowed-bottom-1").val()) {
-                                //$j(this).attr("valid",1);
-                                $j("#"+children1[c].id).attr("valid",1);
-                                console.log("FRONT valid position" + p.left + ">" + $j("#allowed-left-1").val() +" " + p.top + ">" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                            } else {
-                                //$j(this).attr("valid",0);
-                                $j("#"+children1[c].id).attr("valid",0);
-                                console.log("FRONT invalid position" + p.left + ":" + $j("#allowed-left-1").val() +" " + p.top + ":" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                            }
-
-                }        
-              }
-             console.log("FRONT  TESTING BORDER: left: " + $j("#allowed-left-1").val() + "; top:" +$j("#allowed-top-1").val() + "bottom: " + $j("#allowed-bottom-1").val() + " right:" +$j("#allowed-right-1").val());
-            updatePrice();   
-        }
-     });
-     
-     $j("#border-2").draggable({
-        stop: function() {
-           var pos = $j(this).position();
-             var pos_left = pos.left + 135;
-             var pos_top = pos.top +120;
-             var pos_right = pos.left + 135 + 100;
-             var pos_bottom = pos.top +120 + 130;
-             
-             $j("#allowed-left-2").val(pos_left);
-             $j("#allowed-top-2").val(pos_top);
-             $j("#allowed-right-2").val(pos_right);
-             $j("#allowed-bottom-2").val(pos_bottom);
-             
-             var children2 = document.getElementById('art-canvas2').childNodes;
-             for (var c in children2){
-                if(children2[c].id !== undefined ) {
-                    console.log("BACK VALID ELEMENTS:"+$j("#"+children2[c].id).attr("valid") + $j("#"+children2[c].id).attr("id"));
-                        var e = $j("#"+children2[c].id);
-                        var p = $j("#"+children2[c].id).position();
-
-                            if(p.left >= $j("#allowed-left-2").val() && p.top >= $j("#allowed-top-2").val() && (p.left + e.width() ) <= $j("#allowed-right-2").val() && (p.top + e.height() ) <= $j("#allowed-bottom-2").val()) {
-                                //$j(this).attr("valid",1);
-                                $j("#"+children2[c].id).attr("valid",1);
-                                console.log("FRONT valid position" + p.left + ">" + $j("#allowed-left-2").val() +" " + p.top + ">" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
-                            } else {
-                                //$j(this).attr("valid",0);
-                                $j("#"+children2[c].id).attr("valid",0);
-                                console.log("FRONT invalid position" + p.left + ":" + $j("#allowed-left-2").val() +" " + p.top + ":" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
-                            }
-
-                }        
-              }
-              console.log("BACK  TESTING BORDER: left: " + $j("#allowed-left-2").val() + "; top:" +$j("#allowed-top-2").val() + "bottom: " + $j("#allowed-bottom-2").val() + " right:" +$j("#allowed-right-2").val());
-              updatePrice(); 
-        }
-     });
-     
-     $j("#border-3").draggable({
-        stop: function() {
-           var pos = $j(this).position();
-             var pos_left = pos.left + 135;
-             var pos_top = pos.top +120;
-             var pos_right = pos.left + 135 + 100;
-             var pos_bottom = pos.top +120 + 130;
-             
-             $j("#allowed-left-3").val(pos_left);
-             $j("#allowed-top-3").val(pos_top);
-             $j("#allowed-right-3").val(pos_right);
-             $j("#allowed-bottom-3").val(pos_bottom);
-             
-             var children3 = document.getElementById('art-canvas3').childNodes;
-             for (var c in children3){
-                if(children3[c].id !== undefined ) {
-                    console.log("LEFT VALID ELEMENTS:"+$j("#"+children3[c].id).attr("valid") + $j("#"+children3[c].id).attr("id"));
-                        var e = $j("#"+children3[c].id);
-                        var p = $j("#"+children3[c].id).position();
-
-                            if(p.left >= $j("#allowed-left-3").val() && p.top >= $j("#allowed-top-3").val() && (p.left + e.width() ) <= $j("#allowed-right-3").val() && (p.top + e.height() ) <= $j("#allowed-bottom-3").val()) {
-                                //$j(this).attr("valid",1);
-                                $j("#"+children3[c].id).attr("valid",1);
-                                console.log("LEFT valid position" + p.left + ">" + $j("#allowed-left-3").val() +" " + p.top + ">" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
-                            } else {
-                                //$j(this).attr("valid",0);
-                                $j("#"+children3[c].id).attr("valid",0);
-                                console.log("LEFT invalid position" + p.left + ":" + $j("#allowed-left-3").val() +" " + p.top + ":" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
-                            }
-
-                }        
-              }
-              console.log("LEFT  TESTING BORDER: left: " + $j("#allowed-left-3").val() + "; top:" +$j("#allowed-top-3").val() + "bottom: " + $j("#allowed-bottom-3").val() + " right:" +$j("#allowed-right-3").val());
-              updatePrice(); 
-        }
-     });
-     
-     $j("#border-4").draggable({
-         
-         stop: function() {
-             var pos = $j(this).position();
-             var pos_left = pos.left + 135;
-             var pos_top = pos.top +120;
-             var pos_right = pos.left + 135 + 100;
-             var pos_bottom = pos.top +120 + 130;
-             
-             $j("#allowed-left-4").val(pos_left);
-             $j("#allowed-top-4").val(pos_top);
-             $j("#allowed-right-4").val(pos_right);
-             $j("#allowed-bottom-4").val(pos_bottom);
-             
-             var children4 = document.getElementById('art-canvas4').childNodes;
-             for (var c in children4){
-                if(children4[c].id !== undefined ) {
-                    console.log("RIGHT VALID ELEMENTS:"+$j("#"+children4[c].id).attr("valid") + $j("#"+children4[c].id).attr("id"));
-                        var e = $j("#"+children4[c].id);
-                        var p = $j("#"+children4[c].id).position();
-
-                            if(p.left >= $j("#allowed-left-4").val() && p.top >= $j("#allowed-top-4").val() && (p.left + e.width() ) <= $j("#allowed-right-4").val() && (p.top + e.height() ) <= $j("#allowed-bottom-4").val()) {
-                                //$j(this).attr("valid",1);
-                                $j("#"+children4[c].id).attr("valid",1);
-                                console.log("RIGHT valid position" + p.left + ">" + $j("#allowed-left-4").val() +" " + p.top + ">" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
-                            } else {
-                                //$j(this).attr("valid",0);
-                                $j("#"+children4[c].id).attr("valid",0);
-                                console.log("RIGHT invalid position" + p.left + ":" + $j("#allowed-left-4").val() +" " + p.top + ":" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
-                            }
-
-                }        
-              }
-              console.log("RIGHT TESTING BORDER: left: " + $j("#allowed-left-4").val() + "; top:" +$j("#allowed-top-4").val() + "bottom: " + $j("#allowed-bottom-4").val() + " right:" +$j("#allowed-right-4").val());
-              updatePrice(); 
-        }
-     });
-     
-     $j("#border-2").hide();
-     $j("#border-3").hide();
-     $j("#border-4").hide();
-     
-     $j("#print-guide-border").click(function(){
-         if ($j(this).is(':checked')) {
-           // alert("checked");
-            
-            
-            switch (active){
-                case "front": 
-                    $j("#border-1").show();
-                    $j("#border-2").hide();
-                    $j("#border-3").hide();
-                    $j("#border-4").hide();
-                    break;
-                case "back":
-                    $j("#border-1").hide();
-                    $j("#border-2").show();
-                    $j("#border-3").hide();
-                    $j("#border-4").hide();
-                    break;
-                case "left": 
-                    $j("#border-1").hide();
-                    $j("#border-2").hide();
-                    $j("#border-3").show();
-                    $j("#border-4").hide();
-                    break;
-                case "right":
-                    $j("#border-1").hide();
-                    $j("#border-2").hide();
-                    $j("#border-3").hide();
-                    $j("#border-4").show();
-                    break;
-            }
-         }else {
-           // alert('unchecked');
-            //$j("#border-1").hide();
-            switch (active){
-                case "front": 
-                    $j("#border-1").hide();
-                    $j("#border-2").hide();
-                    $j("#border-3").hide();
-                    $j("#border-4").hide();
-                    break;
-                case "back":
-                    $j("#border-1").hide();
-                    $j("#border-2").hide();
-                    $j("#border-3").hide();
-                    $j("#border-4").hide();
-                    break;
-                case "left": 
-                    $j("#border-1").hide();
-                    $j("#border-2").hide();
-                    $j("#border-3").hide();
-                    $j("#border-4").hide();
-                    break;
-                case "right":
-                    $j("#border-1").hide();
-                    $j("#border-2").hide();
-                    $j("#border-3").hide();
-                    $j("#border-4").hide();
-                    break;
-            }
-         }
-         
-     });
      
      
     $j(".shirtdesigner-tabmenu > li").click(function(e){
@@ -887,7 +460,7 @@ $j(document).ready(function(){
                 
     var text_size = parseInt($j("#text-size").val());
     var text_font_family = $j("#text-font").val();
-    var text_color = "black";
+    var text_color = "#000000";
     var text_style = "straight";
     var active_text = "1";
     $j("#front-text-1-size").val(text_size);
@@ -952,7 +525,11 @@ $j(document).ready(function(){
     
     $j("#text-3").attr("readonly",true);
     $j("#text-2").attr("readonly",true);
+    
+    //$j("#text-print-1").draggable();
+    
     var canvas = document.getElementById('print');
+    //var canvas = document.getElementById('text-print-1');
     var canvas2 = document.getElementById('print2');
     var canvas3 = document.getElementById('print3');
     var canvas4 = document.getElementById('print4');
@@ -1000,6 +577,7 @@ $j(document).ready(function(){
     function textDraw1() {
         
         var canvas = document.getElementById('print');
+        //var canvas = document.getElementById('text-print-1');
         
         var x = canvas.width/2;
         var y = 0;
@@ -1074,7 +652,7 @@ $j(document).ready(function(){
         }
         
         
-       
+       updatePrice();
     }
  /******** TEXT2 ********/  
     function textDraw2() {
@@ -1151,7 +729,7 @@ $j(document).ready(function(){
                 state4.addShape(shape42);
                 break;
         }
-        
+        updatePrice();
         
     }
  /******** TEXT3 ********/   
@@ -1228,7 +806,7 @@ $j(document).ready(function(){
                 state4.addShape(shape43);
                 break;
         }
-        
+        updatePrice();
     }
     $j("#text-size").change(function () {
         text_size = parseInt($j("#text-size").val());
@@ -1313,6 +891,7 @@ $j(document).ready(function(){
                 }
                 break;
         }
+        updatePrice();
         
     });
     
@@ -1400,10 +979,11 @@ $j(document).ready(function(){
                 }
                 break;
         }
-        
+        updatePrice();
     });
     
     $j(".text-color-selections > div").click(function(e){
+        
         text_color = "#"+e.target.id;
         console.log( '.text-color-selections > div' + active_text);
         
@@ -1577,7 +1157,7 @@ $j(document).ready(function(){
                 }
                 break;
         }
-        
+        updatePrice();
     });
     
     $j("#text-1").keyup(function(e,val){
@@ -1601,6 +1181,7 @@ $j(document).ready(function(){
                 break;
         }
         textDraw1();
+        updatePrice();
     });
     
     $j("#text-2").keyup(function(e,val){
@@ -1624,6 +1205,7 @@ $j(document).ready(function(){
                 break;
         }
         textDraw2();
+        updatePrice();
     });
     
     $j("#text-3").keyup(function(e,val){
@@ -1647,14 +1229,21 @@ $j(document).ready(function(){
                 break;
         }
         textDraw3();
+        updatePrice();
+    });
+    
+    
+    $j(".bordered").click(function(){
+        console.log("MOUSEDOWN!");
+        updatePrice();
     });
     
     $j("#art-category").change(function () {
         
-        var categories = new Array("animals","fitness","floral","fruits","gifts","military","miscellaneous","music","party","people","shapes","sports","techno","valentine");
+        var categories = new Array("animals","fitness","floral","fruits","gifts","gushdesigns","military","miscellaneous","music","party","people","shapes","sports","techno","valentine");
         art_category = $j("#art-category").val();
         
-        for (var i = 0; i < categories.length; i++) {
+		for (var i = 0; i < categories.length; i++) {
             var x = "#"+categories[i];
             $j(x).css("display", "none");
         }
@@ -1667,7 +1256,7 @@ $j(document).ready(function(){
     /******** ART EVENTS ********/
     /******** ART EVENTS ********/
     /******** ART EVENTS ********/
-    var art_color = "#111111";
+    var art_color = "#000000";
     var art_canvas_id;
     var art_element_id;
     var art_size = $j("#art-size").val();
@@ -1691,7 +1280,14 @@ $j(document).ready(function(){
                 e.height = 100;
                 e.width = 100;
                 break;
-            
+            case "custom1":
+                e.height = 160;
+                e.width = 160;
+                break;
+			case "custom2":
+                e.height = 200;
+                e.width = 200;
+                break;	
         }
         drawArt();
     });
@@ -1705,26 +1301,59 @@ $j(document).ready(function(){
           if(inputs[i].id.indexOf(art_element_id) == 0)
                 art_element_id = inputs[i].id;
         }
-
-        var e = document.getElementById(highlighted_art_id);
+		var e = document.getElementById(highlighted_art_id);
+        var f = document.getElementById(art_element_id);
+        var i = new Image();
+	i.src = f.src;
+        i.onload = function () {
         
-        switch($j("#image-size").val()){
-            case "small":
-                e.height = 25;
-                e.width = 25;
+        
+		//alert(i.width + 'x' + i.height);
+		switch($j("#image-size").val()){
+            case "10":
+                e.height = i.height * 0.10;
+                e.width = i.width * 0.10;
                 break;
-            case "medium":
-                e.height = 50;
-                e.width = 50;
+            case "15":
+                e.height = i.height * 0.15;
+                e.width = i.width * 0.15;
                 break;
-            case "large":
-                e.height = 100;
-                e.width = 100;
+            case "20":
+                e.height = i.height * 0.20;
+                e.width = i.width * 0.20;
+                break;
+			case "25":
+                e.height = i.height * 0.25;
+                e.width = i.width * 0.25;
+                break;
+			case "30":
+                e.height = i.height * 0.30;
+                e.width = i.width * 0.30;
+                break;
+			case "40":
+                e.height = i.height * 0.40;
+                e.width = i.width * 0.40;
+                break;
+            case "50":
+                e.height = i.height * 0.50;
+                e.width = i.width * 0.50;
+                break;
+			case "60":
+                e.height = i.height * 0.60;
+                e.width = i.width * 0.60;
+                break;
+			case "75":
+                e.height = i.height * 0.75;
+                e.width = i.width * 0.75;
+                break;
+			case "100":
+                e.height = i.height * 1.00;
+                e.width = i.width * 1.00;
                 break;
             
         }
         drawImage();
-        
+        };
     });
     
     function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
@@ -1742,6 +1371,12 @@ $j(document).ready(function(){
             case "large":
                 return 100;
                 break;
+			case "custom1":
+                return 160;
+                break;
+			case "custom2":
+                return 200;
+                break;
             
         }
     }
@@ -1753,25 +1388,29 @@ $j(document).ready(function(){
         
         var art = art_canvas_id.split('-');
         art[0] = art[0].substr(1,art[0].length);
-        
+        //alert(art[0]);
         var img_path = "../../media/shirtdesigner/images/art/"+ art[0] + "/"+ art_element_id;
         var img= new Image();
         
-        img.src= img_path;
+		img.src= img_path;
         art_context.clearRect(0, 0, getArtSize(), getArtSize());
         art_context.drawImage(img, 0, 0, getArtSize(), getArtSize());
         
         var imgd = art_context.getImageData(0, 0, getArtSize(), getArtSize()),
         pix = imgd.data;
-
-        // Loops through all of the pixels and modifies the components.
-        for (var i = 0, n = pix.length; i <n; i += 4) {
+		
+		if(art[0]!="gushdesigns")
+		{
+        	// Loops through all of the pixels and modifies the components.
+        	for (var i = 0, n = pix.length; i <n; i += 4) {
               
-              pix[i] = hexToR(art_color);
-              pix[i+1] = hexToG(art_color);
-              pix[i+2] = hexToB(art_color);
-              //pix[i+3] is the transparency.
-        }
+				  pix[i] = hexToR(art_color);
+				  pix[i+1] = hexToG(art_color);
+				  pix[i+2] = hexToB(art_color);
+				  //pix[i+3] is the transparency.
+        	}
+		}
+		
         art_context.putImageData(imgd, 0, 0);
         updatePrice();
     }
@@ -1915,6 +1554,7 @@ $j(document).ready(function(){
         art_element_id = highlighted_art_id.substr(1,highlighted_art_id.length) + '.png';
         
         drawArt();
+        updatePrice();
      });
      
      /******** ART EVENTS ********/
@@ -1923,16 +1563,36 @@ $j(document).ready(function(){
      
      function getImageSize() {
         switch($j("#image-size").val()){
-            case "small":
-                return 25;
+            case "10":
+                return 0.10;
                 break;
-            case "medium":
-                return 50;
+            case "15":
+                return 0.15;
                 break;
-            case "large":
-                return 100;
+            case "20":
+                return 0.20;
                 break;
-            
+            case "25":
+                return 0.25;
+                break;
+			case "30":
+                return 0.30;
+                break;
+			case "40":
+                return 0.40;
+                break;
+			case "50":
+                return 0.50;
+                break;
+            case "60":
+                return 0.60;
+                break;
+            case "75":
+                return 0.75;
+                break;
+			case "100":
+                return 1.00;
+                break;
         }
     }
     
@@ -1943,17 +1603,41 @@ $j(document).ready(function(){
         var image_canvas = document.getElementById(image_canvas_id);
         var image_context = image_canvas.getContext('2d');
         var img_path = "../../media/shirtdesigner/images/uploads/"+ design_id+"/"+image_element_id;
+        console.log('check ID:' + image_element_id);
+        
+        var eff = document.getElementById(image_element_id);
+        /*var i = new Image();
+        i.src = eff.src;
+        var h = i.height * getImageSize();
+        var w = i.width * getImageSize();
+        console.log('check width&hieght:' + i.height + 'x' + i.width);
+        console.log('check src:' + i.src);
+        */
         
         var img= new Image();
-        img.src= img_path;
+        img.src= eff.src;//img_path;
+        /*var h = img.height * getImageSize();
+        var w = img.width * getImageSize();
+        console.log('check width&hieght:' + img.height + 'x' + img.width );
+        */
+        var h, w;
+        
         img.onload = function () {
-            image_context.clearRect(0,0,getImageSize(),getImageSize());
-            image_context.drawImage(img,0,0,getImageSize(),getImageSize());
+            h = img.height * getImageSize();
+            w = img.width * getImageSize();
+            console.log('check width&hieght:' + img.height + 'x' + img.width);
+            console.log('check src:' + img.src);
+        
+            image_context.clearRect(0,0,w,h);
+            image_context.drawImage(img,0,0,w,h);
+            
+            //var imgd = image_context.getImageData(0, 0, w, h),
+            //pix = imgd.data;
+            //image_context.putImageData(imgd, 0, 0);
+            updatePrice();
         };
-        var imgd = image_context.getImageData(0, 0, getImageSize(), getImageSize()),
-        pix = imgd.data;
-        image_context.putImageData(imgd, 0, 0);
-        updatePrice();
+        
+        
     }
     
     
@@ -1987,52 +1671,65 @@ $j(document).ready(function(){
         if ($j('#'+image_canvas_id).length > 0 ) {
             drawImage();
         }else {
+            var c, h, w;
+            //alert(image_element_id);
+			var eff = document.getElementById(image_element_id);
+			var i = new Image();
+			i.src = eff.src;
+                        i.onload = function () {
+                            h = i.height * getImageSize();
+                            w = i.width * getImageSize();
+
+                            console.log("before drawImage " + h + "||" + w);
+
+                            c = document.createElement("canvas");
+                            c.id= image_canvas_id;
+                            c.width= w;//100;
+                            c.height=h;//100; 
+                            c.setAttribute('ondblclick', 'removeCanvasImage("'+image_canvas_id+'")');
+                            c.setAttribute('onclick', 'highlightCanvasImage("'+image_canvas_id+'")');
+                            
+                            highlighted_art_id = image_canvas_id;
+                            $j("#image-canvas canvas").removeClass();
+                            c.setAttribute('class','highlight-canvas-image');
+
+                            var link = document.getElementById(image_element_id).getAttribute("src");
+                            link = link.replace("../../", getBaseURL())
+
+
+                            var inputElement = document.createElement("input");
+                            inputElement.id = "i-" + image_canvas_id;
+                            inputElement.name = "i-" + image_canvas_id;
+                            inputElement.type = "hidden";
+                            inputElement.setAttribute('id-of-canvas',image_canvas_id);
+                            inputElement.setAttribute('valid',0);
+                            inputElement.setAttribute('value',link);
+
+                            switch(active){
+                                case "front":
+                                    document.getElementById('art-canvas').appendChild(c);
+                                    document.getElementById('front-image-links').appendChild(inputElement);
+                                    break;
+                                case "back":
+                                    document.getElementById('art-canvas2').appendChild(c);
+                                    document.getElementById('back-image-links').appendChild(inputElement);
+                                    break;
+                                case "left":
+                                    document.getElementById('art-canvas3').appendChild(c);
+                                    document.getElementById('left-image-links').appendChild(inputElement);
+                                    break;
+                                case "right":
+                                    document.getElementById('art-canvas4').appendChild(c);
+                                    document.getElementById('right-image-links').appendChild(inputElement);
+                                    break;
+                            }
+                            drawImage();
+                        
             
-            var c = document.createElement("canvas");
-            c.id= image_canvas_id;
-            c.width= getImageSize();//100;
-            c.height=getImageSize();//100; 
-            c.setAttribute('ondblclick', 'removeCanvasImage("'+image_canvas_id+'")');
-            c.setAttribute('onclick', 'highlightCanvasImage("'+image_canvas_id+'")');
             
-            highlighted_art_id = image_canvas_id;
-            $j("#image-canvas canvas").removeClass();
-            c.setAttribute('class','highlight-canvas-image');
-            
-            var link = document.getElementById(image_element_id).getAttribute("src");
-            link = link.replace("../../", getBaseURL())
-            
-            
-            var inputElement = document.createElement("input");
-            inputElement.id = "i-" + image_canvas_id;
-            inputElement.name = "i-" + image_canvas_id;
-            inputElement.type = "hidden";
-            inputElement.setAttribute('id-of-canvas',image_canvas_id);
-            inputElement.setAttribute('valid',0);
-            inputElement.setAttribute('value',link);
-            
-            switch(active){
-                case "front":
-                    document.getElementById('art-canvas').appendChild(c);
-                    document.getElementById('front-image-links').appendChild(inputElement);
-                    break;
-                case "back":
-                    document.getElementById('art-canvas2').appendChild(c);
-                    document.getElementById('back-image-links').appendChild(inputElement);
-                    break;
-                case "left":
-                    document.getElementById('art-canvas3').appendChild(c);
-                    document.getElementById('left-image-links').appendChild(inputElement);
-                    break;
-                case "right":
-                    document.getElementById('art-canvas4').appendChild(c);
-                    document.getElementById('right-image-links').appendChild(inputElement);
-                    break;
-            }
             highlighted_art_id = image_canvas_id;
             $j("#art-canvas canvas").removeClass();
             $j("#" + image_canvas_id).addClass("highlight-canvas-image");
-            
             $j("#" + image_canvas_id).draggable({
 
                 stop: function() {
@@ -2082,7 +1779,7 @@ $j(document).ready(function(){
                     updatePrice(); 
                 }
             });
-            drawImage();
+           }; 
         }
         
      });
@@ -2212,6 +1909,628 @@ $j(document).ready(function(){
             $j("#print2").removeClass("bordered");
         }    
     });
+    
+    function updatePrice() {
+         
+        var text_parts=0, parts = 0, print_front=0, print_back = 0, print_left = 0, print_right = 0, full_color=0, text_full_color = 0;
+        var art_colors = new Array();
+        var text_colors = new Array();
+        var front_outside = 0, back_outside = 0, left_outside = 0, right_outside = 0;
+        
+        console.log("original price:"+ $j("#original-price").val());
+       
+        var price = $j("#original-price").val();
+        price = Number(new String(price.replace(",","")));
+        
+        // Checking for multiple colors used in the text
+        console.log("getting colors of PRINT")
+        var text_canvas = document.getElementById("print");
+        var text_context = text_canvas.getContext('2d');
+        var text_pix = text_context.getImageData(0, 0, text_canvas.width, text_canvas.height).data;
+
+        for (var j = 0, n = text_pix.length; j <n; j += 4) {
+            if(text_pix[j+3]==255) {
+                if(art_colors.length == 0) {
+                    art_colors.push(text_pix[j] );
+                    art_colors.push(text_pix[j +1]);
+                    art_colors.push(text_pix[j+2]);
+                    console.log("one color lang!");
+                } else {
+                    if( art_colors[0] != text_pix[j] || art_colors[1] != text_pix[j + 1] || art_colors[2] != text_pix[j+2]) {
+                        full_color=1;
+                        console.log("oh my! full color!");
+                        break;
+                    }
+                }
+            }
+        }
+        
+        
+        var children1 = document.getElementById('art-canvas').childNodes;
+        for (var c in children1){
+            if(children1[c].id !== undefined ) {
+                console.log("id:"+children1[c].id);
+                console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
+                
+                if(full_color == 0) {
+                    var canvas = document.getElementById(children1[c].id);
+                    var context = canvas.getContext('2d');
+                    var pix = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+                    for (var i = 0, n = pix.length; i <n; i += 4) {
+
+                        if(pix[i+3]==255) {
+                            if(art_colors.length == 0) {
+                                art_colors.push(pix[i] );
+                                art_colors.push(pix[i +1]);
+                                art_colors.push(pix[i+2]);
+
+                                console.log("1one colored " + art_colors[0] + ":" + pix[i]);
+                                    console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
+                                    console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
+                            } else {
+                                //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                                if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
+                                    console.log("1full colored " + art_colors[0] + ":" + pix[i]);
+                                    console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
+                                    console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
+                                    full_color=1;
+                                    break;
+                                }
+                            }
+                    }
+                    }
+                
+                }
+                
+                if($j("#"+children1[c].id).attr("valid")==0) {
+                    parts++;
+                    front_outside++;
+                    break;
+                //    alert("some print is invalid!");
+                }  else {
+                    print_front = 1;
+                }
+            
+            }        
+        }
+        
+        // Checking if elements are outside or inside border
+        var allowed_left = $j("#allowed-left-1").val();
+        var allowed_top = $j("#allowed-top-1").val();
+        var allowed_right = $j("#allowed-right-1").val();
+        var allowed_bottom = $j("#allowed-bottom-1").val();
+        
+        if(front.text_1.length > 0 ) {
+            if (shape1.x >= allowed_left && shape1.y >= allowed_top && (shape1.x + shape1.w) <= allowed_right && (shape1.y + shape1.h) <= allowed_bottom ) {
+                print_front = 1;
+                console.log("print_front = 1");
+            } else {
+                if(front_outside == 0) {
+                    parts++;
+                    console.log("front1 part++");
+                    front_outside++;  
+                }
+                
+            }
+        }
+        
+        if(front.text_2.length > 0) {
+            if (shape2.x >= allowed_left && shape2.y >= allowed_top && (shape2.x + shape2.w) <= allowed_right && (shape2.y + shape2.h) <= allowed_bottom ) {
+                print_front = 1;
+            } else {
+                if(front_outside == 0) {
+                    parts++;
+                    console.log("front2 part++");
+                    front_outside++;
+                    
+                }
+            }
+        }
+        
+        if(front.text_3.length > 0 ) {
+            if (shape3.x >= allowed_left && shape3.y >= allowed_top && (shape3.x + shape3.w) <= allowed_right && (shape3.y + shape3.h) <= allowed_bottom ) {
+                print_front = 1;
+            } else {
+                if(front_outside == 0) {
+                    parts++;
+                    console.log("front3 part++");
+                    front_outside++;
+                }
+                
+            }
+        }
+        
+        children1 = document.getElementById('art-canvas2').childNodes;
+        for (var c2 in children1){
+            if(children1[c2].id !== undefined ) {
+                console.log("id:"+children1[c2].id);
+                console.log("valid:" + $j("#"+children1[c2].id).attr("valid"));
+                if(full_color == 0) {
+                    var canvas2 = document.getElementById(children1[c2].id);
+                    var context2 = canvas2.getContext('2d');
+                    var pix2 = context2.getImageData(0, 0, canvas2.width , canvas2.height).data;
+
+                    for (var i = 0, n = pix2.length; i <n; i += 4) {
+
+                        if(pix2[i+3]==255) {
+                            if(art_colors.length == 0) {
+                                art_colors.push(pix2[i] );
+                                art_colors.push(pix2[i +1]);
+                                art_colors.push(pix2[i+2]);
+
+                                console.log("1one colored " + art_colors[0] + ":" + pix2[i]);
+                                    console.log("1one colored " + art_colors[1] + ":" + pix2[i+1]);
+                                    console.log("1one colored " + art_colors[2] + ":" + pix2[i+2]);
+                            } else {
+                                //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                                if( art_colors[0] != pix2[i] || art_colors[1] != pix2[i + 1] || art_colors[2] != pix2[i+2]) {
+                                    console.log("1full colored " + art_colors[0] + ":" + pix2[i]);
+                                    console.log("1full colored " + art_colors[1] + ":" + pix2[i+1]);
+                                    console.log("1full colored " + art_colors[2] + ":" + pix2[i+2]);
+                                    full_color=1;
+                                    break;
+                                }
+                            }
+                    }
+                    }
+                }
+                if($j("#"+children1[c2].id).attr("valid")==0) {
+                    parts++;
+                    break;
+                //    alert("some print is invalid!");
+                } else {
+                    print_back = 1;
+                }
+            }        
+        }
+        
+        // Checking if elements are outside or inside border
+        allowed_left = $j("#allowed-left-2").val();
+        allowed_top = $j("#allowed-top-2").val();
+        allowed_right = $j("#allowed-right-2").val();
+        allowed_bottom = $j("#allowed-bottom-2").val();
+        
+        if(back.text_1.length > 0 ) {
+            if (shape21.x >= allowed_left && shape21.y >= allowed_top && (shape21.x + shape21.w) <= allowed_right && (shape21.y + shape21.h) <= allowed_bottom ) {
+                print_back = 1;
+            } else {
+                if(back_outside == 0) {
+                    parts++;
+                    console.log("back1 part++");
+                    back_outside++;
+                }
+                
+            }
+        }
+        
+        if(back.text_2.length > 0 ) {
+            if (shape22.x >= allowed_left && shape22.y >= allowed_top && (shape22.x + shape22.w) <= allowed_right && (shape22.y + shape22.h) <= allowed_bottom ) {
+                print_back = 1;
+            } else {
+                if(back_outside == 0) {
+                    parts++;
+                    console.log("back2 part++");
+                    back_outside++;    
+                }
+                
+            }
+        }
+        
+        if(back.text_3.length > 0 ) {
+            if (shape23.x >= allowed_left && shape23.y >= allowed_top && (shape23.x + shape23.w) <= allowed_right && (shape23.y + shape23.h) <= allowed_bottom ) {
+                print_back = 1;
+            } else {
+                if(back_outside == 0) {
+                    parts++;
+                    console.log("back3 part++");
+                    back_outside++;
+                }
+                
+            }
+        }
+        
+        children1 = document.getElementById('art-canvas3').childNodes;
+        for (var c3 in children1){
+            if(children1[c3].id !== undefined ) {
+                console.log("id:"+children1[c3].id);
+                console.log("valid:" + $j("#"+children1[c3].id).attr("valid"));
+                if(full_color == 0) {
+                    var canvas3 = document.getElementById(children1[c3].id);
+                    var context3 = canvas3.getContext('2d');
+                    var pix3 = context3.getImageData(0, 0, canvas3.width,canvas3.height).data;
+
+                    for (var i = 0, n = pix3.length; i <n; i += 4) {
+
+                        if(pix3[i+3]==255) {
+                            if(art_colors.length == 0) {
+                                art_colors.push(pix3[i] );
+                                art_colors.push(pix3[i +1]);
+                                art_colors.push(pix3[i+2]);
+
+                                console.log("1one colored " + art_colors[0] + ":" + pix3[i]);
+                                    console.log("1one colored " + art_colors[1] + ":" + pix3[i+1]);
+                                    console.log("1one colored " + art_colors[2] + ":" + pix3[i+2]);
+                            } else {
+                                //var pixel_color = pix[i] + pix[i+1] + pix[i+2];
+                                if( art_colors[0] != pix3[i] || art_colors[1] != pix3[i + 1] || art_colors[2] != pix3[i+2]) {
+                                    console.log("1full colored " + art_colors[0] + ":" + pix3[i]);
+                                    console.log("1full colored " + art_colors[1] + ":" + pix3[i+1]);
+                                    console.log("1full colored " + art_colors[2] + ":" + pix3[i+2]);
+                                    full_color=1;
+                                    break;
+                                }
+                            }
+                    }
+                    }
+                }
+                if($j("#"+children1[c3].id).attr("valid")==0) {
+                    parts++;
+                    break;
+                //    alert("some print is invalid!");
+                } else {
+                    print_left = 1;
+                }
+            }        
+        }
+        
+        // Checking if elements are outside or inside border
+        allowed_left = $j("#allowed-left-3").val();
+        allowed_top = $j("#allowed-top-3").val();
+        allowed_right = $j("#allowed-right-3").val();
+        allowed_bottom = $j("#allowed-bottom-3").val();
+        
+        if(left.text_1.length > 0 && left_outside == 0) {
+            if (shape31.x >= allowed_left && shape31.y >= allowed_top && (shape31.x + shape31.w) <= allowed_right && (shape31.y + shape31.h) <= allowed_bottom ) {
+                print_left = 1;
+            } else {
+                parts++;
+                console.log("left1 part++");
+                left_outside++;
+            }
+        }
+        
+        if(left.text_2.length > 0 && left_outside == 0) {
+            if (shape32.x >= allowed_left && shape32.y >= allowed_top && (shape32.x + shape32.w) <= allowed_right && (shape32.y + shape32.h) <= allowed_bottom ) {
+                print_left = 1;
+            } else {
+                parts++;
+                console.log("left2 part++");
+                left_outside++;
+            }
+        }
+        
+        if(left.text_3.length > 0 && left_outside == 0) {
+            if (shape33.x >= allowed_left && shape33.y >= allowed_top && (shape33.x + shape33.w) <= allowed_right && (shape33.y + shape33.h) <= allowed_bottom ) {
+                print_left = 1;
+            } else {
+                parts++;
+                console.log("left3 part++");
+                left_outside++;
+            }
+        }
+        
+        children1 = document.getElementById('art-canvas4').childNodes;
+        for (var c4 in children1){
+            if(children1[c4].id !== undefined ) {
+                console.log("id:"+children1[c4].id);
+                console.log("valid:" + $j("#"+children1[c4].id).attr("valid"));
+                if(full_color == 0) {
+                    var canvas4 = document.getElementById(children1[c4].id);
+                    var context4 = canvas4.getContext('2d');
+                    var pix4 = context4.getImageData(0, 0, canvas4.width,canvas4.height).data;
+
+                    for (var i = 0, n = pix4.length; i <n; i += 4) {
+
+                        if(pix4[i+3]==255) {
+                            if(art_colors.length == 0) {
+                                art_colors.push(pix4[i] );
+                                art_colors.push(pix4[i +1]);
+                                art_colors.push(pix4[i+2]);
+
+                                console.log("1one colored " + art_colors[0] + ":" + pix4[i]);
+                                    console.log("1one colored " + art_colors[1] + ":" + pix4[i+1]);
+                                    console.log("1one colored " + art_colors[2] + ":" + pix4[i+2]);
+                            } else {
+                                //var pix4el_color = pix4[i] + pix4[i+1] + pix4[i+2];
+                                if( art_colors[0] != pix4[i] || art_colors[1] != pix4[i + 1] || art_colors[2] != pix4[i+2]) {
+                                    console.log("1full colored " + art_colors[0] + ":" + pix4[i]);
+                                    console.log("1full colored " + art_colors[1] + ":" + pix4[i+1]);
+                                    console.log("1full colored " + art_colors[2] + ":" + pix4[i+2]);
+                                    full_color=1;
+                                    break;
+                                }
+                            }
+                    }
+                    }
+                }
+                if($j("#"+children1[c4].id).attr("valid")==0) {
+                    parts++;
+                    break;
+                //    alert("some print is invalid!");
+                } else {
+                    print_right = 1;
+                }
+            }        
+        }
+        
+        // Checking if elements are outside or inside border
+        
+        allowed_left = $j("#allowed-left-4").val();
+        allowed_top = $j("#allowed-top-4").val();
+        allowed_right = $j("#allowed-right-4").val();
+        allowed_bottom = $j("#allowed-bottom-4").val();
+        
+        if(right.text_1.length > 0 && right_outside == 0) {
+            if (shape41.x >= allowed_left && shape41.y >= allowed_top && (shape41.x + shape41.w) <= allowed_right && (shape41.y + shape41.h) <= allowed_bottom ) {
+                print_right = 1;
+            } else {
+                parts++;
+                console.log("right1 part++");
+                right_outside++;
+            }
+        }
+        
+        if(right.text_2.length > 0 && right_outside == 0) {
+            if (shape42.x >= allowed_left && shape42.y >= allowed_top && (shape42.x + shape42.w) <= allowed_right && (shape42.y + shape42.h) <= allowed_bottom ) {
+                print_right = 1;
+            } else {
+                parts++;
+                console.log("right2 part++");
+                right_outside++;
+            }
+        }
+        
+        if(right.text_3.length > 0 && right_outside == 0) {
+            if (shape43.x >= allowed_left && shape43.y >= allowed_top && (shape43.x + shape43.w) <= allowed_right && (shape43.y + shape43.h) <= allowed_bottom ) {
+                print_right = 1;
+            } else {
+                parts++;
+                console.log("right3 part++");
+                right_outside++;
+            }
+        }
+              if (text_full_color==1 || full_color==1) { price += 150;}
+              
+              var sides = 0;
+              if (print_front==1) { sides++;}
+              if (print_back==1) { sides++;}
+              if (print_left==1) { sides++;}
+              if (print_right==1) { sides++;}
+              
+              if(sides > 1) {
+                  price += (200 * (sides-1));
+              }
+              console.log("parts:" + parts);
+              console.log("sides:" + sides);
+              
+        /*
+              if (print_back==1) { price+=200;};
+              if (print_left==1) { price+=200;};
+              if (print_right==1) { price+=200;};
+              */
+              price += (200 * parts);
+              $j("#product-price").val( price);
+              $j("#product-price-final").val( price);
+    }
+    
+     $j("#border-1").draggable({
+        stop: function() {
+           var pos = $j(this).position();
+             var pos_left = pos.left + 95;
+             var pos_top = pos.top +120;
+             var pos_right = pos.left + 95 + 200;
+             var pos_bottom = pos.top +120 + 230;
+             $j("#allowed-left-1").val(pos_left);
+             $j("#allowed-top-1").val(pos_top);
+             $j("#allowed-right-1").val(pos_right);
+             $j("#allowed-bottom-1").val(pos_bottom);
+             
+             var children1 = document.getElementById('art-canvas').childNodes;
+             for (var c in children1){
+                if(children1[c].id !== undefined ) {
+                    console.log("FRONT VALID ELEMENTS:"+$j("#"+children1[c].id).attr("valid") + $j("#"+children1[c].id).attr("id"));
+                        var e = $j("#"+children1[c].id);
+                        var p = $j("#"+children1[c].id).position();
+
+                            if(p.left >= $j("#allowed-left-1").val() && p.top >= $j("#allowed-top-1").val() && (p.left + e.width() ) <= $j("#allowed-right-1").val() && (p.top + e.height() ) <= $j("#allowed-bottom-1").val()) {
+                                //$j(this).attr("valid",1);
+                                $j("#"+children1[c].id).attr("valid",1);
+                                console.log("FRONT valid position" + p.left + ">" + $j("#allowed-left-1").val() +" " + p.top + ">" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
+                            } else {
+                                //$j(this).attr("valid",0);
+                                $j("#"+children1[c].id).attr("valid",0);
+                                console.log("FRONT invalid position" + p.left + ":" + $j("#allowed-left-1").val() +" " + p.top + ":" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
+                            }
+
+                }        
+              }
+             console.log("FRONT  TESTING BORDER: left: " + $j("#allowed-left-1").val() + "; top:" +$j("#allowed-top-1").val() + "bottom: " + $j("#allowed-bottom-1").val() + " right:" +$j("#allowed-right-1").val());
+            updatePrice();   
+        }
+     });
+     
+     $j("#border-2").draggable({
+        stop: function() {
+           var pos = $j(this).position();
+             var pos_left = pos.left + 95;
+             var pos_top = pos.top +120;
+             var pos_right = pos.left + 95 + 200;
+             var pos_bottom = pos.top +120 + 230;
+             
+             $j("#allowed-left-2").val(pos_left);
+             $j("#allowed-top-2").val(pos_top);
+             $j("#allowed-right-2").val(pos_right);
+             $j("#allowed-bottom-2").val(pos_bottom);
+             
+             var children2 = document.getElementById('art-canvas2').childNodes;
+             for (var c in children2){
+                if(children2[c].id !== undefined ) {
+                    console.log("BACK VALID ELEMENTS:"+$j("#"+children2[c].id).attr("valid") + $j("#"+children2[c].id).attr("id"));
+                        var e = $j("#"+children2[c].id);
+                        var p = $j("#"+children2[c].id).position();
+
+                            if(p.left >= $j("#allowed-left-2").val() && p.top >= $j("#allowed-top-2").val() && (p.left + e.width() ) <= $j("#allowed-right-2").val() && (p.top + e.height() ) <= $j("#allowed-bottom-2").val()) {
+                                //$j(this).attr("valid",1);
+                                $j("#"+children2[c].id).attr("valid",1);
+                                console.log("FRONT valid position" + p.left + ">" + $j("#allowed-left-2").val() +" " + p.top + ">" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
+                            } else {
+                                //$j(this).attr("valid",0);
+                                $j("#"+children2[c].id).attr("valid",0);
+                                console.log("FRONT invalid position" + p.left + ":" + $j("#allowed-left-2").val() +" " + p.top + ":" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
+                            }
+
+                }        
+              }
+              console.log("BACK  TESTING BORDER: left: " + $j("#allowed-left-2").val() + "; top:" +$j("#allowed-top-2").val() + "bottom: " + $j("#allowed-bottom-2").val() + " right:" +$j("#allowed-right-2").val());
+              updatePrice(); 
+        }
+     });
+     
+     $j("#border-3").draggable({
+        stop: function() {
+           var pos = $j(this).position();
+             var pos_left = pos.left + 95;
+             var pos_top = pos.top +120;
+             var pos_right = pos.left + 95 + 200;
+             var pos_bottom = pos.top +120 + 230;
+             
+             $j("#allowed-left-3").val(pos_left);
+             $j("#allowed-top-3").val(pos_top);
+             $j("#allowed-right-3").val(pos_right);
+             $j("#allowed-bottom-3").val(pos_bottom);
+             
+             var children3 = document.getElementById('art-canvas3').childNodes;
+             for (var c in children3){
+                if(children3[c].id !== undefined ) {
+                    console.log("LEFT VALID ELEMENTS:"+$j("#"+children3[c].id).attr("valid") + $j("#"+children3[c].id).attr("id"));
+                        var e = $j("#"+children3[c].id);
+                        var p = $j("#"+children3[c].id).position();
+
+                            if(p.left >= $j("#allowed-left-3").val() && p.top >= $j("#allowed-top-3").val() && (p.left + e.width() ) <= $j("#allowed-right-3").val() && (p.top + e.height() ) <= $j("#allowed-bottom-3").val()) {
+                                //$j(this).attr("valid",1);
+                                $j("#"+children3[c].id).attr("valid",1);
+                                console.log("LEFT valid position" + p.left + ">" + $j("#allowed-left-3").val() +" " + p.top + ">" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
+                            } else {
+                                //$j(this).attr("valid",0);
+                                $j("#"+children3[c].id).attr("valid",0);
+                                console.log("LEFT invalid position" + p.left + ":" + $j("#allowed-left-3").val() +" " + p.top + ":" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
+                            }
+
+                }        
+              }
+              console.log("LEFT  TESTING BORDER: left: " + $j("#allowed-left-3").val() + "; top:" +$j("#allowed-top-3").val() + "bottom: " + $j("#allowed-bottom-3").val() + " right:" +$j("#allowed-right-3").val());
+              updatePrice(); 
+        }
+     });
+     
+     $j("#border-4").draggable({
+         
+         stop: function() {
+             var pos = $j(this).position();
+             var pos_left = pos.left + 95;
+             var pos_top = pos.top +120;
+             var pos_right = pos.left + 95 + 200;
+             var pos_bottom = pos.top +120 + 230;
+             
+             $j("#allowed-left-4").val(pos_left);
+             $j("#allowed-top-4").val(pos_top);
+             $j("#allowed-right-4").val(pos_right);
+             $j("#allowed-bottom-4").val(pos_bottom);
+             
+             var children4 = document.getElementById('art-canvas4').childNodes;
+             for (var c in children4){
+                if(children4[c].id !== undefined ) {
+                    console.log("RIGHT VALID ELEMENTS:"+$j("#"+children4[c].id).attr("valid") + $j("#"+children4[c].id).attr("id"));
+                        var e = $j("#"+children4[c].id);
+                        var p = $j("#"+children4[c].id).position();
+
+                            if(p.left >= $j("#allowed-left-4").val() && p.top >= $j("#allowed-top-4").val() && (p.left + e.width() ) <= $j("#allowed-right-4").val() && (p.top + e.height() ) <= $j("#allowed-bottom-4").val()) {
+                                //$j(this).attr("valid",1);
+                                $j("#"+children4[c].id).attr("valid",1);
+                                console.log("RIGHT valid position" + p.left + ">" + $j("#allowed-left-4").val() +" " + p.top + ">" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
+                            } else {
+                                //$j(this).attr("valid",0);
+                                $j("#"+children4[c].id).attr("valid",0);
+                                console.log("RIGHT invalid position" + p.left + ":" + $j("#allowed-left-4").val() +" " + p.top + ":" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
+                            }
+
+                }        
+              }
+              console.log("RIGHT TESTING BORDER: left: " + $j("#allowed-left-4").val() + "; top:" +$j("#allowed-top-4").val() + "bottom: " + $j("#allowed-bottom-4").val() + " right:" +$j("#allowed-right-4").val());
+              updatePrice(); 
+        }
+     });
+     $j("#border-1").hide();
+     $j("#border-2").hide();
+     $j("#border-3").hide();
+     $j("#border-4").hide();
+     
+     $j("#print-guide-border").click(function(){
+         if ($j(this).is(':checked')) {
+           // alert("checked");
+            
+            
+            switch (active){
+                case "front": 
+                    $j("#border-1").show();
+                    $j("#border-2").hide();
+                    $j("#border-3").hide();
+                    $j("#border-4").hide();
+                    break;
+                case "back":
+                    $j("#border-1").hide();
+                    $j("#border-2").show();
+                    $j("#border-3").hide();
+                    $j("#border-4").hide();
+                    break;
+                case "left": 
+                    $j("#border-1").hide();
+                    $j("#border-2").hide();
+                    $j("#border-3").show();
+                    $j("#border-4").hide();
+                    break;
+                case "right":
+                    $j("#border-1").hide();
+                    $j("#border-2").hide();
+                    $j("#border-3").hide();
+                    $j("#border-4").show();
+                    break;
+            }
+         }else {
+           // alert('unchecked');
+            //$j("#border-1").hide();
+            switch (active){
+                case "front": 
+                    $j("#border-1").hide();
+                    $j("#border-2").hide();
+                    $j("#border-3").hide();
+                    $j("#border-4").hide();
+                    break;
+                case "back":
+                    $j("#border-1").hide();
+                    $j("#border-2").hide();
+                    $j("#border-3").hide();
+                    $j("#border-4").hide();
+                    break;
+                case "left": 
+                    $j("#border-1").hide();
+                    $j("#border-2").hide();
+                    $j("#border-3").hide();
+                    $j("#border-4").hide();
+                    break;
+                case "right":
+                    $j("#border-1").hide();
+                    $j("#border-2").hide();
+                    $j("#border-3").hide();
+                    $j("#border-4").hide();
+                    break;
+            }
+         }
+         
+     });
+     
+     
     
     $j('.submit').click(function(e) {
        if (($j("#s").val() == "") && ($j("#m").val() == "") && ($j("#l").val() == "") && ($j("#xl").val() == "")){
@@ -2466,6 +2785,8 @@ $j(document).ready(function(){
             var thediv=document.getElementById('reviewbox');
             thediv.style.display = "none";
         });
+        
+        
         
         
       }  

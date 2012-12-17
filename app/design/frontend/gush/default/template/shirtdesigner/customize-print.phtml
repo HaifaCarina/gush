@@ -254,7 +254,7 @@ $print_colors = array(
     
     
     //include_once('http://localhost/magento/app/design/frontend/base/default/template/shirtdesigner/colors_array.php');
-    if( $_POST ){
+   /* if( $_POST ){
         if ((($_FILES["file"]["type"] == "image/gif")
         || ($_FILES["file"]["type"] == "image/jpeg")
         || ($_FILES["file"]["type"] == "image/jpg")
@@ -289,11 +289,12 @@ $print_colors = array(
         {
                 //echo "Invalid file";
         }
-    }
+    } */
     $uploads = scandir('media/shirtdesigner/images/uploads/'.$this->getData('design_id'));
     $categories = scandir('media/shirtdesigner/images/art');
     $military = scandir('media/shirtdesigner/images/art/military');
     $music = scandir('media/shirtdesigner/images/art/music');
+	$gushdesigns = scandir('media/shirtdesigner/images/art/gushdesigns');
     $ignore = array( 'cgi-bin', '.', '..' ,'.DS_Store','.svn');
     
     $art = array();
@@ -305,8 +306,7 @@ $print_colors = array(
            $art[] = scandir('media/shirtdesigner/images/art/'.$cat);
         }
     }
-
-
+	
 ?>
 <script type="text/javascript" >
         
@@ -505,7 +505,8 @@ $print_colors = array(
                         <input type="hidden" id="xl-size" name="xl-size"  />
                         
                         <input type="hidden" id="price" name="price" value="<?php echo $this->getData('product_price');  ?>" />
-                        
+                        <input type="hidden" id="product-price-final" name="product-price-final" value="<?php echo $this->getData('product_price');  ?>" />
+            
                         <div id="front-image-links"></div>
                         <div id="back-image-links"></div>
                         <div id="left-image-links"></div>
@@ -636,17 +637,7 @@ $print_colors = array(
                         *doubleclick on preview to remove object
                     </td>
                 </tr>
-                <tr>
-                    <td><label>Design Size</label></td>
-                    <td>
-                        <select id="art-size" name="art-size" style="max-width: 150px;" onchange="">
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                            
-                        </select>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td><label>Art Color</label></td>
                     <td>
@@ -665,6 +656,18 @@ $print_colors = array(
                             ?>
                         
                         </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Design Size</label></td>
+                    <td>
+                        <select id="art-size" name="art-size" style="max-width: 150px;" onchange="">
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                            <option value="custom1">Custom (160 x 160)</option>
+                            <option value="custom2">Custom (200 x 200)</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -698,6 +701,15 @@ $print_colors = array(
                                 
                                
                                 <br/>
+                                *Recommended file types<br />images with background:<br />
+                                &nbsp;&nbsp;&nbsp; - jpg<br />
+                                &nbsp;&nbsp;&nbsp; - 300 DPI<br />
+                                images without background:<br />
+                                &nbsp;&nbsp;&nbsp; - png, tiff<br />
+                                &nbsp;&nbsp;&nbsp; - 300 DPI<br />
+                                NOTE: No spaces on filenames<br />
+                                MAX. FILE RESOLUTION: 14"x18" / 1008px x 1296px
+                                <br/><br/>
                                 *doubleclick on preview to remove object
                             </td>
                         </tr>
@@ -720,10 +732,16 @@ $print_colors = array(
                         <td><label>Image Size</label></td>
                             <td>
                                 <select id="image-size" name="image-size" style="max-width: 150px;" onchange="">
-                                    <option value="small">Small</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="large">Large</option>
-
+                                    <option value="10">10%</option>
+                                    <option value="15">15%</option>
+                                    <option value="20">20%</option>
+                                    <option value="25">25%</option>
+                            		<option value="30">30%</option>
+                                    <option value="40">40%</option>
+                                    <option value="50">50%</option>
+                                    <option value="60">60%</option>
+                                    <option value="75">75%</option>
+                            		<option value="100">100%</option>
                                 </select>
                             </td>
                         </tr>
@@ -780,34 +798,28 @@ $print_colors = array(
         <li id="design-menu" class="active">Design Preview</li>
         <!--<li id="swap-menu">Swap Out Item</li>-->
     </ul>
-        <?php
-            $shirt_design = scandir('media/shirtdesigner/images/apparels/'.$this->getData('sku'));
-            // This gets the filename of the first item in the directory
-            $front_image_ok = false;
-            $back_image_ok = false;
-            foreach ( $shirt_design as $d ) { 
-                    if(!in_array( $d, $ignore ))
-                    {   
-                        if('f-' == substr($d, 0, 2) && !$front_image_ok) {
-                            $front_image_filename = $d;
-                            $front_image_ok = true;
-                        } 
-                        if('b-' == substr($d, 0, 2) && !$back_image_ok) {
-                            $back_image_filename = $d;
-                            $back_image_ok = true;
-                        } 
-                    } 
-            }
-        ?>
         
         <div id="main-preview" style="background-image: url('<?php echo $this->getData('front-custom-shirt-url');?>')">
             <input type="hidden" id="sku" value="<?php echo $this->getData('sku'); ?>" /> <!--  -->
-            <div id="border-1" class="border-guide" style="position: absolute; margin-left: 135px;margin-top: 120px; height:130px; width:100px;border: 2px solid; border-color: red;"></div>
-            <div id="border-2" class="border-guide" style="position: absolute; margin-left: 135px;margin-top: 120px; height:130px; width:100px;border: 2px solid; border-color: blue;"></div>
-            <div id="border-3" class="border-guide" style="position: absolute; margin-left: 135px;margin-top: 120px; height:130px; width:100px;border: 2px solid; border-color: green;"></div>
-            <div id="border-4" class="border-guide" style="position: absolute; margin-left: 135px;margin-top: 120px; height:130px; width:100px;border: 2px solid; border-color: pink;"></div>
+            <div id="border-1" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3); margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: red;">
+            </div>
+                
+            <div id="border-2" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3);margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: blue;">
+            </div>
+            
+            <div id="border-3" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3);margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: green;">
+            </div>
+            
+            <div id="border-4" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3);margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: pink;">
+            </div>
+            
             <canvas id="print" class="bordered" width="374"  height="394"></canvas>
-            <div id="art-canvas" class="bordered" height="394" width="374" ></div>
+            <div id="art-canvas" class="bordered" height="394" width="374" >
+                
+                <!--<canvas id="text-print-1" class="bordered" width="374"  height="394" style="position: absolute; border: 2px solid; border-color: yellow;"></canvas>
+                 -->
+                
+            </div>
             <canvas id="print2" class="bordered" height="394" width="374"></canvas>
             <div id="art-canvas2" class="bordered" height="394" width="374"></div>
             <canvas id="print3" class="bordered" width="374"  height="394"></canvas>
@@ -836,7 +848,7 @@ $print_colors = array(
             <input type="hidden" id="allowed-bottom-4"  value="250"/>
             <input type="hidden" id="allowed-right-4" value="235" />
             <span style="float: right;" >
-            <input type="checkbox" name="print-guide-border" id="print-guide-border"value="print-guide-border" checked>Display print border<br>
+            <input type="checkbox" name="print-guide-border" id="print-guide-border"value="print-guide-border" >Display print border<br>
             </span>
         </div>
     <!--    <div id="mini-preview" style="background-image: url('<?php echo $this->getData('back-custom-shirt-url');?>')">
