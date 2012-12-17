@@ -18,16 +18,17 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $this->getLayout()->getBlock('head')->addJs('jquery/jquery-ui.min.js');
         $this->getLayout()->getBlock('head')->addCss('shirtdesigner/shirt-style.css');
 
-        // Compares if longsleeves/jackets is found in the sku value
         if (strstr($sku, 'longsleeves') || strstr($sku, 'jackets') ) {
+            // Compares if longsleeves/jackets is found in the sku value
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-longsleeves.js');
             $block = $this->getLayout()->createBlock(
             'Mage_Core_Block_Template',
             'shirtdesigner',
             array('template' => 'shirtdesigner/customize-fabric.phtml')
             );
-        // Compares if hoody is found in the sku value
+        
         } else if (strstr($sku, 'hoody')){
+            // Compares if hoody is found in the sku value
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-hoody.js');
             $block = $this->getLayout()->createBlock(
 		'Mage_Core_Block_Template',
@@ -35,8 +36,9 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
 		array('template' => 'shirtdesigner/customize-fabric-hoody.phtml')
 		);
          
-        // the rest will be considered as tshirts
+      
         } else {
+            // the rest will be considered as tshirts
             $this->getLayout()->getBlock('head')->addJs('shirtdesigner/customize-fabric-tshirt.js');
             $block = $this->getLayout()->createBlock(
             'Mage_Core_Block_Template',
@@ -90,9 +92,11 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $readConnection2 = $resource2->getConnection('core_read');
         $query2 = 'SELECT entity_id FROM catalog_product_entity where sku="'.$param['sku'].'"';
         $results2 = $readConnection2->fetchAll($query2);
-        $product_id = $results2[0][entity_id];
+        //$product_id = $results2[0][entity_id];
+        $product_id = $results2[0]['entity_id'];
         
-        echo '<script type="text/javascript">console.log("SKU:'.$param['sku'].'");</script>';
+        echo '<script type="text/javascript">console.log("product_id:'.$product_id.'");</script>';
+        //echo '<script type="text/javascript">console.log("product_id2:'.$product_id2.'");</script>';
         
         $block->setData('sku',$param['sku']);
         $block->setData('product_id',$product_id); //FIND SOLUTION
@@ -117,7 +121,18 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         
         $model = Mage::getModel('catalog/product');
         $_product = $model->load($product_id);
-        $block->setData('product_price',number_format($_product->getPrice(), 2));  
+        
+        $price = number_format($_product->getPrice(), 2);
+        $price = str_replace(",", "", $price);
+        
+        if ($param['multicolor'] == "1") {
+           echo '<script type="text/javascript">console.log("original: '.$price.'");</script>';
+           $price +=number_format(100, 2);
+           echo '<script type="text/javascript">console.log("new price: '.$price.'");</script>';
+           
+        }
+        $block->setData('product_price', $price);  
+        
         
         Mage::getSingleton('core/session')->setFrontCustomShirtCode($param['front-custom-shirt-code']);
         Mage::getSingleton('core/session')->setBackCustomShirtCode($param['back-custom-shirt-code']);
@@ -130,6 +145,8 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $query = 'SELECT max(design_id) FROM shirt_designer';
         $results = $readConnection->fetchAll($query);
         $design_id = $results[0]['max(design_id)'] + 1;
+        echo '<script type="text/javascript">console.log("Design ID:'.$design_id.'");</script>';
+        
         $block->setData('design_id',$design_id);
         $this->getLayout()->getBlock('content')->append($block);	
 	$this->renderLayout();
@@ -284,10 +301,15 @@ class Myportal_ShirtDesigner_IndexController extends Mage_Core_Controller_Front_
         $design->save(); 
         
         Mage::getSingleton('core/session')->setDesignId($param['design-id']);
+        Mage::getSingleton('core/session')->setNewPrice($param['product-price-final']);
+        Mage::log('product-price-final: '. $param['product-price-final'] );
+        $myData = Mage::getSingleton('core/session')->getNewPrice();
+        Mage::log('mydata: '. $myData );
         
         $url = Mage::getUrl('',array('_secure'=>true));
         $url = $url.'checkout/cart/add?product='.$param['product-id'].'&qty='.$qty; //checkout/cart/add?product=14&qty=1
         //echo '<script type="text/javascript">alert("'.$url.'");</script>';
+        Mage::log('redirect: '. $url);
         $this->_redirectUrl($url);
           
     }
