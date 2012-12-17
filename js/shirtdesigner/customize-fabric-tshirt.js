@@ -143,7 +143,11 @@ $j(document).ready(function(){
             neck_collar_b1: "neck-color",
             neck_vneck_b1: "neck-color",
             neck_round_b1: "neck-color",
-           
+            
+			neck_collar_b2: "neck-color",
+            neck_vneck_b2: "neck-color",
+            neck_round_b2: "neck-color",
+			
             right_round_body: "body-color",
             right_round_body_btm: "body-color",
             right_round_neck: "neck-color",
@@ -232,6 +236,10 @@ $j(document).ready(function(){
             neck_collar_b1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/collar/b1.png",
             neck_vneck_b1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/vneck/b1.png",
             neck_round_b1: "../../media/shirtdesigner/images/illustration/female/tshirt/black/round/b1.png",
+			
+			neck_collar_b2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/collar/b2.png",
+            neck_vneck_b2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/vneck/b2.png",
+            neck_round_b2: "../../media/shirtdesigner/images/illustration/female/tshirt/black/round/b2.png",
            
             right_round_body: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-body.png",
             right_round_body_btm: "../../media/shirtdesigner/images/illustration/female/tshirt/black/right-round/right-body-btm.png",
@@ -332,6 +340,27 @@ $j(document).ready(function(){
                 
                 console.log(key_array);
                 updateCanvasSpecific(key,  shirt_context);
+            }
+            
+            var all_parts =  ["body-color", "neck-color", "left-sleeve-color", "left-sleeve-outline-color", "right-sleeve-color", "right-sleeve-outline-color"];
+            
+            
+            
+            var initial_color = $j("#"+ all_parts[0]).val();
+            
+            console.log("initial color" + initial_color);
+            for (var j = 1; j < all_parts.length; j++) {
+                
+                current = $j("#"+ all_parts[j]).val();
+                
+                if (initial_color != current) {
+                    $j("#multicolor").val("1");
+                    break;
+                } 
+                console.log("check part:" +all_parts[j] + "||color:" + current);
+                
+                console.log("multicolor" + $j("#multicolor").val());
+                
             }
             
         }
@@ -507,13 +536,13 @@ $j(document).ready(function(){
             
             switch($j('input[name=neck-selection]:checked').val()) {
                 case "round-neck": 
-                    keys = ["back_round_b","back_round_b_btm","back_round_lb1","back_round_lb2","back_round_rb1","back_round_rb2"];
+                    keys = ["back_round_b","back_round_b_btm","back_round_lb1","back_round_lb2","back_round_rb1","back_round_rb2","neck_round_b2"];
                     break;
                 case "v-neck":
-                    keys = ["back_vneck_b","back_vneck_b_btm","back_vneck_lb1","back_vneck_lb2","back_vneck_rb1","back_vneck_rb2"];
+                    keys = ["back_vneck_b","back_vneck_b_btm","back_vneck_lb1","back_vneck_lb2","back_vneck_rb1","back_vneck_rb2","neck_vneck_b2"];
                     break;
                 case "collar":
-                    keys = ["back_collar_b","back_collar_b_btm","back_collar_lb1","back_collar_lb2","back_collar_rb1","back_collar_rb2"];
+                    keys = ["back_collar_b","back_collar_b_btm","back_collar_lb1","back_collar_lb2","back_collar_rb1","back_collar_rb2","neck_collar_b2"];
                     break;
             }
             
@@ -831,6 +860,8 @@ $j(document).ready(function(){
         }
         
         $j("#submit-custom-shirt").click(function(){
+            
+            
             createImageData();
             // Note that the submit script is run in the UpdateCanvasBack when everything has been completed
         });
