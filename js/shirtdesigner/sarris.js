@@ -23,8 +23,15 @@ function Shape(x, y, str, fill, style,text_size, font_family) {
   this.y = y || 0;
   this.w = str.length*7;
   this.h = text_size *1.5;
+    this.valid = true;
+    this.border = false;
   
   switch (this.style) {
+        case "rectangle":
+          this.w = 200;
+          this.h = 230;
+          break;
+          
         case "straight":
             this.w = str.length*5;
             this.h = text_size *1.5;
@@ -68,17 +75,16 @@ function Shape(x, y, str, fill, style,text_size, font_family) {
 
 // Draws this shape to a given context
 Shape.prototype.draw = function(context) {
-  //context.clearRect(0,0,this.w, this.h);
-  //this.clear();
   context.fillStyle = this.fill;
   context.font = " "+ this.text_size+ "px " + this.font_family;//+ text_font_family;
   
-  //context.fillRect(this.x, this.y, this.w, this.h);
-  //context.fillStyle = "black";
-            
-  
     switch (this.style) {
-        
+        case "rectangle":
+            if (this.valid==true) {
+            context.fillStyle = "black";
+            context.strokeRect(this.x, this.y, this.w, this.h);
+                }
+            break;
         case "straight":
             
             context.fillText(this.str, this.x, this.y+this.text_size);
@@ -138,7 +144,7 @@ Shape.prototype.draw = function(context) {
             posY = this.y + this.h; 
             drawVertical2Text(context,this.str, posX, posY);
             break;
-    }
+    }   
 
  }
 
@@ -149,6 +155,7 @@ Shape.prototype.contains = function(mx, my) {
   return  (this.x <= mx) && (this.x + this.w >= mx) &&
           (this.y <= my) && (this.y + this.h >= my);
 }
+
 
 function CanvasState(canvas,context) {
   // **** First some setup! ****
@@ -221,6 +228,7 @@ function CanvasState(canvas,context) {
     }
   }, true);
   canvas.addEventListener('mousemove', function(e) {
+                          
     if (myState.dragging){
       var mouse = myState.getMouse(e);
       // We don't want to drag the object by its top-left corner, we want to drag it
@@ -232,6 +240,29 @@ function CanvasState(canvas,context) {
   }, true);
   canvas.addEventListener('mouseup', function(e) {
     myState.dragging = false;
+                          
+                          var shapes = myState.shapes;
+                          var border;
+                          var l = shapes.length;
+                          
+                          for (var i = 0; i < l ; i++) {
+                              var mySel = shapes[i];
+                                  if(mySel.border==true) {
+                                    border = mySel;
+                                    break;
+                                  }
+                          }
+                          
+                          border.draw(context);
+                          for (var i = 0; i < l ; i++) {
+                              var mySel = shapes[i];
+                              if(mySel.border==false) {
+                                mySel.draw(context);
+                              }
+                          } 
+                          
+    
+    
   }, true);
   // double click for making new shapes
   canvas.addEventListener('dblclick', function(e) {
@@ -249,8 +280,10 @@ function CanvasState(canvas,context) {
 }
 
 CanvasState.prototype.addShape = function(shape) {
-  this.shapes.push(shape);
-  this.valid = false;
+  if (shape !== undefined) {  
+      this.shapes.push(shape);
+      this.valid = false;
+  }
 }
 
 CanvasState.prototype.clear = function() {
@@ -270,12 +303,18 @@ CanvasState.prototype.draw = function() {
     
     // draw all shapes
     var l = shapes.length;
+      console.log("shapes length:" + l);
     for (var i = 0; i < l; i++) {
       var shape = shapes[i];
-      // We can skip the drawing of elements that have moved off the screen:
-      if (shape.x > this.width || shape.y > this.height ||
-          shape.x + shape.w < 0 || shape.y + shape.h < 0) continue;
-      shapes[i].draw(context);
+        if (shape !== undefined) {
+            // We can skip the drawing of elements that have moved off the screen:
+            if (shape.x > this.width || shape.y > this.height || shape.x + shape.w < 0 || shape.y + shape.h < 0 || (shape.valid == false)) continue;
+            
+            shapes[i].draw(context);
+        }
+          
+      
+      
     }
     
     // draw selection
