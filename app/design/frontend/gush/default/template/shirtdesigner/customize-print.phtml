@@ -616,7 +616,7 @@ $print_colors = array(
                         </select> 
                         <br/>
                         <?php 
-                            for ($i=0; $i <= 13; $i++){
+                            for ($i=0; $i <= 14; $i++){
                                 
                                 $category_name = $categories[$i+3];
                                 
@@ -800,25 +800,10 @@ $print_colors = array(
     </ul>
         
         <div id="main-preview" style="background-image: url('<?php echo $this->getData('front-custom-shirt-url');?>')">
-            <input type="hidden" id="sku" value="<?php echo $this->getData('sku'); ?>" /> <!--  -->
-            <div id="border-1" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3); margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: red;">
-            </div>
-                
-            <div id="border-2" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3);margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: blue;">
-            </div>
+            <input type="hidden" id="sku" value="<?php echo $this->getData('sku'); ?>" /> 
             
-            <div id="border-3" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3);margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: green;">
-            </div>
-            
-            <div id="border-4" class="border-guide" style="position: absolute; background-color: rgba(225, 225, 225, .3);margin-left: 95px;margin-top: 120px; height:230px; width:200px;border: 2px solid; border-color: pink;">
-            </div>
-            
-            <canvas id="print" class="bordered" width="374"  height="394"></canvas>
             <div id="art-canvas" class="bordered" height="394" width="374" >
-                
-                <!--<canvas id="text-print-1" class="bordered" width="374"  height="394" style="position: absolute; border: 2px solid; border-color: yellow;"></canvas>
-                 -->
-                
+                <canvas id="print" class="bordered" width="374"  height="394" style="border: 1px solid red; margin-top: 394px;"></canvas>
             </div>
             <canvas id="print2" class="bordered" height="394" width="374"></canvas>
             <div id="art-canvas2" class="bordered" height="394" width="374"></div>
@@ -827,9 +812,6 @@ $print_colors = array(
             <canvas id="print4" class="bordered" height="394" width="374"></canvas>
             <div id="art-canvas4" class="bordered" height="394" width="374"></div>
             
-            
-            PHP <input type="text" id="product-price" size="8" style="background-color: #5EDAFE" value="<?php echo $this->getData('product_price'); ?>" readonly />
-            <input type="hidden" id="original-price"  value="<?php echo $this->getData('product_price'); ?>"/>
             
             <input type="hidden" id="allowed-top-1"  value="120"/>
             <input type="hidden" id="allowed-left-1" value="135" />
@@ -847,7 +829,13 @@ $print_colors = array(
             <input type="hidden" id="allowed-left-4" value="135" />
             <input type="hidden" id="allowed-bottom-4"  value="250"/>
             <input type="hidden" id="allowed-right-4" value="235" />
-            <span style="float: right;" >
+			<input type="hidden" id="original-price"  value="<?php echo $this->getData('product_price'); ?>"/>
+			
+			<span style="float: left; margin-top: 394px;">
+            PHP <input type="text" id="product-price" size="8" style="background-color: #5EDAFE" value="<?php echo $this->getData('product_price'); ?>" readonly />
+            </span>
+			
+            <span style="float: right; margin-top: 394px;" >
             <input type="checkbox" name="print-guide-border" id="print-guide-border"value="print-guide-border" >Display print border<br>
             </span>
         </div>
