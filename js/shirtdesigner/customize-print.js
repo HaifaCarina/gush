@@ -1504,49 +1504,7 @@ $j(document).ready(function(){
                                                  $j("#" + art_canvas_id).draggable({
                                                                                    
                                                                                    stop: function() {
-                                                                                   var e = $j(this);
-                                                                                   var p = $j(this).position();
-                                                                                   console.log("art canvas: left: " + p.left + "; top:" +p.top + " width:" + $j(this).width() + " height:" + $j(this).height() );
                                                                                    
-                                                                                   switch(active){
-                                                                                   case "front":
-                                                                                   if(p.left >= $j("#allowed-left-1").val() && p.top >= $j("#allowed-top-1").val() && (p.left + e.width() ) <= $j("#allowed-right-1").val() && (p.top + e.height() ) <= $j("#allowed-bottom-1").val()) {
-                                                                                   $j(this).attr("valid",1);
-                                                                                   console.log("valid position" + p.left + ">" + $j("#allowed-left-1").val() +" " + p.top + ">" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                                                                                   } else {
-                                                                                   $j(this).attr("valid",0);
-                                                                                   console.log("invalid position" + p.left + ":" + $j("#allowed-left-1").val() +" " + p.top + ":" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                                                                                   }
-                                                                                   break;
-                                                                                   case "back":
-                                                                                   if(p.left >= $j("#allowed-left-2").val() && p.top >= $j("#allowed-top-2").val() && (p.left + e.width() ) <= $j("#allowed-right-2").val() && (p.top + e.height() ) <= $j("#allowed-bottom-2").val()) {
-                                                                                   $j(this).attr("valid",1);
-                                                                                   console.log("valid position" + p.left + ">" + $j("#allowed-left-2").val() +" " + p.top + ">" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
-                                                                                   } else {
-                                                                                   $j(this).attr("valid",0);
-                                                                                   console.log("invalid position" + p.left + ":" + $j("#allowed-left-2").val() +" " + p.top + ":" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
-                                                                                   }
-                                                                                   break;
-                                                                                   case "left":
-                                                                                   if(p.left >= $j("#allowed-left-3").val() && p.top >= $j("#allowed-top-3").val() && (p.left + e.width() ) <= $j("#allowed-right-3").val() && (p.top + e.height() ) <= $j("#allowed-bottom-3").val()) {
-                                                                                   $j(this).attr("valid",1);
-                                                                                   console.log("valid position" + p.left + ">" + $j("#allowed-left-3").val() +" " + p.top + ">" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
-                                                                                   } else {
-                                                                                   $j(this).attr("valid",0);
-                                                                                   console.log("invalid position" + p.left + ":" + $j("#allowed-left-3").val() +" " + p.top + ":" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
-                                                                                   }
-                                                                                   break;
-                                                                                   case "right":
-                                                                                   
-                                                                                   if(p.left >= $j("#allowed-left-4").val() && p.top >= $j("#allowed-top-4").val() && (p.left + e.width() ) <= $j("#allowed-right-4").val() && (p.top + e.height() ) <= $j("#allowed-bottom-4").val()) {
-                                                                                   $j(this).attr("valid",1);
-                                                                                   console.log("valid position" + p.left + ">" + $j("#allowed-left-4").val() +" " + p.top + ">" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
-                                                                                   } else {
-                                                                                   $j(this).attr("valid",0);
-                                                                                   console.log("invalid position" + p.left + ":" + $j("#allowed-left-4").val() +" " + p.top + ":" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
-                                                                                   }
-                                                                                   break;
-                                                                                   }
                                                                                    updatePrice();
                                                                                    }
                                                                                    });
@@ -1741,50 +1699,8 @@ $j(document).ready(function(){
                                    $j("#" + image_canvas_id).draggable({
                                                                        
                                                                        stop: function() {
-                                                                       var e = $j(this);
-                                                                       var p = $j(this).position();
-                                                                       console.log("art canvas: left: " + p.left + "; top:" +p.top + " width:" + $j(this).width() + " height:" + $j(this).height() );
                                                                        
-                                                                       switch(active){
-                                                                       case "front":
-                                                                       if(p.left >= $j("#allowed-left-1").val() && p.top >= $j("#allowed-top-1").val() && (p.left + e.width() ) <= $j("#allowed-right-1").val() && (p.top + e.height() ) <= $j("#allowed-bottom-1").val()) {
-                                                                       $j(this).attr("valid",1);
-                                                                       console.log("valid position" + p.left + ">" + $j("#allowed-left-1").val() +" " + p.top + ">" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                                                                       } else {
-                                                                       $j(this).attr("valid",0);
-                                                                       console.log("invalid position" + p.left + ":" + $j("#allowed-left-1").val() +" " + p.top + ":" + $j("#allowed-top-1").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-1").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-1").val());
-                                                                       }
-                                                                       break;
-                                                                       case "back":
-                                                                       if(p.left >= $j("#allowed-left-2").val() && p.top >= $j("#allowed-top-2").val() && (p.left + e.width() ) <= $j("#allowed-right-2").val() && (p.top + e.height() ) <= $j("#allowed-bottom-2").val()) {
-                                                                       $j(this).attr("valid",1);
-                                                                       console.log("valid position" + p.left + ">" + $j("#allowed-left-2").val() +" " + p.top + ">" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
-                                                                       } else {
-                                                                       $j(this).attr("valid",0);
-                                                                       console.log("invalid position" + p.left + ":" + $j("#allowed-left-2").val() +" " + p.top + ":" + $j("#allowed-top-2").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-2").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-2").val());
-                                                                       }
-                                                                       break;
-                                                                       case "left":
-                                                                       if(p.left >= $j("#allowed-left-3").val() && p.top >= $j("#allowed-top-3").val() && (p.left + e.width() ) <= $j("#allowed-right-3").val() && (p.top + e.height() ) <= $j("#allowed-bottom-3").val()) {
-                                                                       $j(this).attr("valid",1);
-                                                                       console.log("valid position" + p.left + ">" + $j("#allowed-left-3").val() +" " + p.top + ">" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
-                                                                       } else {
-                                                                       $j(this).attr("valid",0);
-                                                                       console.log("invalid position" + p.left + ":" + $j("#allowed-left-3").val() +" " + p.top + ":" + $j("#allowed-top-3").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-3").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-3").val());
-                                                                       }
-                                                                       break;
-                                                                       case "right":
-                                                                       
-                                                                       if(p.left >= $j("#allowed-left-4").val() && p.top >= $j("#allowed-top-4").val() && (p.left + e.width() ) <= $j("#allowed-right-4").val() && (p.top + e.height() ) <= $j("#allowed-bottom-4").val()) {
-                                                                       $j(this).attr("valid",1);
-                                                                       console.log("valid position" + p.left + ">" + $j("#allowed-left-4").val() +" " + p.top + ">" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
-                                                                       } else {
-                                                                       $j(this).attr("valid",0);
-                                                                       console.log("invalid position" + p.left + ":" + $j("#allowed-left-4").val() +" " + p.top + ":" + $j("#allowed-top-4").val() +" " + (p.left + e.width() ) + "<" + $j("#allowed-right-4").val() +" " + (p.top + e.height() ) + "<" + $j("#allowed-bottom-4").val());
-                                                                       }
-                                                                       break;
-                                                                       }
-                                                                       updatePrice();
+                                                                        updatePrice();
                                                                        }
                                                                        });
                                    };
@@ -1983,7 +1899,7 @@ $j(document).ready(function(){
                                        reviewboxupdate();
                                        review();
                                        
-                                       function reviewboxupdate(){
+                            function reviewboxupdate(){
                                        var i = document.createElement("input");
                                        i.className= "art-input";
                                        i.type = "hidden";
@@ -1994,6 +1910,7 @@ $j(document).ready(function(){
                                        // FRONT/OUTPUT
                                        var output = document.getElementById('output');
                                        var context = output.getContext('2d');
+                                       context.clearRect(0,0, output.width, output.height);
                                        
                                        // This it to gather front artwork links
                                        var inputChildren = document.getElementById('front-image-links').childNodes;
@@ -2012,7 +1929,7 @@ $j(document).ready(function(){
                                        
                                        var canvas = document.getElementById(children[c].id);
                                        console.log("FRONT"+($j("#"+children[c].id).position().left)+","+($j("#"+children[c].id).position().top));
-                                       context.drawImage(canvas, ($j("#"+children[c].id).position().left), ($j("#"+children[c].id).position().top));
+                                       context.drawImage(canvas, ($j("#"+children[c].id).position().left), ($j("#"+children[c].id).position().top - 790));
                                        }
                                        }
                                        
@@ -2032,6 +1949,7 @@ $j(document).ready(function(){
                                        // BACK/OUTPUT2
                                        var output2 = document.getElementById('output2');
                                        var context2 = output2.getContext('2d');
+                                       context2.clearRect(0,0, output2.width, output2.height);
                                        
                                        // This it to gather front artwork links
                                        var inputChildren2 = document.getElementById('back-image-links').childNodes;
@@ -2068,6 +1986,7 @@ $j(document).ready(function(){
                                        // LEFT/OUTPUT3
                                        var output3 = document.getElementById('output3');
                                        var context3 = output3.getContext('2d');
+                                       context3.clearRect(0,0, output3.width, output3.height);
                                        
                                        // This it to gather front artwork links
                                        var inputChildren3 = document.getElementById('left-image-links').childNodes;
@@ -2106,6 +2025,7 @@ $j(document).ready(function(){
                                        // RIGHT/OUTPUT4
                                        var output4 = document.getElementById('output4');
                                        var context4 = output4.getContext('2d');
+                                       context4.clearRect(0,0, output4.width, output4.height);
                                        
                                        // This it to gather front artwork links
                                        var inputChildren4 = document.getElementById('right-image-links').childNodes;
