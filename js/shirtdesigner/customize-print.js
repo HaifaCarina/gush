@@ -1735,6 +1735,7 @@ $j(document).ready(function(){
                                    c.height=h;//100;
                                    c.setAttribute('ondblclick', 'removeCanvasImage("'+image_canvas_id+'")');
                                    c.setAttribute('onclick', 'highlightCanvasImage("'+image_canvas_id+'")');
+                                   c.setAttribute('style', 'margin-top: -394px;');
                                    c.setAttribute('src', eff.src);
                                    highlighted_art_id = image_canvas_id;
                                    $j("#image-canvas canvas").removeClass();
