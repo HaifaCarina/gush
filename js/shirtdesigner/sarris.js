@@ -240,7 +240,7 @@ function CanvasState(canvas,context) {
   }, true);
   canvas.addEventListener('mouseup', function(e) {
     myState.dragging = false;
-                          
+                          myState.clear();
                           var shapes = myState.shapes;
                           var border;
                           var l = shapes.length;

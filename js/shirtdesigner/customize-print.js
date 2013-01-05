@@ -1,3 +1,8 @@
+// Initial values
+var $j = jQuery.noConflict();
+var active = "front";
+var highlighted_art_id;
+
 String.prototype.replaceAt=function(index, c) {
     return this.substr(0, index) + c + this.substr(index+c.length);
 }
@@ -31,9 +36,6 @@ var left = new Record();
 var right = new Record();
 
 
-var $j = jQuery.noConflict();
-var active = "front";
-var highlighted_art_id;
 
 function removeCanvasImage(e){
     $j("#" + e).remove();
@@ -68,8 +70,8 @@ function getBaseURL() {
     
     if (baseURL.indexOf('http://localhost') != -1) {
         // Base Url for localhost
-        var url = location.href;  // window.location.href;
-        var pathname = location.pathname;  // window.location.pathname;
+        var url = location.href;  
+        var pathname = location.pathname;  
         var index1 = url.indexOf(pathname);
         var index2 = url.indexOf("/", index1 + 1);
         var baseLocalUrl = url.substr(0, index2);
@@ -540,17 +542,33 @@ $j(document).ready(function(){
                    var state3 = new CanvasState(canvas3,context3);
                    var state4 = new CanvasState(canvas4,context4);
                    
-                   var shape0 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
-                   shape0.valid = false;
-                   shape0.border = true;
-                   state.addShape(shape0);
+                   var shape01 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape01.valid = false;
+                   shape01.border = true;
+                   state.addShape(shape01);
                    
-                   var shape1 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
-                   state.addShape(shape1);
-                   var shape2 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
-                   state.addShape(shape2);
-                   var shape3 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
-                   state.addShape(shape3);
+                   var shape02 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape02.valid = false;
+                   shape02.border = true;
+                   state2.addShape(shape02);
+                   
+                   var shape03 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape03.valid = false;
+                   shape03.border = true;
+                   state3.addShape(shape03);
+                   
+                   var shape04 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape04.valid = false;
+                   shape04.border = true;
+                   state4.addShape(shape04);
+                   
+                   
+                   var shape11 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
+                   state.addShape(shape11);
+                   var shape12 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
+                   state.addShape(shape12);
+                   var shape13 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
+                   state.addShape(shape13);
                    
                    var shape21 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
                    state2.addShape(shape21);
@@ -578,90 +596,103 @@ $j(document).ready(function(){
                    function textDraw1() {
                    
                    var canvas = document.getElementById('print');
-                   //var canvas = document.getElementById('text-print-1');
-                   
                    var x = canvas.width/2;
                    var y = 0;
                    
                    switch(active) {
                    case "front":
-                   console.log('draw1 FRONT' + front.text_1_color);
-                   text_font_family = front.text_1_font_family;
-                   text_size = front.text_1_size;
-                   text_color = front.text_1_color;
-                   text_style = front.text_1_style;
-                   
-                   shape1.fill = text_color;
-                   shape1.style = text_style;
-                   shape1.str = $j("#text-1").val();
-                   shape1.text_size = text_size;
-                   shape1.font_family = text_font_family;
-                   shape1.w = getTextRectWidth($j("#text-1").val());
-                   shape1.h = getTextRectHeight($j("#text-1").val());
-                   
-                   state.clear();
-                   
-                   shape1.draw(context);
-                   shape0.draw(context);
-                   //state.addShape();
-                   break;
+                       console.log('draw1 FRONT' + front.text_1_color);
+                       text_font_family = front.text_1_font_family;
+                       text_size = front.text_1_size;
+                       text_color = front.text_1_color;
+                       text_style = front.text_1_style;
+                       
+                       shape11.fill = text_color;
+                       shape11.style = text_style;
+                       shape11.str = $j("#text-1").val();
+                       shape11.text_size = text_size;
+                       shape11.font_family = text_font_family;
+                       shape11.w = getTextRectWidth($j("#text-1").val());
+                       shape11.h = getTextRectHeight($j("#text-1").val());
+                       
+                       state.clear();
+                       shape01.draw(context);
+                       shape11.draw(context);
+                       shape12.draw(context);
+                       shape13.draw(context);
+                       
+                       break;
                    
                    case "back":
-                   text_font_family = back.text_1_font_family;
-                   text_size = back.text_1_size;
-                   text_color = back.text_1_color;
-                   text_style = back.text_1_style;
+                       text_font_family = back.text_1_font_family;
+                       text_size = back.text_1_size;
+                       text_color = back.text_1_color;
+                       text_style = back.text_1_style;
+                       
+                       shape21.fill = text_color;
+                       shape21.style = text_style;
+                       shape21.str = $j("#text-1").val();
+                       shape21.text_size = text_size;
+                       shape21.font_family = text_font_family;
+                       shape21.w = getTextRectWidth($j("#text-1").val());
+                       shape21.h = getTextRectHeight($j("#text-1").val());
+                       
+                   state2.clear();
+                   shape02.draw(context2);
+                   shape21.draw(context2);
+                   shape22.draw(context2);
+                   shape23.draw(context2);
                    
-                   shape21.fill = text_color;
-                   shape21.style = text_style;
-                   shape21.str = $j("#text-1").val();
-                   shape21.text_size = text_size;
-                   shape21.font_family = text_font_family;
-                   shape21.w = getTextRectWidth($j("#text-1").val());
-                   shape21.h = getTextRectHeight($j("#text-1").val());
-                   
-                   state2.addShape(shape21);
-                   break;
+                       break;
                    case "left":
-                   text_font_family = left.text_1_font_family;
-                   text_size = left.text_1_size;
-                   text_color = left.text_1_color;
-                   text_style = left.text_1_style;
+                       text_font_family = left.text_1_font_family;
+                       text_size = left.text_1_size;
+                       text_color = left.text_1_color;
+                       text_style = left.text_1_style;
+                       
+                       shape31.fill = text_color;
+                       shape31.style = text_style;
+                       shape31.str = $j("#text-1").val();
+                       shape31.text_size = text_size;
+                       shape31.font_family = text_font_family;
+                       shape31.w = getTextRectWidth($j("#text-1").val());
+                       shape31.h = getTextRectHeight($j("#text-1").val());
+                       
+                   state3.clear();
+                   shape03.draw(context3);
+                   shape31.draw(context3);
+                   shape32.draw(context3);
+                   shape33.draw(context3);
                    
-                   shape31.fill = text_color;
-                   shape31.style = text_style;
-                   shape31.str = $j("#text-1").val();
-                   shape31.text_size = text_size;
-                   shape31.font_family = text_font_family;
-                   shape31.w = getTextRectWidth($j("#text-1").val());
-                   shape31.h = getTextRectHeight($j("#text-1").val());
-                   
-                   state3.addShape(shape31);
-                   break;
+                       break;
                    case "right":
-                   text_font_family = right.text_1_font_family;
-                   text_size = right.text_1_size;
-                   text_color = right.text_1_color;
-                   text_style = right.text_1_style;
+                       text_font_family = right.text_1_font_family;
+                       text_size = right.text_1_size;
+                       text_color = right.text_1_color;
+                       text_style = right.text_1_style;
+                       
+                       shape41.fill = text_color;
+                       shape41.style = text_style;
+                       shape41.str = $j("#text-1").val();
+                       shape41.text_size = text_size;
+                       shape41.font_family = text_font_family;
+                       shape41.w = getTextRectWidth($j("#text-1").val());
+                       shape41.h = getTextRectHeight($j("#text-1").val());
+                       
+                   state4.clear();
+                   shape04.draw(context4);
+                   shape41.draw(context4);
+                   shape42.draw(context4);
+                   shape43.draw(context4);
                    
-                   shape41.fill = text_color;
-                   shape41.style = text_style;
-                   shape41.str = $j("#text-1").val();
-                   shape41.text_size = text_size;
-                   shape41.font_family = text_font_family;
-                   shape41.w = getTextRectWidth($j("#text-1").val());
-                   shape41.h = getTextRectHeight($j("#text-1").val());
-                   
-                   state4.addShape(shape41);
-                   break;
+                       break;
                    }
-                   
                    
                    updatePrice();
                    }
                    /******** TEXT2 ********/
                    function textDraw2() {
-                   /*
+                   
                    
                    var canvas = document.getElementById('print');
                    
@@ -671,81 +702,107 @@ $j(document).ready(function(){
                    //layer.remove(box);
                    switch(active) {
                    case "front":
-                   text_font_family = front.text_2_font_family;
-                   text_size = front.text_2_size;
-                   text_color = front.text_2_color;
-                   text_style = front.text_2_style;
+                       text_font_family = front.text_2_font_family;
+                       text_size = front.text_2_size;
+                       text_color = front.text_2_color;
+                       text_style = front.text_2_style;
+                       
+                       shape12.fill = text_color;
+                       shape12.style = text_style;
+                       shape12.str = $j("#text-2").val();
+                       shape12.text_size = text_size;
+                       shape12.font_family = text_font_family;
+                       shape12.w = getTextRectWidth($j("#text-2").val());
+                       shape12.h = getTextRectHeight($j("#text-2").val());
                    
-                   shape2.fill = text_color;
-                   shape2.style = text_style;
-                   shape2.str = $j("#text-2").val();
-                   shape2.text_size = text_size;
-                   shape2.font_family = text_font_family;
-                   shape2.w = getTextRectWidth($j("#text-2").val());
-                   shape2.h = getTextRectHeight($j("#text-2").val());
-                   state.addShape(shape2);
+                   state.clear();
+                   shape01.draw(context);
+                   shape11.draw(context);
+                   shape12.draw(context);
+                   shape13.draw(context);
+                   
+                   
                    break;
                    
                    case "back":
-                   text_font_family = back.text_2_font_family;
-                   text_size = back.text_2_size;
-                   text_color = back.text_2_color;
-                   text_style = back.text_2_style;
+                       text_font_family = back.text_2_font_family;
+                       text_size = back.text_2_size;
+                       text_color = back.text_2_color;
+                       text_style = back.text_2_style;
+                       
+                       shape22.fill = text_color;
+                       shape22.style = text_style;
+                       shape22.str = $j("#text-2").val();
+                       shape22.text_size = text_size;
+                       shape22.font_family = text_font_family;
+                       shape22.w = getTextRectWidth($j("#text-2").val());
+                       shape22.h = getTextRectHeight($j("#text-2").val());
                    
-                   shape22.fill = text_color;
-                   shape22.style = text_style;
-                   shape22.str = $j("#text-2").val();
-                   shape22.text_size = text_size;
-                   shape22.font_family = text_font_family;
-                   shape22.w = getTextRectWidth($j("#text-2").val());
-                   shape22.h = getTextRectHeight($j("#text-2").val());
-                   state2.addShape(shape22);
+                   state2.clear();
+                   shape02.draw(context2);
+                   shape21.draw(context2);
+                   shape22.draw(context2);
+                   shape23.draw(context2);
+                   
+                   
                    break;
                    case "left":
-                   text_font_family = left.text_2_font_family;
-                   text_size = left.text_2_size;
-                   text_color = left.text_2_color;
-                   text_style = left.text_2_style;
+                       text_font_family = left.text_2_font_family;
+                       text_size = left.text_2_size;
+                       text_color = left.text_2_color;
+                       text_style = left.text_2_style;
+                       
+                       shape32.fill = text_color;
+                       shape32.style = text_style;
+                       shape32.str = $j("#text-2").val();
+                       shape32.text_size = text_size;
+                       shape32.font_family = text_font_family;
+                       shape32.w = getTextRectWidth($j("#text-2").val());
+                       shape32.h = getTextRectHeight($j("#text-2").val());
+                       
+                   state3.clear();
+                   shape03.draw(context3);
+                   shape31.draw(context3);
+                   shape32.draw(context3);
+                   shape33.draw(context3);
                    
-                   shape32.fill = text_color;
-                   shape32.style = text_style;
-                   shape32.str = $j("#text-2").val();
-                   shape32.text_size = text_size;
-                   shape32.font_family = text_font_family;
-                   shape32.w = getTextRectWidth($j("#text-2").val());
-                   shape32.h = getTextRectHeight($j("#text-2").val());
                    
-                   state3.addShape(shape32);
                    break;
                    case "right":
-                   text_font_family = right.text_2_font_family;
-                   text_size = right.text_2_size;
-                   text_color = right.text_2_color;
-                   text_style = right.text_2_style;
+                       text_font_family = right.text_2_font_family;
+                       text_size = right.text_2_size;
+                       text_color = right.text_2_color;
+                       text_style = right.text_2_style;
+                       
+                       shape42.fill = text_color;
+                       shape42.style = text_style;
+                       shape42.str = $j("#text-2").val();
+                       shape42.text_size = text_size;
+                       shape42.font_family = text_font_family;
+                       shape42.w = getTextRectWidth($j("#text-2").val());
+                       shape42.h = getTextRectHeight($j("#text-2").val());
                    
-                   shape42.fill = text_color;
-                   shape42.style = text_style;
-                   shape42.str = $j("#text-2").val();
-                   shape42.text_size = text_size;
-                   shape42.font_family = text_font_family;
-                   shape42.w = getTextRectWidth($j("#text-2").val());
-                   shape42.h = getTextRectHeight($j("#text-2").val());
+                   state4.clear();
+                   shape04.draw(context4);
+                   shape41.draw(context4);
+                   shape42.draw(context4);
+                   shape43.draw(context4);
                    
-                   state4.addShape(shape42);
+                       
                    break;
                    }
+                   
                    updatePrice();
-                   */
+                   
                    }
                    /******** TEXT3 ********/
                    function textDraw3() {
-                   /*
+                   
                    var canvas = document.getElementById('print');
                    
                    var x = canvas.width/2;
                    var y = 80 ;
                    
-                   //layer.remove(box);
                    switch(active) {
                    case "front":
                    text_font_family = front.text_3_font_family;
@@ -753,14 +810,20 @@ $j(document).ready(function(){
                    text_color = front.text_3_color;
                    text_style = front.text_3_style;
                    
-                   shape3.fill = text_color;
-                   shape3.style = text_style;
-                   shape3.str = $j("#text-3").val();
-                   shape3.text_size = text_size;
-                   shape3.font_family = text_font_family;
-                   shape3.w = getTextRectWidth($j("#text-3").val());
-                   shape3.h = getTextRectHeight($j("#text-3").val());
-                   state.addShape(shape3);
+                   shape13.fill = text_color;
+                   shape13.style = text_style;
+                   shape13.str = $j("#text-3").val();
+                   shape13.text_size = text_size;
+                   shape13.font_family = text_font_family;
+                   shape13.w = getTextRectWidth($j("#text-3").val());
+                   shape13.h = getTextRectHeight($j("#text-3").val());
+                   
+                   state.clear();
+                   shape01.draw(context);
+                   shape11.draw(context);
+                   shape12.draw(context);
+                   shape13.draw(context);
+                   
                    break;
                    
                    case "back":
@@ -776,8 +839,16 @@ $j(document).ready(function(){
                    shape23.font_family = text_font_family;
                    shape23.w = getTextRectWidth($j("#text-3").val());
                    shape23.h = getTextRectHeight($j("#text-3").val());
-                   state2.addShape(shape23);
+                   
+                   state2.clear();
+                   shape02.draw(context2);
+                   shape21.draw(context2);
+                   shape22.draw(context2);
+                   shape23.draw(context2);
+                   
                    break;
+                   
+                   
                    case "left":
                    text_font_family = left.text_3_font_family;
                    text_size = left.text_3_size;
@@ -792,7 +863,12 @@ $j(document).ready(function(){
                    shape33.w = getTextRectWidth($j("#text-3").val());
                    shape33.h = getTextRectHeight($j("#text-3").val());
                    
-                   state3.addShape(shape33);
+                   state3.clear();
+                   shape03.draw(context3);
+                   shape31.draw(context3);
+                   shape32.draw(context3);
+                   shape33.draw(context3);
+                   
                    break;
                    case "right":
                    text_font_family = right.text_3_font_family;
@@ -808,11 +884,16 @@ $j(document).ready(function(){
                    shape43.w = getTextRectWidth($j("#text-3").val());
                    shape43.h = getTextRectHeight($j("#text-3").val());
                    
-                   state4.addShape(shape43);
+                   state4.clear();
+                   shape04.draw(context4);
+                   shape41.draw(context4);
+                   shape42.draw(context4);
+                   shape43.draw(context4);
+                   
                    break;
                    }
                    updatePrice();
-                    */
+                    
                    }
                    $j("#text-size").change(function () {
                                            text_size = parseInt($j("#text-size").val());
@@ -1837,23 +1918,72 @@ $j(document).ready(function(){
                    
                    
                    $j("#print-guide-border").click(function(){
+                                                   
                                                    if ($j(this).is(':checked')) {
-                                                    console.log("checked");
-                                                   shape0.valid = true;
-                                                   //shape0.draw(context);
-                                                   //state.addShape(shape0);
+                                                    
+                                                       shape01.valid = true;
+                                                       state.clear();
+                                                       shape01.draw(context);
+                                                       shape11.draw(context);
+                                                       shape12.draw(context);
+                                                       shape13.draw(context);
+                                                       
+                                                       shape02.valid = true;
+                                                       state2.clear();
+                                                       shape02.draw(context2);
+                                                       shape21.draw(context2);
+                                                       shape22.draw(context2);
+                                                       shape23.draw(context2);
+                                                       
+                                                       shape03.valid = true;
+                                                       state3.clear();
+                                                       shape03.draw(context3);
+                                                       shape31.draw(context3);
+                                                       shape32.draw(context3);
+                                                       shape33.draw(context3);
+                                                       
+                                                       shape04.valid = true;
+                                                       state4.clear();
+                                                       shape04.draw(context4);
+                                                       shape41.draw(context4);
+                                                       shape42.draw(context4);
+                                                       shape43.draw(context4);
+                                                       
                                                    
-                                                
+                                                   
                                                    } else {
-                                                   shape0.valid = false;
-                                                   //shape0.draw(context);
-                                                   //state.addShape(shape0);
-                                                        //state.addShape(shape0);
-                                                   }
-                                                   state.clear();
+                                                        
+                                                       shape01.valid = false;
+                                                       state.clear();
+                                                       shape01.draw(context);
+                                                       shape11.draw(context);
+                                                       shape12.draw(context);
+                                                       shape13.draw(context);
+                                                       
+                                                       shape02.valid = false;
+                                                       state2.clear();
+                                                       shape02.draw(context2);
+                                                       shape21.draw(context2);
+                                                       shape22.draw(context2);
+                                                       shape23.draw(context2);
+                                                       
+                                                       shape03.valid = false;
+                                                       state3.clear();
+                                                       shape03.draw(context3);
+                                                       shape31.draw(context3);
+                                                       shape32.draw(context3);
+                                                       shape33.draw(context3);
+                                                       
+                                                       shape04.valid = false;
+                                                       state4.clear();
+                                                       shape04.draw(context4);
+                                                       shape41.draw(context4);
+                                                       shape42.draw(context4);
+                                                       shape43.draw(context4);
                                                    
-                                                   shape1.draw(context);
-                                                   shape0.draw(context);
+                                                   }
+                                                   
+                                                   
                                                    
                                                    });
                    
@@ -1870,17 +2000,7 @@ $j(document).ready(function(){
                                        
                                        $j("div.front-content").css("display", "none");
                                        $j("div.sizes-content").fadeIn(); 
-                                       if ($j("#print-guide-border").is(':checked')) {
-                                       $j("#border-1").hide();
-                                       $j("#border-2").hide();
-                                       $j("#border-3").hide();
-                                       $j("#border-4").hide();
-                                       } else {
-                                       $j("#border-1").hide();
-                                       $j("#border-2").hide();
-                                       $j("#border-3").hide();
-                                       $j("#border-4").hide();
-                                       }
+                                       
                                        
                                        } else {
                                        
@@ -1896,6 +2016,35 @@ $j(document).ready(function(){
                                        
                                        $j("#art-canvas canvas").removeClass('.highlight-canvas-image');
                                        
+                                       $j("#print-guide-border").removeAttr('checked');
+                                       shape01.valid = false;
+                                       state.clear();
+                                       shape01.draw(context);
+                                       shape11.draw(context);
+                                       shape12.draw(context);
+                                       shape13.draw(context);
+                                       
+                                       shape02.valid = false;
+                                       state2.clear();
+                                       shape02.draw(context2);
+                                       shape21.draw(context2);
+                                       shape22.draw(context2);
+                                       shape23.draw(context2);
+                                       
+                                       shape03.valid = false;
+                                       state3.clear();
+                                       shape03.draw(context3);
+                                       shape31.draw(context3);
+                                       shape32.draw(context3);
+                                       shape33.draw(context3);
+                                       
+                                       shape04.valid = false;
+                                       state4.clear();
+                                       shape04.draw(context4);
+                                       shape41.draw(context4);
+                                       shape42.draw(context4);
+                                       shape43.draw(context4);
+                                       
                                        reviewboxupdate();
                                        review();
                                        
@@ -1905,6 +2054,9 @@ $j(document).ready(function(){
                                        i.type = "hidden";
                                        i.name = "testinput";
                                        document.getElementById('checkout-design').appendChild(i);
+                                       
+                                       // Removes the borders
+                                       
                                        
                                        
                                        // FRONT/OUTPUT
