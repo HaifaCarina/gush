@@ -7,6 +7,12 @@ String.prototype.replaceAt=function(index, c) {
     return this.substr(0, index) + c + this.substr(index+c.length);
 }
 
+function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+
+
 function Record() {
     this.text_1 = "";
     this.text_1_font_family = "Arial";
@@ -35,7 +41,113 @@ var back = new Record();
 var left = new Record();
 var right = new Record();
 
+/*
+function isArtFullColor(id) {
+    
+    var art_colors = new Array();
+    var children1 = document.getElementById(id).childNodes;
+    for (var c in children1){
+        if(children1[c].id !== undefined ) {
+            console.log("id:"+children1[c].id);
+            console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
+            
+            //if(full_color == 0) {
+                var canvas = document.getElementById(children1[c].id);
+                var context = canvas.getContext('2d');
+                var pix = context.getImageData(0, 0, canvas.width, canvas.height).data;
+                
+                for (var i = 0, n = pix.length; i <n; i += 4) {
+                    
+                    if(pix[i+3]==255) {
+                        if(art_colors.length == 0) {
+                            art_colors.push(pix[i] );
+                            art_colors.push(pix[i +1]);
+                            art_colors.push(pix[i+2]);
+                            
+                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
+                            console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
+                            console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
+                        } else {
+                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
+                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
+                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
+                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
+                                full_color=1;
+                                return [0];
+                                break;
+                            }
+                        }
+                    }
+                }
+            
+           // }
+        }
+    }
+    return [0, art_colors];
+}
+*/
 
+function isTextFullColor() {
+    var records = new Array(front, back, left, right);
+    var colors = new Array();
+    var art_colors = new Array();
+    
+    for (var i = 0; i < records.length; ++i) {
+        if (records[i].text_1.length > 0) colors.push(records[i].text_1_color);
+        if (records[i].text_2.length > 0) colors.push(records[i].text_2_color);
+        if (records[i].text_3.length > 0) colors.push(records[i].text_3_color);
+    }
+    
+    var arr = colors.sort();
+    
+    for (var i = 0; i < arr.length - 1; i++) {
+        if (arr[i + 1] != arr[i]) {
+            return [1];
+        }
+    }
+    
+    art_colors[0] = hexToR(arr[0]);
+    art_colors[1] = hexToG(arr[0]);
+    art_colors[2] = hexToB(arr[0]);
+    
+    return [0, art_colors];
+}
+
+function updatePrice() {
+    console.log("updatePrice");
+    
+    var price = Number(new String($j("#original-price").val().replace(",","")));
+    var full_color = 0, text_full_color = 0;
+    var art_colors = new Array();
+    
+    
+    var records = new Array(front, back, left, right);
+    var text_count = 0;
+    
+    for (var i = 0; i < records.length; ++i) {
+        if (records[i].text_1.length > 0) text_count = 1; break;
+        if (records[i].text_2.length > 0) text_count = 1; break;
+        if (records[i].text_3.length > 0) text_count = 1; break;
+    }
+    
+    if (text_count == 1) {
+        console.log("text count =1");
+        
+        var x = isTextFullColor();
+        if (x[0] == 0) {
+            console.log("one color");
+            art_colors = x[1];
+            console.log(art_colors);
+        } else {
+            text_full_color = 1;
+            console.log("text_full_color=1");
+        }
+    }
+    
+    $j("#product-price").val(price);
+    $j("#product-price-final").val(price);
+    
+}
 
 function removeCanvasImage(e){
     $j("#" + e).remove();
@@ -87,6 +199,7 @@ function getBaseURL() {
 
 
 $j(document).ready(function(){
+                   
                    window.console = $j('<iframe>').hide().appendTo('body')[0].contentWindow.console;
                    
                    
@@ -1319,12 +1432,12 @@ $j(document).ready(function(){
                                        updatePrice();
                                        });
                    
-                   
+                   /*
                    $j(".bordered").click(function(){
                                          console.log("MOUSEDOWN!");
-                                         updatePrice();
+                                         //updatePrice();
                                          });
-                   
+                   */
                    $j("#art-category").change(function () {
                                               
                                               var categories = new Array("animals","fitness","floral","fruits","gifts","gushdesigns","military","miscellaneous","music","party","people","shapes","sports","techno","valentine");
@@ -1443,10 +1556,6 @@ $j(document).ready(function(){
                                             };
                                             });
                    
-                   function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
-                   function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
-                   function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
-                   function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
                    function getArtSize() {
                    switch($j("#art-size").val()){
                    case "small":
@@ -1719,7 +1828,6 @@ $j(document).ready(function(){
                                    drawImage();
                                    }else {
                                    var c, h, w;
-                                   //alert(image_element_id);
                                    var eff = document.getElementById(image_element_id);
                                    var i = new Image();
                                    i.src = eff.src;
@@ -1731,8 +1839,8 @@ $j(document).ready(function(){
                                    
                                    c = document.createElement("canvas");
                                    c.id= image_canvas_id;
-                                   c.width= w;//100;
-                                   c.height=h;//100;
+                                   c.width= w;
+                                   c.height=h;
                                    c.setAttribute('ondblclick', 'removeCanvasImage("'+image_canvas_id+'")');
                                    c.setAttribute('onclick', 'highlightCanvasImage("'+image_canvas_id+'")');
                                    c.setAttribute('style', 'margin-top: -394px;');
@@ -2322,9 +2430,7 @@ $j(document).ready(function(){
                                        
                                        });
                    
-                   function updatePrice() {
-                   console.log("price is empty");
-                   }
+                   
                    
                    
                    });
