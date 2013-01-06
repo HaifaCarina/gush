@@ -101,6 +101,7 @@ function isArtFullColor(canvas_ids) {
                         } else {
                             if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
                                 full_color=1;
+                                console.log("fullcolor");
                                 return [1];
                                 break;
                             }
@@ -112,13 +113,13 @@ function isArtFullColor(canvas_ids) {
     }
     
     
-    
+    console.log("onecolor");
     
     return [0, art_colors];
 }
 
 function compareElementBorders (borders, texts, arts) {
-    var final_inside = 0, final_outside = 0;
+    var final_inside = 0, final_outside = 0, customdes = 0;
     
     for (var i = 0; i < borders.length; ++i) {
         var inside = 0, outside = 0;
@@ -141,6 +142,8 @@ function compareElementBorders (borders, texts, arts) {
         for (var c in children1){
             // filter out undefined and print (used for text) elements
             if(children1[c].id !== undefined && children1[c].id.search("print") != 0 ) {
+                
+                // evaluates position values
                 var p = $j("#"+children1[c].id).position();
                 p.top = p.top - 790;
                 
@@ -160,6 +163,11 @@ function compareElementBorders (borders, texts, arts) {
                     outside++;
                 }
                 
+                //checks if image is uploaded: by checking src
+                var c_src = document.getElementById(children1[c].id).getAttribute("src").search('uploads');
+                customdes = (c_src > -1 && customdes == 0) ? 1: 0;
+                
+                
             }
         }
         
@@ -169,9 +177,7 @@ function compareElementBorders (borders, texts, arts) {
         
     }
     
-    console.log("inside:"+final_inside);
-    console.log("outside:"+final_outside);
-    return [final_inside, final_outside];
+    return [final_inside, final_outside, customdes];
     
         
 }
@@ -185,7 +191,7 @@ function updatePrice() {
     var text_colors = new Array();
     var art_colors = new Array();
     
-    // TEXTS checks if there are any occurence of texts
+    // TEXTS FULL COLOR: checks if there are any occurence of texts
     var records = new Array(front, back, left, right);
     var text_count = 0, art_count = 0;
     for (var i = 0; i < records.length; ++i) {
@@ -203,14 +209,14 @@ function updatePrice() {
         }
     }
     
-    // ART IMAGES: checks if there are any occurence of art images
+    // ART IMAGES FULL COLOR: checks if there are any occurence of art images
     var art_canvases = new Array("art-canvas", "art-canvas2", "art-canvas3", "art-canvas4" );
     var final_canvas = new Array();
     
     for (var i = 0; i < art_canvases.length ; i++) {
         var children1 = document.getElementById(art_canvases[i]).childNodes;
         for (var c in children1){
-            if(children1[c].id !== undefined && children1[c].id.search("print")) {
+            if(children1[c].id !== undefined && children1[c].id.search("print") != 0) {
                 art_count = 1;
                 final_canvas.push(art_canvases[i]);
                 break;
@@ -231,11 +237,16 @@ function updatePrice() {
         }
     }
     
-    var full_text_art = (text_colors == art_colors)? true: false;
+    var full_text_art = (text_colors == art_colors)? false: true;
+    
+    console.log("text_full_color:" + text_full_color);
+    console.log("art_full_color:" + art_full_color);
+    console.log(text_colors);
+    console.log(art_colors);
     
     if (text_full_color == 1 || art_full_color == 1 || full_text_art) {
         price = price + 150;
-        console.log("add 150 pesos");
+        console.log("add (full colored) 150");
     }
     
     // Checks the elements for borders
@@ -246,11 +257,17 @@ function updatePrice() {
     
     // add 200 for more than one printed side within the border
     price = (elem_count[0] > 1) ? price + ((elem_count[0]-1) * 200) : price;
+    if (elem_count[0] > 1) console.log("add (>1 printed side) " + ((elem_count[0]-1) * 200));
     
     // add 200 for each side with print outside border
     price = price + (elem_count[1] * 200);
+    console.log("add (200/outside print) " + (elem_count[1] * 200));
     
-    console.log("inside:" + elem_count[0] + " ||outside: " + elem_count[1]);
+    // add 100 for custom design
+    price = price + (elem_count[2] * 100);
+    console.log("add (100 for customdesign)" + (elem_count[2] * 100) );
+    
+    console.log("inside:" + elem_count[0] + " || outside: " + elem_count[1]+ " || customdes: " + elem_count[2]);
     $j("#product-price").val(price);
     $j("#product-price-final").val(price);
     
