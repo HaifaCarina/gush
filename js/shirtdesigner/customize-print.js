@@ -41,51 +41,8 @@ var back = new Record();
 var left = new Record();
 var right = new Record();
 
-/*
-function isArtFullColor(id) {
-    
-    var art_colors = new Array();
-    var children1 = document.getElementById(id).childNodes;
-    for (var c in children1){
-        if(children1[c].id !== undefined ) {
-            console.log("id:"+children1[c].id);
-            console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
-            
-            //if(full_color == 0) {
-                var canvas = document.getElementById(children1[c].id);
-                var context = canvas.getContext('2d');
-                var pix = context.getImageData(0, 0, canvas.width, canvas.height).data;
-                
-                for (var i = 0, n = pix.length; i <n; i += 4) {
-                    
-                    if(pix[i+3]==255) {
-                        if(art_colors.length == 0) {
-                            art_colors.push(pix[i] );
-                            art_colors.push(pix[i +1]);
-                            art_colors.push(pix[i+2]);
-                            
-                            console.log("1one colored " + art_colors[0] + ":" + pix[i]);
-                            console.log("1one colored " + art_colors[1] + ":" + pix[i+1]);
-                            console.log("1one colored " + art_colors[2] + ":" + pix[i+2]);
-                        } else {
-                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
-                                console.log("1full colored " + art_colors[0] + ":" + pix[i]);
-                                console.log("1full colored " + art_colors[1] + ":" + pix[i+1]);
-                                console.log("1full colored " + art_colors[2] + ":" + pix[i+2]);
-                                full_color=1;
-                                return [0];
-                                break;
-                            }
-                        }
-                    }
-                }
-            
-           // }
-        }
-    }
-    return [0, art_colors];
-}
-*/
+
+
 
 function isTextFullColor() {
     var records = new Array(front, back, left, right);
@@ -113,16 +70,61 @@ function isTextFullColor() {
     return [0, art_colors];
 }
 
+function isArtFullColor(canvas_ids) {
+    
+    console.log("lenth:" + canvas_ids.length);
+    var art_colors = new Array();
+    
+    for (var i = 0; i < canvas_ids.length; i++)
+    {
+        var children1 = document.getElementById(canvas_ids[i]).childNodes;
+        for (var c in children1){
+            if(children1[c].id !== undefined ) {
+                console.log("id:"+children1[c].id);
+                console.log("valid:" + $j("#"+children1[c].id).attr("valid"));
+                
+                var canvas = document.getElementById(children1[c].id);
+                var context = canvas.getContext('2d');
+                var pix = context.getImageData(0, 0, canvas.width, canvas.height).data;
+                
+                for (var i = 0, n = pix.length; i <n; i += 4) {
+                    
+                    if(pix[i+3]==255) {
+                        if(art_colors.length == 0) {
+                            art_colors.push(pix[i] );
+                            art_colors.push(pix[i +1]);
+                            art_colors.push(pix[i+2]);
+                        } else {
+                            if( art_colors[0] != pix[i] || art_colors[1] != pix[i + 1] || art_colors[2] != pix[i+2]) {
+                                full_color=1;
+                                return [1];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    return [0, art_colors];
+}
+
+
 function updatePrice() {
     console.log("updatePrice");
     
     var price = Number(new String($j("#original-price").val().replace(",","")));
-    var full_color = 0, text_full_color = 0;
+    var full_color = 0, text_full_color = 0, art_full_color = 0;
+    var text_colors = new Array();
     var art_colors = new Array();
     
-    
+    // checks if there are any occurence of texts
     var records = new Array(front, back, left, right);
-    var text_count = 0;
+    var text_count = 0, art_count = 0;
     
     for (var i = 0; i < records.length; ++i) {
         if (records[i].text_1.length > 0) text_count = 1; break;
@@ -136,14 +138,53 @@ function updatePrice() {
         var x = isTextFullColor();
         if (x[0] == 0) {
             console.log("one color");
-            art_colors = x[1];
-            console.log(art_colors);
+            text_colors = x[1];
         } else {
             text_full_color = 1;
             console.log("text_full_color=1");
         }
     }
     
+    // checks if there are any occurence of art images
+    var art_canvases = new Array("art-canvas", "art-canvas2", "art-canvas3", "art-canvas4" );
+    var final_canvas = new Array();
+    
+    for (var i = 0; i < art_canvases.length ; i++) {
+        var children1 = document.getElementById(art_canvases[i]).childNodes;
+        for (var c in children1){
+            if(children1[c].id !== undefined && children1[c].id.search("print")) {
+                art_count = 1;
+                final_canvas.push(art_canvases[i]);
+                break;
+                
+            }
+        }
+    }
+    console.log("finalcanvas");
+    console.log(final_canvas);
+    
+    if (art_count == 1) {
+        var x = isArtFullColor(final_canvas);
+        
+        if (x[0] == 0) {
+            console.log("one color");
+            art_colors = x[1];
+        } else {
+            art_full_color = 1;
+            console.log("art_full_color=1");
+        }
+    }
+    console.log("text_colors:");
+    console.log(text_colors);
+    console.log("text_colors:");
+    console.log(art_colors);
+    
+    var full_text_art = (text_colors == art_colors)? true: false;
+    
+    if (text_full_color == 1 || art_full_color == 1 || full_text_art) {
+        console.log("add 150 pesos");
+    }
+    console.log("art count: " + art_count);
     $j("#product-price").val(price);
     $j("#product-price-final").val(price);
     
