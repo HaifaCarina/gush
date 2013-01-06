@@ -303,7 +303,6 @@ CanvasState.prototype.draw = function() {
     
     // draw all shapes
     var l = shapes.length;
-      console.log("shapes length:" + l);
     for (var i = 0; i < l; i++) {
       var shape = shapes[i];
         if (shape !== undefined) {
