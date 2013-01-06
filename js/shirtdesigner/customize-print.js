@@ -2,6 +2,8 @@
 var $j = jQuery.noConflict();
 var active = "front";
 var highlighted_art_id;
+var shape01, shape02, shape03, shape04;
+var shape11, shape12, shape13, shape21, shape22, shape23, shape31, shape32, shape33, shape31, shape32, shape33;
 
 String.prototype.replaceAt=function(index, c) {
     return this.substr(0, index) + c + this.substr(index+c.length);
@@ -67,6 +69,8 @@ function isTextFullColor() {
     art_colors[1] = hexToG(arr[0]);
     art_colors[2] = hexToB(arr[0]);
     
+    
+    
     return [0, art_colors];
 }
 
@@ -113,6 +117,65 @@ function isArtFullColor(canvas_ids) {
     return [0, art_colors];
 }
 
+function compareElementBorders (borders, texts, arts) {
+    var final_inside = 0, final_outside = 0;
+    
+    for (var i = 0; i < borders.length; ++i) {
+        var inside = 0, outside = 0;
+        
+        // go through text1, text2 and text3 data
+        for (var j=0; j < 3; j++) {
+            if ( texts[i][j].str.length > 0 ) {
+                if(texts[i][j].x >= borders[i].x && texts[i][j].y >= borders[i].y &&
+                   texts[i][j].x + texts[i][j].w <= borders[i].x + borders[i].w &&
+                   texts[i][j].y + texts[i][j].h <= borders[i].y + borders[i].h) {
+                    inside++;
+                } else {
+                    outside++;
+                }
+            }
+        }
+        
+        var children1 = document.getElementById(arts[i]).childNodes;
+        
+        for (var c in children1){
+            // filter out undefined and print (used for text) elements
+            if(children1[c].id !== undefined && children1[c].id.search("print") != 0 ) {
+                var p = $j("#"+children1[c].id).position();
+                p.top = p.top - 790;
+                
+                var elem_right = p.left + parseInt($j("#"+children1[c].id).width());
+                var elem_bottom = p.top + parseInt($j("#"+children1[c].id).height());
+                var border_right = borders[i].x + borders[i].w;
+                var border_bottom = borders[i].y + borders[i].h;
+                
+                if(p.left >= borders[i].x &&
+                   p.top >= borders[i].y &&
+                   elem_right <= border_right &&
+                   elem_bottom <= border_bottom ) {
+                    
+                    inside++;
+                    
+                } else {
+                    outside++;
+                }
+                
+            }
+        }
+        
+        if (inside > 0) final_inside++;
+        if (outside > 0 ) final_outside++;
+        
+        
+    }
+    
+    console.log("inside:"+final_inside);
+    console.log("outside:"+final_outside);
+    return [final_inside, final_outside];
+    
+        
+}
+
 
 function updatePrice() {
     console.log("updatePrice");
@@ -122,10 +185,9 @@ function updatePrice() {
     var text_colors = new Array();
     var art_colors = new Array();
     
-    // checks if there are any occurence of texts
+    // TEXTS checks if there are any occurence of texts
     var records = new Array(front, back, left, right);
     var text_count = 0, art_count = 0;
-    
     for (var i = 0; i < records.length; ++i) {
         if (records[i].text_1.length > 0) text_count = 1; break;
         if (records[i].text_2.length > 0) text_count = 1; break;
@@ -133,19 +195,15 @@ function updatePrice() {
     }
     
     if (text_count == 1) {
-        console.log("text count =1");
-        
         var x = isTextFullColor();
         if (x[0] == 0) {
-            console.log("one color");
             text_colors = x[1];
         } else {
             text_full_color = 1;
-            console.log("text_full_color=1");
         }
     }
     
-    // checks if there are any occurence of art images
+    // ART IMAGES: checks if there are any occurence of art images
     var art_canvases = new Array("art-canvas", "art-canvas2", "art-canvas3", "art-canvas4" );
     var final_canvas = new Array();
     
@@ -160,31 +218,39 @@ function updatePrice() {
             }
         }
     }
-    console.log("finalcanvas");
-    console.log(final_canvas);
+    //console.log("finalcanvas");
+    //console.log(final_canvas);
     
     if (art_count == 1) {
         var x = isArtFullColor(final_canvas);
         
         if (x[0] == 0) {
-            console.log("one color");
             art_colors = x[1];
         } else {
             art_full_color = 1;
-            console.log("art_full_color=1");
         }
     }
-    console.log("text_colors:");
-    console.log(text_colors);
-    console.log("text_colors:");
-    console.log(art_colors);
     
     var full_text_art = (text_colors == art_colors)? true: false;
     
     if (text_full_color == 1 || art_full_color == 1 || full_text_art) {
+        price = price + 150;
         console.log("add 150 pesos");
     }
-    console.log("art count: " + art_count);
+    
+    // Checks the elements for borders
+    var art_records = new Array("art-canvas", "art-canvas2", "art-canvas3", "art-canvas4");
+    var shape_records = new Array([shape11, shape12, shape13], [shape21, shape22, shape23], [shape31, shape32, shape33], [shape41, shape42, shape43]);
+    var borders = new Array(shape01, shape02, shape03, shape04);
+    var elem_count = compareElementBorders(borders, shape_records, art_records);
+    
+    // add 200 for more than one printed side within the border
+    price = (elem_count[0] > 1) ? price + ((elem_count[0]-1) * 200) : price;
+    
+    // add 200 for each side with print outside border
+    price = price + (elem_count[1] * 200);
+    
+    console.log("inside:" + elem_count[0] + " ||outside: " + elem_count[1]);
     $j("#product-price").val(price);
     $j("#product-price-final").val(price);
     
@@ -696,53 +762,53 @@ $j(document).ready(function(){
                    var state3 = new CanvasState(canvas3,context3);
                    var state4 = new CanvasState(canvas4,context4);
                    
-                   var shape01 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape01 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
                    shape01.valid = false;
                    shape01.border = true;
                    state.addShape(shape01);
                    
-                   var shape02 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape02 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
                    shape02.valid = false;
                    shape02.border = true;
                    state2.addShape(shape02);
                    
-                   var shape03 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape03 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
                    shape03.valid = false;
                    shape03.border = true;
                    state3.addShape(shape03);
                    
-                   var shape04 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
+                   shape04 = new Shape(95,120,"test string" , text_color,"rectangle",text_size, text_font_family);
                    shape04.valid = false;
                    shape04.border = true;
                    state4.addShape(shape04);
                    
                    
-                   var shape11 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
+                   shape11 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
                    state.addShape(shape11);
-                   var shape12 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
+                   shape12 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
                    state.addShape(shape12);
-                   var shape13 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
+                   shape13 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
                    state.addShape(shape13);
                    
-                   var shape21 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
+                   shape21 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
                    state2.addShape(shape21);
-                   var shape22 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
+                   shape22 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
                    state2.addShape(shape22);
-                   var shape23 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
+                   shape23 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
                    state2.addShape(shape23);
                    
-                   var shape31 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
+                   shape31 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
                    state3.addShape(shape31);
-                   var shape32 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
+                   shape32 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
                    state3.addShape(shape32);
-                   var shape33 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
+                   shape33 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
                    state3.addShape(shape33);
                    
-                   var shape41 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
+                   shape41 = new Shape(0,0, $j("#text-1").val(), text_color,text_style,text_size, text_font_family);
                    state4.addShape(shape41);
-                   var shape42 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
+                   shape42 = new Shape(0,0, $j("#text-2").val(), text_color, text_style, text_size, text_font_family);
                    state4.addShape(shape42);
-                   var shape43 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
+                   shape43 = new Shape(0,0, $j("#text-3").val(), text_color, text_style, text_size, text_font_family);
                    state4.addShape(shape43);
                    
                    
@@ -1049,6 +1115,11 @@ $j(document).ready(function(){
                    updatePrice();
                     
                    }
+                   
+                   $j(".bordered").click(function(){
+                                         console.log("MOUSEDOWN!");
+                                         updatePrice();
+                                         });
                    $j("#text-size").change(function () {
                                            text_size = parseInt($j("#text-size").val());
                                            switch(active) {
