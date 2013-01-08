@@ -145,15 +145,16 @@ function compareElementBorders (borders, texts, arts) {
                 
                 // evaluates position values
                 var p = $j("#"+children1[c].id).position();
-                p.top = p.top - 790;
+                //p.top = p.top - 790;
+                var top = p.top - 790;
                 
                 var elem_right = p.left + parseInt($j("#"+children1[c].id).width());
-                var elem_bottom = p.top + parseInt($j("#"+children1[c].id).height());
+                var elem_bottom = top + parseInt($j("#"+children1[c].id).height());
                 var border_right = borders[i].x + borders[i].w;
                 var border_bottom = borders[i].y + borders[i].h;
                 
                 if(p.left >= borders[i].x &&
-                   p.top >= borders[i].y &&
+                   top >= borders[i].y &&
                    elem_right <= border_right &&
                    elem_bottom <= border_bottom ) {
                     
@@ -165,8 +166,9 @@ function compareElementBorders (borders, texts, arts) {
                 
                 //checks if image is uploaded: by checking src
                 var c_src = document.getElementById(children1[c].id).getAttribute("src").search('uploads');
-                customdes++;
-                //customdes = (c_src > -1 && customdes == 0) ? 1: 0;
+                if (c_src > -1 && customdes == 0) {
+                    customdes++;
+                }
                 
                 
             }
@@ -2311,20 +2313,25 @@ $j(document).ready(function(){
                                        var inputChildren = document.getElementById('front-image-links').childNodes;
                                        var inputElements = new Array();
                                        for (var d in inputChildren){
-                                       if(inputChildren[d].id != null   ){
+                                       if(inputChildren[d].id !== undefined  ){
                                        inputElements[d] = document.getElementById(inputChildren[d].id).getAttribute("value");  
                                        } 
                                        }
                                        
-                                       var children = document.getElementById('art-canvas').childNodes; console.log("Children1 length: " + children.length);
+                                       var children = document.getElementById('art-canvas').childNodes;
+                                       console.log("Children1 length: " + children.length);
+                                       
                                        var ids = new Array();
+                                       
                                        for (var c in children){
-                                       if(children[c].id != null   ){
+                                       if(children[c].id !== undefined  && children[c].id.search("print") != 0 ){
                                        ids[c] = children[c].id.substr(1,children[c].id.length);//children[c].id;
                                        
                                        var canvas = document.getElementById(children[c].id);
-                                       console.log("FRONT"+($j("#"+children[c].id).position().left)+","+($j("#"+children[c].id).position().top));
-                                       context.drawImage(canvas, ($j("#"+children[c].id).position().left), ($j("#"+children[c].id).position().top - 790));
+                                       var front_top = ($j("#"+children[c].id).position().top > 790 ) ? $j("#"+children[c].id).position().top - 790 : $j("#"+children[c].id).position().top ;
+                                       console.log("id:" + children[c].id);
+                                       console.log("FRONT"+($j("#"+children[c].id).position().left)+","+front_top);
+                                       context.drawImage(canvas, ($j("#"+children[c].id).position().left), front_top);
                                        }
                                        }
                                        
@@ -2350,7 +2357,7 @@ $j(document).ready(function(){
                                        var inputChildren2 = document.getElementById('back-image-links').childNodes;
                                        var inputElements2 = new Array();
                                        for (var d in inputChildren2){
-                                       if(inputChildren2[d].id != null   ){
+                                       if(inputChildren2[d].id !== undefined  ){
                                        inputElements2[d] = document.getElementById(inputChildren2[d].id).getAttribute("value");  
                                        } 
                                        }
@@ -2358,11 +2365,13 @@ $j(document).ready(function(){
                                        var children2 = document.getElementById('art-canvas2').childNodes;
                                        var ids2 = new Array();
                                        for (var c in children2){
-                                       if(children2[c].id != null   ){
+                                       if(children2[c].id !== undefined  && children2[c].id.search("print") != 0 ){
                                        ids2[c] = children2[c].id.substr(1,children2[c].id.length);//children2[c].id;
                                        var canvas2 = document.getElementById(children2[c].id);
-                                       console.log("BACK"+($j("#"+children2[c].id).position().left)+","+($j("#"+children2[c].id).position().top));
-                                       context2.drawImage(canvas2, ($j("#"+children2[c].id).position().left), ($j("#"+children2[c].id).position().top)); //73
+                                       var back_top = ($j("#"+children2[c].id).position().top > 790 ) ? $j("#"+children2[c].id).position().top - 790 : $j("#"+children2[c].id).position().top ;
+                                       console.log("id:" + children2[c].id);
+                                       console.log("BACK"+($j("#"+children2[c].id).position().left)+","+ back_top);
+                                       context2.drawImage(canvas2, ($j("#"+children2[c].id).position().left), back_top); //73
                                        }
                                        }
                                        
@@ -2387,7 +2396,7 @@ $j(document).ready(function(){
                                        var inputChildren3 = document.getElementById('left-image-links').childNodes;
                                        var inputElements3 = new Array();
                                        for (var d in inputChildren3){
-                                       if(inputChildren3[d].id != null   ){
+                                       if(inputChildren3[d].id !== undefined    ){
                                        inputElements3[d] = document.getElementById(inputChildren3[d].id).getAttribute("value");  
                                        } 
                                        }
@@ -2395,11 +2404,13 @@ $j(document).ready(function(){
                                        var children3 = document.getElementById('art-canvas3').childNodes;
                                        var ids3 = new Array();
                                        for (var c in children3){
-                                       if(children3[c].id != null   ){
+                                       if(children3[c].id !== undefined  && children3[c].id.search("print") != 0 ){
                                        ids3[c] = children3[c].id.substr(1,children3[c].id.length);//children3[c].id;
                                        var canvas3 = document.getElementById(children3[c].id);
-                                       console.log("LEFT"+($j("#"+children3[c].id).position().left)+","+($j("#"+children3[c].id).position().top));
-                                       context3.drawImage(canvas3, ($j("#"+children3[c].id).position().left ), ($j("#"+children3[c].id).position().top)); //73
+                                       var left_top = ($j("#"+children3[c].id).position().top > 790 ) ? $j("#"+children3[c].id).position().top - 790 : $j("#"+children3[c].id).position().top ;
+                                       console.log("id:" + children3[c].id);
+                                       console.log("LEFT"+($j("#"+children3[c].id).position().left)+","+left_top);
+                                       context3.drawImage(canvas3, ($j("#"+children3[c].id).position().left ), left_top); //73
                                        
                                        }
                                        }
@@ -2426,7 +2437,7 @@ $j(document).ready(function(){
                                        var inputChildren4 = document.getElementById('right-image-links').childNodes;
                                        var inputElements4 = new Array();
                                        for (var d in inputChildren4){
-                                       if(inputChildren4[d].id != null   ){
+                                       if(inputChildren4[d].id !== undefined  ){
                                        inputElements4[d] = document.getElementById(inputChildren4[d].id).getAttribute("value");  
                                        } 
                                        }
@@ -2436,13 +2447,15 @@ $j(document).ready(function(){
                                        var ids4 = new Array();
                                        
                                        for (var c in children4){
-                                       if(children4[c].id != null   ){
+                                       if(children4[c].id !== undefined  && children4[c].id.search("print") != 0 ){
                                        ids4[c] = children4[c].id.substr(1,children4[c].id.length);//children4[c].id;
                                        
                                        var canvas4 = document.getElementById(children4[c].id);
                                        console.log(c);
-                                       console.log("RIGHT"+($j("#"+children4[c].id).position().left )+","+($j("#"+children4[c].id).position().top));
-                                       context4.drawImage(canvas4, ($j("#"+children4[c].id).position().left), ($j("#"+children4[c].id).position().top-394)); //73
+                                       var right_top = ($j("#"+children4[c].id).position().top > 790 ) ? $j("#"+children4[c].id).position().top - 790 : $j("#"+children4[c].id).position().top ;
+                                       console.log("id:" + children4[c].id);
+                                       console.log("RIGHT"+($j("#"+children4[c].id).position().left )+","+right_top);
+                                       context4.drawImage(canvas4, ($j("#"+children4[c].id).position().left), right_top); //73
                                        }
                                        }
                                        
