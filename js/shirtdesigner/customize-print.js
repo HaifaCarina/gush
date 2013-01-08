@@ -119,7 +119,7 @@ function isArtFullColor(canvas_ids) {
 }
 
 function compareElementBorders (borders, texts, arts) {
-    var final_inside = 0, final_outside = 0, customdes = 0;
+    var final_inside = 0, final_outside = 0, customdes = 0, sides = 0;
     
     for (var i = 0; i < borders.length; ++i) {
         var inside = 0, outside = 0;
@@ -165,7 +165,8 @@ function compareElementBorders (borders, texts, arts) {
                 
                 //checks if image is uploaded: by checking src
                 var c_src = document.getElementById(children1[c].id).getAttribute("src").search('uploads');
-                customdes = (c_src > -1 && customdes == 0) ? 1: 0;
+                customdes++;
+                //customdes = (c_src > -1 && customdes == 0) ? 1: 0;
                 
                 
             }
@@ -173,11 +174,11 @@ function compareElementBorders (borders, texts, arts) {
         
         if (inside > 0) final_inside++;
         if (outside > 0 ) final_outside++;
-        
+        if (inside > 0 || outside > 0  ) sides++;
         
     }
-    
-    return [final_inside, final_outside, customdes];
+    if (customdes > 0) customdes = 1;
+    return [final_inside, final_outside, customdes, sides];
     
         
 }
@@ -244,10 +245,11 @@ function updatePrice() {
     console.log(text_colors);
     console.log(art_colors);
     
-    if (text_full_color == 1 || art_full_color == 1 || full_text_art) {
+    /*if (text_full_color == 1 || art_full_color == 1 || full_text_art) {
         price = price + 150;
         console.log("add (full colored) 150");
     }
+    */
     
     // Checks the elements for borders
     var art_records = new Array("art-canvas", "art-canvas2", "art-canvas3", "art-canvas4");
@@ -256,18 +258,23 @@ function updatePrice() {
     var elem_count = compareElementBorders(borders, shape_records, art_records);
     
     // add 200 for more than one printed side within the border
-    price = (elem_count[0] > 1) ? price + ((elem_count[0]-1) * 200) : price;
-    if (elem_count[0] > 1) console.log("add (>1 printed side) " + ((elem_count[0]-1) * 200));
+    //price = (elem_count[0] > 1) ? price + ((elem_count[0]-1) * 200) : price;
+    
+    // add 200 for more than one printed side 
+    price = (elem_count[3] > 1) ? price + ((elem_count[3]-1) * 200) : price;
+    if (elem_count[3] > 1) console.log("add (>1 printed side) " + ((elem_count[3]-1) * 200));
+        
+        
     
     // add 200 for each side with print outside border
-    price = price + (elem_count[1] * 200);
-    console.log("add (200/outside print) " + (elem_count[1] * 200));
+    //price = price + (elem_count[1] * 200);
+    //console.log("add (200/outside print) " + (elem_count[1] * 200));
     
     // add 100 for custom design
     price = price + (elem_count[2] * 100);
     console.log("add (100 for customdesign)" + (elem_count[2] * 100) );
     
-    console.log("inside:" + elem_count[0] + " || outside: " + elem_count[1]+ " || customdes: " + elem_count[2]);
+    console.log("inside:" + elem_count[0] + " || outside: " + elem_count[1]+ " || customdes: " + elem_count[2] + " || sides: " + elem_count[3]);
     $j("#product-price").val(price);
     $j("#product-price-final").val(price);
     
@@ -1510,7 +1517,6 @@ $j(document).ready(function(){
                                        break;
                                        }
                                        textDraw1();
-                                       updatePrice();
                                        });
                    
                    $j("#text-2").keyup(function(e,val){
@@ -1533,8 +1539,8 @@ $j(document).ready(function(){
                                        $j("#right-text-2").val($j("#text-2").val());
                                        break;
                                        }
+                                       
                                        textDraw2();
-                                       updatePrice();
                                        });
                    
                    $j("#text-3").keyup(function(e,val){
@@ -1558,7 +1564,6 @@ $j(document).ready(function(){
                                        break;
                                        }
                                        textDraw3();
-                                       updatePrice();
                                        });
                    
                    /*
