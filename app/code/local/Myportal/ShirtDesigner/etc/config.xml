@@ -97,6 +97,15 @@
                     </shirtdesigner_observer>
                 </observers>
             </sales_quote_add_item>
+            <sales_order_place_after>
+                <observers>
+                    <shirtdesigner_observer>
+                        <type>singleton</type>
+                        <class>shirtdesigner/observer</class>
+                        <method>salesOrderPlaceAfter</method>
+                    </shirtdesigner_observer>
+                </observers>
+            </sales_order_place_after>
         </events>
         
         

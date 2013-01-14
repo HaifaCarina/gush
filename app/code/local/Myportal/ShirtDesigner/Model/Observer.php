@@ -14,6 +14,11 @@ class Myportal_ShirtDesigner_Model_Observer
                $quote_item->setOriginalCustomPrice($new_price);
                $quote_item->save();
            
-	 } 
-} 
+	 }
+    
+    public function salesOrderPlaceAfter($observer)
+    {
+        Mage::log('salesOrderPlaceAfter event called');
+    }
+}
 ?>
